@@ -1,0 +1,94 @@
+/* Ported from testimonials.php inline styles */
+
+.testimonial-carousel-item {
+  flex: 0 0 auto !important;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+.testimonial-carousel-item.is-active {
+  width: 100% !important;
+  opacity: 1 !important;
+}
+
+.testimonial-carousel-item.is-side {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .testimonial-carousel-item.is-active {
+    width: calc((100% - 3rem) * 0.45) !important;
+  }
+
+  .testimonial-carousel-item.is-side {
+    display: block !important;
+    width: calc((100% - 3rem) * 0.275) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .testimonial-carousel-item.is-active {
+    width: calc((100% - 3rem) * 0.42) !important;
+  }
+
+  .testimonial-carousel-item.is-side {
+    display: block !important;
+    width: calc((100% - 3rem) * 0.29) !important;
+  }
+}
+
+.testimonials-carousel-viewport {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.testimonials-carousel-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  justify-content: flex-start !important;
+}
+
+.testimonial-carousel-item img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+.testimonial-video-container {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.testimonial-video-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.testimonial-carousel-item.is-active .testimonial-play-button {
+  display: block !important;
+}
+
+.testimonial-carousel-item.is-side .testimonial-play-button {
+  display: none !important;
+}
+
+.testimonial-carousel-item.is-active .testimonial-name {
+  font-size: 1rem !important;
+}
+
+.testimonial-carousel-item.is-side .testimonial-name {
+  font-size: 0.875rem !important;
+}
+
+.testimonial-carousel-item.is-active blockquote {
+  font-size: 1.25rem !important;
+}
+
+.testimonial-carousel-item.is-side blockquote {
+  font-size: 1rem !important;
+}

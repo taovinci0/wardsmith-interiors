@@ -1,0 +1,47 @@
+@import 'tailwindcss';
+@import './styles/ward-smith-parity.css';
+@import './styles/testimonials-carousel.css';
+
+/* Self-hosted serif — same files as WP theme (assets/fonts/Legquinne-*) */
+@font-face {
+  font-family: 'Legquinne';
+  src: url('/fonts/Legquinne-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Design tokens aligned with WP theme (ward-smith-interiors/tailwind.config.js) */
+@theme {
+  --color-primary: #224a4f;
+  --color-primary-dark: #1a383c;
+  --color-accent-600: #d8b08c;
+  --color-accent-200: #e5ceba;
+  --color-neutral-900: #1b1b1b;
+  --color-neutral-600: #525252;
+  --color-neutral-300: #d9d9d9;
+  --color-neutral-200: #e8e6e1;
+  --color-neutral-100: #f7f5f2;
+
+  --font-serif: 'Legquinne', ui-serif, Georgia, serif;
+  --font-sans: gotham, ui-sans-serif, system-ui, sans-serif;
+
+  --max-width-container: 1500px;
+
+  --spacing-section: 8rem;
+  --spacing-component: 3rem;
+
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    /* Gotham from Typekit + light body copy (matches WP @apply font-light) */
+    @apply bg-neutral-100 font-sans font-light text-neutral-600;
+  }
+}
