@@ -224,7 +224,7 @@ body.page-contact .site-header.scrolled {
 }
 
 #primary-menu li.has-mega-menu {
-  position: relative;
+  position: static;
 }
 
 .mega-menu {
@@ -232,8 +232,7 @@ body.page-contact .site-header.scrolled {
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  width: 100vw;
-  max-width: 1400px;
+  width: min(1400px, calc(100vw - 2rem));
   background: #fff;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
