@@ -1,5 +1,23 @@
 import { defineConfig, defineField, defineType } from 'sanity'
-import { deskTool } from 'sanity/desk'
+import { deskTool, type StructureResolver } from 'sanity/desk'
+
+const singletonTypes = new Set(['homePage', 'siteSettings'])
+const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
+
+const structure: StructureResolver = (S) =>
+  S.list()
+    .title('Content')
+    .items([
+      S.listItem()
+        .title('Home Page')
+        .id('homePage')
+        .child(S.editor().id('homePage').schemaType('homePage').documentId('homePage')),
+      S.listItem()
+        .title('Site Settings')
+        .id('siteSettings')
+        .child(S.editor().id('siteSettings').schemaType('siteSettings').documentId('siteSettings')),
+      ...S.documentTypeListItems().filter((item) => !singletonTypes.has(item.getId() || '')),
+    ])
 
 const servicePage = defineType({
   name: 'servicePage',
@@ -91,13 +109,168 @@ const enquirySubmission = defineType({
   ],
 })
 
+const homePage = defineType({
+  name: 'homePage',
+  title: 'Home Page',
+  type: 'document',
+  fields: [
+    defineField({ name: 'title', type: 'string', initialValue: 'Home Page' }),
+    defineField({
+      name: 'hero',
+      type: 'object',
+      fields: [
+        defineField({ name: 'eyebrow', type: 'string' }),
+        defineField({ name: 'heading', type: 'string' }),
+        defineField({ name: 'primaryButtonLabel', type: 'string' }),
+        defineField({ name: 'primaryButtonTo', type: 'string' }),
+        defineField({ name: 'secondaryButtonLabel', type: 'string' }),
+        defineField({ name: 'secondaryButtonTo', type: 'string' }),
+        defineField({ name: 'imageUrls', type: 'array', of: [{ type: 'url' }] }),
+      ],
+    }),
+    defineField({
+      name: 'processIntro',
+      type: 'object',
+      fields: [
+        defineField({ name: 'eyebrow', type: 'string' }),
+        defineField({ name: 'heading', type: 'string' }),
+        defineField({ name: 'content', type: 'text' }),
+        defineField({ name: 'imageUrl', type: 'url' }),
+        defineField({ name: 'imageAspectClass', type: 'string' }),
+        defineField({ name: 'videoUrl', type: 'url' }),
+        defineField({ name: 'ctaLabel', type: 'string' }),
+        defineField({ name: 'enableAnimations', type: 'boolean' }),
+      ],
+    }),
+    defineField({
+      name: 'valuesItems',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'title', type: 'string' }),
+            defineField({ name: 'content', type: 'text' }),
+            defineField({ name: 'icon_name', type: 'string' }),
+          ],
+        },
+      ],
+    }),
+    defineField({
+      name: 'servicesSection',
+      type: 'object',
+      fields: [
+        defineField({ name: 'eyebrow', type: 'string' }),
+        defineField({ name: 'heading', type: 'string' }),
+        defineField({ name: 'tagline', type: 'text' }),
+      ],
+    }),
+    defineField({
+      name: 'servicesList',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'slug', type: 'string' }),
+            defineField({ name: 'title', type: 'string' }),
+            defineField({ name: 'shortDescription', type: 'text' }),
+            defineField({ name: 'imageUrl', type: 'url' }),
+          ],
+        },
+      ],
+    }),
+    defineField({
+      name: 'usp',
+      type: 'object',
+      fields: [
+        defineField({ name: 'eyebrow', type: 'string' }),
+        defineField({ name: 'heading', type: 'string' }),
+        defineField({ name: 'content', type: 'text' }),
+        defineField({ name: 'imageUrl1', type: 'url' }),
+        defineField({ name: 'imageUrl2', type: 'url' }),
+        defineField({ name: 'ctaLabel', type: 'string' }),
+        defineField({ name: 'ctaTo', type: 'string' }),
+      ],
+    }),
+    defineField({
+      name: 'trust',
+      type: 'object',
+      fields: [
+        defineField({ name: 'heading', type: 'string' }),
+        defineField({ name: 'content', type: 'text' }),
+        defineField({ name: 'ctaLabel', type: 'string' }),
+        defineField({ name: 'ctaTo', type: 'string' }),
+        defineField({ name: 'backgroundImageUrl', type: 'url' }),
+      ],
+    }),
+    defineField({
+      name: 'testimonialsSection',
+      type: 'object',
+      fields: [
+        defineField({ name: 'eyebrow', type: 'string' }),
+        defineField({ name: 'heading', type: 'string' }),
+        defineField({ name: 'subheading', type: 'text' }),
+      ],
+    }),
+    defineField({
+      name: 'testimonials',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'id', type: 'string' }),
+            defineField({ name: 'name', type: 'string' }),
+            defineField({ name: 'location', type: 'string' }),
+            defineField({ name: 'pull_quote', type: 'text' }),
+            defineField({ name: 'posterImageUrl', type: 'url' }),
+            defineField({ name: 'videoUrl', type: 'url' }),
+          ],
+        },
+      ],
+    }),
+    defineField({
+      name: 'finalCta',
+      type: 'object',
+      fields: [
+        defineField({ name: 'heading', type: 'string' }),
+        defineField({ name: 'content', type: 'text' }),
+        defineField({ name: 'primaryLabel', type: 'string' }),
+        defineField({ name: 'primaryTo', type: 'string' }),
+      ],
+    }),
+  ],
+})
+
+const siteSettings = defineType({
+  name: 'siteSettings',
+  title: 'Site Settings',
+  type: 'document',
+  fields: [
+    defineField({ name: 'siteName', type: 'string' }),
+    defineField({ name: 'defaultTitleSuffix', type: 'string' }),
+    defineField({ name: 'defaultOgImage', type: 'url' }),
+  ],
+})
+
 export default defineConfig({
   name: 'default',
   title: 'Ward-Smith Content Studio',
   projectId: process.env.SANITY_STUDIO_PROJECT_ID || '',
   dataset: process.env.SANITY_STUDIO_DATASET || 'production',
-  plugins: [deskTool()],
+  plugins: [deskTool({ structure })],
+  document: {
+    newDocumentOptions: (prev, { creationContext }) =>
+      creationContext.type === 'global'
+        ? prev.filter((templateItem) => !singletonTypes.has(templateItem.templateId))
+        : prev,
+    actions: (prev, { schemaType }) =>
+      singletonTypes.has(schemaType)
+        ? prev.filter((actionItem) => actionItem.action && singletonActions.has(actionItem.action))
+        : prev,
+  },
   schema: {
-    types: [servicePage, caseStudy, blogPost, enquirySubmission],
+    types: [homePage, siteSettings, servicePage, caseStudy, blogPost, enquirySubmission],
   },
 })

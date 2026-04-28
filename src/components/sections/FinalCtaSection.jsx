@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { finalCta } from '../../data/homePageContent.js'
 import { useSectionReveal } from '../../hooks/useSectionReveal.js'
 
-export function FinalCtaSection() {
+export function FinalCtaSection({ data = finalCta }) {
   const revealRef = useRef(null)
   useSectionReveal(revealRef, 'finalCta')
 
@@ -24,14 +24,14 @@ export function FinalCtaSection() {
 
       <div className="container-custom relative z-10">
         <div ref={revealRef} className="final-cta-animate mx-auto max-w-3xl text-center">
-          {finalCta.heading ? (
+          {data.heading ? (
             <h2 className="final-cta-heading heading-to-body-spacing font-serif text-[3rem] text-white">
-              {finalCta.heading}
+              {data.heading}
             </h2>
           ) : null}
-          {finalCta.content ? (
+          {data.content ? (
             <p className="final-cta-body heading-to-body-spacing font-sans font-light text-white">
-              {finalCta.content}
+              {data.content}
             </p>
           ) : null}
           <div
@@ -41,9 +41,9 @@ export function FinalCtaSection() {
             <Link to="/contact" className="btn-secondary">
               Book a Call
             </Link>
-            {finalCta.primaryLabel && finalCta.primaryTo ? (
-              <Link to={finalCta.primaryTo} className="btn-primary">
-                {finalCta.primaryLabel}
+            {data.primaryLabel && data.primaryTo ? (
+              <Link to={data.primaryTo} className="btn-primary">
+                {data.primaryLabel}
               </Link>
             ) : null}
           </div>

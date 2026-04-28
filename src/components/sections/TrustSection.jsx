@@ -3,7 +3,7 @@ import { useLayoutEffect, useRef } from 'react'
 import { gsap, ScrollTrigger } from '../../lib/gsapClient.js'
 import { trust } from '../../data/homePageContent.js'
 
-export function TrustSection() {
+export function TrustSection({ data = trust }) {
   const sectionRef = useRef(null)
   const bgRef = useRef(null)
 
@@ -63,7 +63,7 @@ export function TrustSection() {
         ref={bgRef}
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: `url('${trust.backgroundImageUrl}')`,
+          backgroundImage: `url('${data.backgroundImageUrl}')`,
           willChange: 'transform',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -84,15 +84,15 @@ export function TrustSection() {
             borderRadius: '1rem',
           }}
         >
-          {trust.heading ? (
-            <h2 className="heading-to-body-spacing font-serif text-[3rem] text-white">{trust.heading}</h2>
+          {data.heading ? (
+            <h2 className="heading-to-body-spacing font-serif text-[3rem] text-white">{data.heading}</h2>
           ) : null}
-          {trust.content ? (
-            <p className="heading-to-body-spacing font-sans font-light text-white">{trust.content}</p>
+          {data.content ? (
+            <p className="heading-to-body-spacing font-sans font-light text-white">{data.content}</p>
           ) : null}
-          {trust.ctaLabel && trust.ctaTo ? (
-            <Link to={trust.ctaTo} className="btn-primary">
-              {trust.ctaLabel}
+          {data.ctaLabel && data.ctaTo ? (
+            <Link to={data.ctaTo} className="btn-primary">
+              {data.ctaLabel}
             </Link>
           ) : null}
         </div>

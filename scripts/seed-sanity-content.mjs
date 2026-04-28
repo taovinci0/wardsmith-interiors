@@ -1,5 +1,16 @@
 import { createClient } from '@sanity/client'
-import { servicesList } from '../src/data/homePageContent.js'
+import {
+  finalCta,
+  processIntro,
+  servicesList,
+  servicesSection,
+  testimonials,
+  testimonialsSection,
+  trust,
+  usp,
+  valuesItems,
+} from '../src/data/homePageContent.js'
+import { heroHomeDefaults } from '../src/data/siteDefaults.js'
 import { getServicePageBundle } from '../src/data/serviceBundles.js'
 import { caseStudiesSeed, blogPostsSeed } from '../src/data/innerPagesContent.js'
 
@@ -35,7 +46,38 @@ async function upsert(doc) {
   return client.createOrReplace(doc)
 }
 
+function withKeys(items = [], keyFromItem) {
+  return items.map((item, index) => ({
+    ...item,
+    _key: String(keyFromItem?.(item, index) ?? index),
+  }))
+}
+
 async function run() {
+  await upsert({
+    _id: 'homePage',
+    _type: 'homePage',
+    title: 'Home Page',
+    hero: heroHomeDefaults,
+    processIntro,
+    valuesItems: withKeys(valuesItems, (item, index) => item.title || `value-${index}`),
+    servicesSection,
+    servicesList: withKeys(servicesList, (item, index) => item.slug || `service-${index}`),
+    usp,
+    trust,
+    testimonialsSection,
+    testimonials: withKeys(testimonials, (item, index) => item.id || `testimonial-${index}`),
+    finalCta,
+  })
+
+  await upsert({
+    _id: 'siteSettings',
+    _type: 'siteSettings',
+    siteName: 'Ward-Smith Interiors',
+    defaultTitleSuffix: 'Ward-Smith Interiors',
+    defaultOgImage: '',
+  })
+
   for (const service of servicesList) {
     const bundle = getServicePageBundle(service.slug)
     await upsert({

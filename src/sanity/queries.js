@@ -24,6 +24,57 @@ export const homePageQuery = /* groq */ `
       videoUrl,
       ctaLabel,
       enableAnimations
+    },
+    valuesItems[]{
+      title,
+      content,
+      icon_name
+    },
+    servicesSection{
+      eyebrow,
+      heading,
+      tagline
+    },
+    servicesList[]{
+      slug,
+      title,
+      shortDescription,
+      imageUrl
+    },
+    usp{
+      eyebrow,
+      heading,
+      content,
+      imageUrl1,
+      imageUrl2,
+      ctaLabel,
+      ctaTo
+    },
+    trust{
+      heading,
+      content,
+      ctaLabel,
+      ctaTo,
+      backgroundImageUrl
+    },
+    testimonialsSection{
+      eyebrow,
+      heading,
+      subheading
+    },
+    testimonials[]{
+      id,
+      name,
+      location,
+      pull_quote,
+      posterImageUrl,
+      videoUrl
+    },
+    finalCta{
+      heading,
+      content,
+      primaryLabel,
+      primaryTo
     }
   }
 `

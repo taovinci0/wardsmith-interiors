@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { usp } from '../../data/homePageContent.js'
 import { useSectionReveal } from '../../hooks/useSectionReveal.js'
 
-export function UspSection() {
+export function UspSection({ data = usp }) {
   const revealRef = useRef(null)
   useSectionReveal(revealRef, 'usp')
 
@@ -19,23 +19,23 @@ export function UspSection() {
 
       <div className="container-custom relative z-10">
         <div ref={revealRef} className="usp-animate mb-12 text-center">
-          {usp.eyebrow ? (
-            <p className="usp-animate-eyebrow eyebrow eyebrow-spacing text-primary">{usp.eyebrow}</p>
+          {data.eyebrow ? (
+            <p className="usp-animate-eyebrow eyebrow eyebrow-spacing text-primary">{data.eyebrow}</p>
           ) : null}
-          {usp.heading ? (
+          {data.heading ? (
             <h2 className="usp-animate-heading heading-to-body-spacing font-serif text-[3rem] text-primary">
-              {usp.heading}
+              {data.heading}
             </h2>
           ) : null}
-          {usp.content ? (
+          {data.content ? (
             <p className="usp-animate-body heading-to-body-spacing mx-auto max-w-3xl font-sans font-light text-primary">
-              {usp.content}
+              {data.content}
             </p>
           ) : null}
-          {usp.ctaLabel && usp.ctaTo ? (
+          {data.ctaLabel && data.ctaTo ? (
             <div className="usp-animate-cta heading-to-body-spacing">
-              <Link to={usp.ctaTo} className="btn-primary-dark">
-                {usp.ctaLabel}
+              <Link to={data.ctaTo} className="btn-primary-dark">
+                {data.ctaLabel}
               </Link>
             </div>
           ) : null}
@@ -62,7 +62,7 @@ export function UspSection() {
             </div>
             <div className="relative aspect-[1.414] overflow-hidden">
               <img
-                src={usp.imageUrl1}
+                src={data.imageUrl1}
                 alt=""
                 className="usp-blueprint-img h-full w-full object-cover"
                 style={{
@@ -91,7 +91,7 @@ export function UspSection() {
             </div>
             <div className="relative aspect-[1.414] overflow-hidden">
               <img
-                src={usp.imageUrl2}
+                src={data.imageUrl2}
                 alt=""
                 className="usp-blueprint-img h-full w-full object-cover"
                 style={{

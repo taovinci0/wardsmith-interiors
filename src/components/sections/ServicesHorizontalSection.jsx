@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import { gsap, ScrollTrigger } from '../../lib/gsapClient.js'
 import { servicesList, servicesSection as header } from '../../data/homePageContent.js'
 
-export function ServicesHorizontalSection() {
+export function ServicesHorizontalSection({ section = header, items = servicesList }) {
   const sectionRef = useRef(null)
   const trackRef = useRef(null)
 
@@ -65,9 +65,9 @@ export function ServicesHorizontalSection() {
       <div className="horizontal-scroll-main relative z-10">
         <div className="horizontal-scroll-main-inner">
           <div className="horizontal-scroll-intro pointer-events-none z-20 max-w-sm flex-shrink-0 md:max-w-full">
-            <p className="eyebrow eyebrow-spacing text-accent-600">{header.eyebrow}</p>
-            <h2 className="heading-to-body-spacing font-serif text-[3rem] text-primary">{header.heading}</h2>
-            <p className="font-sans font-light text-neutral-600">{header.tagline}</p>
+            <p className="eyebrow eyebrow-spacing text-accent-600">{section.eyebrow}</p>
+            <h2 className="heading-to-body-spacing font-serif text-[3rem] text-primary">{section.heading}</h2>
+            <p className="font-sans font-light text-neutral-600">{section.tagline}</p>
           </div>
 
           <div className="horizontal-scroll-track-outer">
@@ -76,7 +76,7 @@ export function ServicesHorizontalSection() {
               ref={trackRef}
               className="mobile-horizontal-scroll-track flex w-max min-h-0 items-start overflow-x-auto pr-[20%]"
             >
-              {servicesList.map((service, idx) => {
+              {items.map((service, idx) => {
                 const step = String(idx + 1).padStart(2, '0')
                 const imageUrl =
                   service.imageUrl ||

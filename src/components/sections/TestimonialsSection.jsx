@@ -3,7 +3,7 @@ import { gsap } from '../../lib/gsapClient.js'
 import { testimonials, testimonialsSection as head } from '../../data/homePageContent.js'
 import { VideoModal } from '../common/VideoModal.jsx'
 
-export function TestimonialsSection() {
+export function TestimonialsSection({ section = head, items = testimonials }) {
   const [currentIndex, setCurrentIndex] = useState(1)
   const [videoOpen, setVideoOpen] = useState(false)
   const [activeVideoUrl, setActiveVideoUrl] = useState(null)
@@ -12,8 +12,6 @@ export function TestimonialsSection() {
   const itemRefs = useRef([])
   const currentIndexRef = useRef(currentIndex)
   const skipInitialIndexEffect = useRef(true)
-
-  const items = testimonials
 
   useEffect(() => {
     currentIndexRef.current = currentIndex
@@ -138,15 +136,15 @@ export function TestimonialsSection() {
     <section id="testimonials-section" className="section-padding bg-neutral-100">
       <div className="container-custom">
         <div className="mb-24 text-center">
-          {head.eyebrow ? (
-            <p className="eyebrow eyebrow-spacing text-accent-600">{head.eyebrow}</p>
+          {section.eyebrow ? (
+            <p className="eyebrow eyebrow-spacing text-accent-600">{section.eyebrow}</p>
           ) : null}
-          {head.heading ? (
-            <h2 className="heading-to-body-spacing font-serif text-[3rem] text-primary">{head.heading}</h2>
+          {section.heading ? (
+            <h2 className="heading-to-body-spacing font-serif text-[3rem] text-primary">{section.heading}</h2>
           ) : null}
-          {head.subheading ? (
+          {section.subheading ? (
             <p className="mt-4 max-w-2xl font-sans text-lg font-light text-neutral-600 mx-auto">
-              {head.subheading}
+              {section.subheading}
             </p>
           ) : null}
         </div>

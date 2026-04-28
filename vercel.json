@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/media/:path*",
+      "destination": "/wp-content/uploads/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
