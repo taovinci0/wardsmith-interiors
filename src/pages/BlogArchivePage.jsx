@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom'
 import { HeroPage } from '../components/heroes/HeroPage.jsx'
 import { blogArchive, blogPostsSeed } from '../data/innerPagesContent.js'
+import { useSanityData } from '../hooks/useSanityData.js'
+import { blogPostsListQuery } from '../sanity/queries.js'
 
 export function BlogArchivePage() {
   const { hero } = blogArchive
+  const { data } = useSanityData(blogPostsListQuery)
+  const posts = data && data.length ? data : blogPostsSeed
 
   return (
     <>
@@ -16,7 +20,7 @@ export function BlogArchivePage() {
       <section className="bg-neutral-100" style={{ paddingTop: '8rem', paddingBottom: '8rem' }}>
         <div className="container-custom">
           <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-            {blogPostsSeed.map((post) => (
+            {posts.map((post) => (
               <article key={post.slug} className="group flex flex-col overflow-hidden rounded-[24px] bg-white shadow-sm">
                 <Link to={`/blog/${post.slug}`} className="block">
                   <div className="aspect-[16/10] overflow-hidden">

@@ -90,3 +90,36 @@ export const siteSettingsQuery = /* groq */ `
     "defaultOgImage": coalesce(ogImage.asset->url, defaultOgImage)
   }
 `
+
+export const blogPostsListQuery = /* groq */ `
+  *[_type == "blogPost" && defined(slug.current)] | order(date desc){
+    "slug": slug.current,
+    title,
+    category,
+    date,
+    excerpt,
+    "imageUrl": coalesce(image.asset->url, imageUrl)
+  }
+`
+
+export const blogPostBySlugQuery = /* groq */ `
+  *[_type == "blogPost" && slug.current == $slug][0]{
+    "slug": slug.current,
+    title,
+    category,
+    date,
+    excerpt,
+    "imageUrl": coalesce(image.asset->url, imageUrl),
+    body[]{
+      ...,
+      _type == "image" => { ..., "url": asset->url }
+    },
+    "related": *[_type == "blogPost" && slug.current != $slug] | order(date desc)[0...3]{
+      "slug": slug.current,
+      title,
+      date,
+      excerpt,
+      "imageUrl": coalesce(image.asset->url, imageUrl)
+    }
+  }
+`
