@@ -5,13 +5,17 @@ import { CaseStudyRelatedSection } from '../components/sections/CaseStudyRelated
 import { HeroPage } from '../components/heroes/HeroPage.jsx'
 import { ServiceGalleryHeaderSection } from '../components/sections/ServiceGalleryHeaderSection.jsx'
 import { defaultHeroBg, getCaseStudyBySlug, getRelatedCaseStudies } from '../data/innerPagesContent.js'
+import { useSanityData } from '../hooks/useSanityData.js'
+import { caseStudyBySlugQuery } from '../sanity/queries.js'
 
 export function CaseStudyDetailPage() {
   const { slug } = useParams()
-  const cs = slug ? getCaseStudyBySlug(slug) : null
-  const related = slug ? getRelatedCaseStudies(slug, 3) : []
+  const { data, loading } = useSanityData(caseStudyBySlugQuery, slug ? { slug } : null)
+  const cs = data ?? (slug ? getCaseStudyBySlug(slug) : null)
+  const related = cs?.related?.length ? cs.related : slug ? getRelatedCaseStudies(slug, 3) : []
 
   if (!cs) {
+    if (loading) return <section className="section-padding" />
     return (
       <section className="section-padding">
         <div className="container-custom text-center">

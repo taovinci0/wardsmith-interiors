@@ -2,9 +2,13 @@ import { Link } from 'react-router-dom'
 import { MapPin } from 'lucide-react'
 import { HeroPage } from '../components/heroes/HeroPage.jsx'
 import { caseStudiesArchive, caseStudiesSeed } from '../data/innerPagesContent.js'
+import { useSanityData } from '../hooks/useSanityData.js'
+import { caseStudiesListQuery } from '../sanity/queries.js'
 
 export function CaseStudiesArchivePage() {
   const { hero } = caseStudiesArchive
+  const { data } = useSanityData(caseStudiesListQuery)
+  const items = data && data.length ? data : caseStudiesSeed
 
   return (
     <>
@@ -17,7 +21,7 @@ export function CaseStudiesArchivePage() {
       <section className="bg-neutral-100" style={{ paddingTop: '8rem', paddingBottom: '8rem' }}>
         <div className="container-custom">
           <div className="case-studies-archive-grid grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {caseStudiesSeed.map((cs) => (
+            {items.map((cs) => (
               <article key={cs.slug} className="group">
                 <Link to={`/case-studies/${cs.slug}`} className="block">
                   <div className="mb-6 aspect-[4/3] overflow-hidden rounded-[24px]">

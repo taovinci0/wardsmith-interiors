@@ -78,12 +78,18 @@ const caseStudy = defineType({
     legacyUrl('imageUrl'),
     defineField({ name: 'cost', type: 'string' }),
     defineField({ name: 'projectOverview', type: 'text' }),
+    defineField({ name: 'testimonialVideoUrl', title: 'Testimonial video URL', type: 'url' }),
+    image('testimonialVideoPoster', 'Testimonial video poster'),
+    legacyUrl('testimonialVideoPosterUrl'),
+    defineField({ name: 'galleryEyebrow', type: 'string' }),
     defineField({ name: 'galleryHeading', type: 'string' }),
     defineField({ name: 'galleryParagraph', type: 'text' }),
     defineField({ name: 'galleryImages', title: 'Gallery images', type: 'array', of: [{ type: 'image', options: { hotspot: true } }] }),
     legacyUrlArray('galleryImageUrls'),
     defineField({ name: 'ctaHeading', type: 'string' }),
     defineField({ name: 'ctaContent', type: 'text' }),
+    defineField({ name: 'ctaButtonLabel', type: 'string' }),
+    defineField({ name: 'ctaButtonTo', type: 'string' }),
   ],
 })
 

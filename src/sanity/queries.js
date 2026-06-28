@@ -91,6 +91,45 @@ export const siteSettingsQuery = /* groq */ `
   }
 `
 
+export const caseStudiesListQuery = /* groq */ `
+  *[_type == "caseStudy" && defined(slug.current)] | order(_createdAt asc){
+    "slug": slug.current,
+    title,
+    location,
+    servicesLine,
+    "imageUrl": coalesce(image.asset->url, imageUrl)
+  }
+`
+
+export const caseStudyBySlugQuery = /* groq */ `
+  *[_type == "caseStudy" && slug.current == $slug][0]{
+    "slug": slug.current,
+    title,
+    location,
+    servicesLine,
+    cost,
+    projectOverview,
+    "imageUrl": coalesce(image.asset->url, imageUrl),
+    testimonialVideoUrl,
+    "testimonialVideoPosterUrl": coalesce(testimonialVideoPoster.asset->url, testimonialVideoPosterUrl),
+    galleryEyebrow,
+    galleryHeading,
+    galleryParagraph,
+    "galleryImageUrls": coalesce(galleryImages[].asset->url, galleryImageUrls),
+    ctaHeading,
+    ctaContent,
+    ctaButtonLabel,
+    ctaButtonTo,
+    "related": *[_type == "caseStudy" && slug.current != $slug] | order(_createdAt asc)[0...3]{
+      "slug": slug.current,
+      title,
+      location,
+      servicesLine,
+      "imageUrl": coalesce(image.asset->url, imageUrl)
+    }
+  }
+`
+
 export const blogPostsListQuery = /* groq */ `
   *[_type == "blogPost" && defined(slug.current)] | order(date desc){
     "slug": slug.current,
