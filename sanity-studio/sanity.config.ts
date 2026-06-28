@@ -45,6 +45,9 @@ const structure: StructureResolver = (S) =>
       ...S.documentTypeListItems().filter((item) => !singletonTypes.has(item.getId() || '')),
     ])
 
+const section = (name: string, title: string, fields: ReturnType<typeof defineField>[]) =>
+  defineField({ name, title, type: 'object', options: { collapsible: true, collapsed: true }, fields })
+
 const servicePage = defineType({
   name: 'servicePage',
   title: 'Service Page',
@@ -52,16 +55,85 @@ const servicePage = defineType({
   fields: [
     defineField({ name: 'title', type: 'string', validation: (r) => r.required() }),
     defineField({ name: 'slug', type: 'slug', options: { source: 'title' }, validation: (r) => r.required() }),
+    defineField({ name: 'shortDescription', type: 'text' }),
     image('image', 'Card image'),
     image('heroImage', 'Hero image'),
     legacyUrl('imageUrl'),
     legacyUrl('heroImageUrl'),
-    defineField({ name: 'processIntroHeading', type: 'string' }),
-    defineField({ name: 'processIntroContent', type: 'text' }),
-    defineField({ name: 'galleryHeading', type: 'string' }),
-    defineField({ name: 'galleryParagraph', type: 'text' }),
-    defineField({ name: 'serviceCtaHeading', type: 'string' }),
-    defineField({ name: 'serviceCtaContent', type: 'text' }),
+    section('processIntro', 'Process intro', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'content', type: 'text' }),
+      image('image', 'Image'),
+      legacyUrl('imageUrl'),
+      defineField({ name: 'imageAspectClass', type: 'string' }),
+      defineField({ name: 'videoUrl', type: 'url' }),
+      defineField({ name: 'ctaLabel', type: 'string' }),
+      defineField({ name: 'enableAnimations', type: 'boolean' }),
+    ]),
+    section('process2', 'Craftsmanship section', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'content', type: 'text' }),
+      image('image', 'Image'),
+      legacyUrl('imageUrl'),
+      defineField({ name: 'videoUrl', type: 'url' }),
+      defineField({ name: 'ctaLabel', type: 'string' }),
+    ]),
+    section('serviceProcessSteps', 'Process steps', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'tagline', type: 'text' }),
+      defineField({
+        name: 'steps',
+        type: 'array',
+        of: [
+          {
+            type: 'object',
+            fields: [
+              defineField({ name: 'title', type: 'string' }),
+              defineField({ name: 'description', type: 'text' }),
+            ],
+          },
+        ],
+      }),
+      defineField({ name: 'stepImages', title: 'Step images', type: 'array', of: [{ type: 'image', options: { hotspot: true } }] }),
+      legacyUrlArray('stepImageUrls'),
+      defineField({
+        name: 'endCard',
+        type: 'object',
+        fields: [
+          defineField({ name: 'heading', type: 'text' }),
+          defineField({ name: 'paragraph', type: 'text' }),
+          defineField({ name: 'buttonLabel', type: 'string' }),
+          defineField({ name: 'buttonTo', type: 'string' }),
+        ],
+      }),
+    ]),
+    section('serviceUsp', 'USP section', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'content', type: 'text' }),
+      image('image1', 'Image 1'),
+      image('image2', 'Image 2'),
+      legacyUrl('imageUrl1'),
+      legacyUrl('imageUrl2'),
+      defineField({ name: 'ctaLabel', type: 'string' }),
+      defineField({ name: 'ctaTo', type: 'string' }),
+    ]),
+    section('gallery', 'Gallery', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'paragraph', type: 'text' }),
+      defineField({ name: 'images', title: 'Gallery images', type: 'array', of: [{ type: 'image', options: { hotspot: true } }] }),
+      legacyUrlArray('imageUrls'),
+    ]),
+    section('serviceCta', 'CTA band', [
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'content', type: 'text' }),
+      defineField({ name: 'buttonLabel', type: 'string' }),
+      defineField({ name: 'buttonTo', type: 'string' }),
+    ]),
   ],
 })
 

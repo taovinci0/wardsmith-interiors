@@ -7,12 +7,16 @@ import { ProcessStepsSection } from '../components/sections/ProcessStepsSection.
 import { ServiceGalleryHeaderSection } from '../components/sections/ServiceGalleryHeaderSection.jsx'
 import { ServiceUspSection } from '../components/sections/ServiceUspSection.jsx'
 import { defaultHeroBg, getServiceBySlug } from '../data/innerPagesContent.js'
+import { useSanityData } from '../hooks/useSanityData.js'
+import { servicePageBySlugQuery } from '../sanity/queries.js'
 
 export function ServiceDetailPage() {
   const { slug } = useParams()
-  const service = slug ? getServiceBySlug(slug) : null
+  const { data, loading } = useSanityData(servicePageBySlugQuery, slug ? { slug } : null)
+  const service = data ?? (slug ? getServiceBySlug(slug) : null)
 
   if (!service) {
+    if (loading) return <section className="section-padding" />
     return (
       <section className="section-padding">
         <div className="container-custom text-center">

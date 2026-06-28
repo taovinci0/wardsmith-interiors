@@ -91,6 +91,52 @@ export const siteSettingsQuery = /* groq */ `
   }
 `
 
+export const servicesListQuery = /* groq */ `
+  *[_type == "servicePage" && defined(slug.current)] | order(_createdAt asc){
+    "slug": slug.current,
+    title,
+    shortDescription,
+    "imageUrl": coalesce(image.asset->url, imageUrl)
+  }
+`
+
+export const servicePageBySlugQuery = /* groq */ `
+  *[_type == "servicePage" && slug.current == $slug][0]{
+    "slug": slug.current,
+    title,
+    shortDescription,
+    "imageUrl": coalesce(image.asset->url, imageUrl),
+    "heroImageUrl": coalesce(heroImage.asset->url, heroImageUrl),
+    processIntro{
+      eyebrow, heading, content,
+      "imageUrl": coalesce(image.asset->url, imageUrl),
+      imageAspectClass, videoUrl, ctaLabel, enableAnimations
+    },
+    process2{
+      eyebrow, heading, content,
+      "imageUrl": coalesce(image.asset->url, imageUrl),
+      videoUrl, ctaLabel
+    },
+    serviceProcessSteps{
+      eyebrow, heading, tagline,
+      steps[]{ title, description },
+      "stepImageUrls": coalesce(stepImages[].asset->url, stepImageUrls),
+      endCard{ heading, paragraph, buttonLabel, buttonTo }
+    },
+    serviceUsp{
+      eyebrow, heading, content,
+      "imageUrl1": coalesce(image1.asset->url, imageUrl1),
+      "imageUrl2": coalesce(image2.asset->url, imageUrl2),
+      ctaLabel, ctaTo
+    },
+    gallery{
+      eyebrow, heading, paragraph,
+      "imageUrls": coalesce(images[].asset->url, imageUrls)
+    },
+    serviceCta{ heading, content, buttonLabel, buttonTo }
+  }
+`
+
 export const caseStudiesListQuery = /* groq */ `
   *[_type == "caseStudy" && defined(slug.current)] | order(_createdAt asc){
     "slug": slug.current,

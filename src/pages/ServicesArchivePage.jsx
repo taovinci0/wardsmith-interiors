@@ -2,9 +2,13 @@ import { Link } from 'react-router-dom'
 import { HeroPage } from '../components/heroes/HeroPage.jsx'
 import { servicesArchive } from '../data/innerPagesContent.js'
 import { servicesList } from '../data/homePageContent.js'
+import { useSanityData } from '../hooks/useSanityData.js'
+import { servicesListQuery } from '../sanity/queries.js'
 
 export function ServicesArchivePage() {
   const { hero } = servicesArchive
+  const { data } = useSanityData(servicesListQuery)
+  const items = data && data.length ? data : servicesList
 
   return (
     <>
@@ -20,7 +24,7 @@ export function ServicesArchivePage() {
       <section className="bg-neutral-100" style={{ paddingTop: '8rem', paddingBottom: '8rem' }}>
         <div className="container-custom">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {servicesList.map((service) => {
+            {items.map((service) => {
               const imageUrl =
                 service.imageUrl ||
                 `https://placehold.co/800x600/E5CEBA/224A4F?text=${encodeURIComponent(service.title)}`
