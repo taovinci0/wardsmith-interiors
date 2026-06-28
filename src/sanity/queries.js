@@ -1,6 +1,10 @@
 /**
  * GROQ queries for homepage singleton and site settings.
- * Schema field names should match `docs/sanity-schema-notes.md` when you create the Studio.
+ *
+ * Image fields are real Sanity image assets (uploaded / picked from the Media
+ * Library). We resolve each one to its CDN URL and `coalesce` with the legacy
+ * imported `/media/...` string, so the frontend keeps receiving plain URL
+ * strings under the same keys it already uses — no component changes needed.
  */
 
 export const homePageQuery = /* groq */ `
@@ -13,13 +17,13 @@ export const homePageQuery = /* groq */ `
       primaryButtonTo,
       secondaryButtonLabel,
       secondaryButtonTo,
-      imageUrls
+      "imageUrls": coalesce(images[].asset->url, imageUrls)
     },
     processIntro{
       eyebrow,
       heading,
       content,
-      imageUrl,
+      "imageUrl": coalesce(image.asset->url, imageUrl),
       imageAspectClass,
       videoUrl,
       ctaLabel,
@@ -39,14 +43,14 @@ export const homePageQuery = /* groq */ `
       slug,
       title,
       shortDescription,
-      imageUrl
+      "imageUrl": coalesce(image.asset->url, imageUrl)
     },
     usp{
       eyebrow,
       heading,
       content,
-      imageUrl1,
-      imageUrl2,
+      "imageUrl1": coalesce(image1.asset->url, imageUrl1),
+      "imageUrl2": coalesce(image2.asset->url, imageUrl2),
       ctaLabel,
       ctaTo
     },
@@ -55,7 +59,7 @@ export const homePageQuery = /* groq */ `
       content,
       ctaLabel,
       ctaTo,
-      backgroundImageUrl
+      "backgroundImageUrl": coalesce(backgroundImage.asset->url, backgroundImageUrl)
     },
     testimonialsSection{
       eyebrow,
@@ -67,7 +71,7 @@ export const homePageQuery = /* groq */ `
       name,
       location,
       pull_quote,
-      posterImageUrl,
+      "posterImageUrl": coalesce(posterImage.asset->url, posterImageUrl),
       videoUrl
     },
     finalCta{
@@ -83,6 +87,6 @@ export const siteSettingsQuery = /* groq */ `
   *[_type == "siteSettings"][0]{
     siteName,
     defaultTitleSuffix,
-    defaultOgImage
+    "defaultOgImage": coalesce(ogImage.asset->url, defaultOgImage)
   }
 `

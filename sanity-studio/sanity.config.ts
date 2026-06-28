@@ -4,6 +4,29 @@ import { deskTool, type StructureResolver } from 'sanity/desk'
 const singletonTypes = new Set(['homePage', 'siteSettings'])
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
 
+/**
+ * Image field with hotspot cropping. This is what gives editors the
+ * "Upload" + "Select from Media Library" experience.
+ */
+const image = (name: string, title?: string) =>
+  defineField({
+    name,
+    title,
+    type: 'image',
+    options: { hotspot: true },
+  })
+
+/**
+ * Legacy URL field kept (hidden) only so previously-imported `/media/...`
+ * string values are preserved in the document and still available as a
+ * fallback to the frontend until an editor uploads a real image.
+ */
+const legacyUrl = (name: string) =>
+  defineField({ name, type: 'url', hidden: true })
+
+const legacyUrlArray = (name: string) =>
+  defineField({ name, type: 'array', of: [{ type: 'url' }], hidden: true })
+
 const structure: StructureResolver = (S) =>
   S.list()
     .title('Content')
@@ -16,6 +39,7 @@ const structure: StructureResolver = (S) =>
         .title('Site Settings')
         .id('siteSettings')
         .child(S.editor().id('siteSettings').schemaType('siteSettings').documentId('siteSettings')),
+      S.divider(),
       ...S.documentTypeListItems().filter((item) => !singletonTypes.has(item.getId() || '')),
     ])
 
@@ -26,8 +50,10 @@ const servicePage = defineType({
   fields: [
     defineField({ name: 'title', type: 'string', validation: (r) => r.required() }),
     defineField({ name: 'slug', type: 'slug', options: { source: 'title' }, validation: (r) => r.required() }),
-    defineField({ name: 'imageUrl', type: 'url' }),
-    defineField({ name: 'heroImageUrl', type: 'url' }),
+    image('image', 'Card image'),
+    image('heroImage', 'Hero image'),
+    legacyUrl('imageUrl'),
+    legacyUrl('heroImageUrl'),
     defineField({ name: 'processIntroHeading', type: 'string' }),
     defineField({ name: 'processIntroContent', type: 'text' }),
     defineField({ name: 'galleryHeading', type: 'string' }),
@@ -46,12 +72,14 @@ const caseStudy = defineType({
     defineField({ name: 'slug', type: 'slug', options: { source: 'title' }, validation: (r) => r.required() }),
     defineField({ name: 'location', type: 'string' }),
     defineField({ name: 'servicesLine', type: 'string' }),
-    defineField({ name: 'imageUrl', type: 'url' }),
+    image('image', 'Cover image'),
+    legacyUrl('imageUrl'),
     defineField({ name: 'cost', type: 'string' }),
     defineField({ name: 'projectOverview', type: 'text' }),
     defineField({ name: 'galleryHeading', type: 'string' }),
     defineField({ name: 'galleryParagraph', type: 'text' }),
-    defineField({ name: 'galleryImageUrls', type: 'array', of: [{ type: 'url' }] }),
+    defineField({ name: 'galleryImages', title: 'Gallery images', type: 'array', of: [{ type: 'image', options: { hotspot: true } }] }),
+    legacyUrlArray('galleryImageUrls'),
     defineField({ name: 'ctaHeading', type: 'string' }),
     defineField({ name: 'ctaContent', type: 'text' }),
   ],
@@ -66,9 +94,10 @@ const blogPost = defineType({
     defineField({ name: 'slug', type: 'slug', options: { source: 'title' }, validation: (r) => r.required() }),
     defineField({ name: 'category', type: 'string' }),
     defineField({ name: 'date', type: 'date' }),
-    defineField({ name: 'imageUrl', type: 'url' }),
+    image('image', 'Featured image'),
+    legacyUrl('imageUrl'),
     defineField({ name: 'excerpt', type: 'text' }),
-    defineField({ name: 'body', type: 'array', of: [{ type: 'block' }] }),
+    defineField({ name: 'body', type: 'array', of: [{ type: 'block' }, { type: 'image', options: { hotspot: true } }] }),
   ],
 })
 
@@ -125,7 +154,8 @@ const homePage = defineType({
         defineField({ name: 'primaryButtonTo', type: 'string' }),
         defineField({ name: 'secondaryButtonLabel', type: 'string' }),
         defineField({ name: 'secondaryButtonTo', type: 'string' }),
-        defineField({ name: 'imageUrls', type: 'array', of: [{ type: 'url' }] }),
+        defineField({ name: 'images', title: 'Slideshow images', type: 'array', of: [{ type: 'image', options: { hotspot: true } }] }),
+        legacyUrlArray('imageUrls'),
       ],
     }),
     defineField({
@@ -135,7 +165,8 @@ const homePage = defineType({
         defineField({ name: 'eyebrow', type: 'string' }),
         defineField({ name: 'heading', type: 'string' }),
         defineField({ name: 'content', type: 'text' }),
-        defineField({ name: 'imageUrl', type: 'url' }),
+        image('image', 'Image'),
+        legacyUrl('imageUrl'),
         defineField({ name: 'imageAspectClass', type: 'string' }),
         defineField({ name: 'videoUrl', type: 'url' }),
         defineField({ name: 'ctaLabel', type: 'string' }),
@@ -175,7 +206,8 @@ const homePage = defineType({
             defineField({ name: 'slug', type: 'string' }),
             defineField({ name: 'title', type: 'string' }),
             defineField({ name: 'shortDescription', type: 'text' }),
-            defineField({ name: 'imageUrl', type: 'url' }),
+            image('image', 'Image'),
+            legacyUrl('imageUrl'),
           ],
         },
       ],
@@ -187,8 +219,10 @@ const homePage = defineType({
         defineField({ name: 'eyebrow', type: 'string' }),
         defineField({ name: 'heading', type: 'string' }),
         defineField({ name: 'content', type: 'text' }),
-        defineField({ name: 'imageUrl1', type: 'url' }),
-        defineField({ name: 'imageUrl2', type: 'url' }),
+        image('image1', 'Image 1'),
+        image('image2', 'Image 2'),
+        legacyUrl('imageUrl1'),
+        legacyUrl('imageUrl2'),
         defineField({ name: 'ctaLabel', type: 'string' }),
         defineField({ name: 'ctaTo', type: 'string' }),
       ],
@@ -201,7 +235,8 @@ const homePage = defineType({
         defineField({ name: 'content', type: 'text' }),
         defineField({ name: 'ctaLabel', type: 'string' }),
         defineField({ name: 'ctaTo', type: 'string' }),
-        defineField({ name: 'backgroundImageUrl', type: 'url' }),
+        image('backgroundImage', 'Background image'),
+        legacyUrl('backgroundImageUrl'),
       ],
     }),
     defineField({
@@ -224,7 +259,8 @@ const homePage = defineType({
             defineField({ name: 'name', type: 'string' }),
             defineField({ name: 'location', type: 'string' }),
             defineField({ name: 'pull_quote', type: 'text' }),
-            defineField({ name: 'posterImageUrl', type: 'url' }),
+            image('posterImage', 'Poster image'),
+            legacyUrl('posterImageUrl'),
             defineField({ name: 'videoUrl', type: 'url' }),
           ],
         },
@@ -250,7 +286,8 @@ const siteSettings = defineType({
   fields: [
     defineField({ name: 'siteName', type: 'string' }),
     defineField({ name: 'defaultTitleSuffix', type: 'string' }),
-    defineField({ name: 'defaultOgImage', type: 'url' }),
+    image('ogImage', 'Default social share image'),
+    legacyUrl('defaultOgImage'),
   ],
 })
 
