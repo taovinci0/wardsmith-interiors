@@ -1,7 +1,7 @@
 import { defineConfig, defineField, defineType } from 'sanity'
 import { deskTool, type StructureResolver } from 'sanity/desk'
 
-const singletonTypes = new Set(['homePage', 'siteSettings', 'faqsPage'])
+const singletonTypes = new Set(['homePage', 'siteSettings', 'faqsPage', 'aboutPage', 'contactPage'])
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
 
 /**
@@ -41,6 +41,14 @@ const structure: StructureResolver = (S) =>
         .title('Site Settings')
         .id('siteSettings')
         .child(S.editor().id('siteSettings').schemaType('siteSettings').documentId('siteSettings')),
+      S.listItem()
+        .title('About Page')
+        .id('aboutPage')
+        .child(S.editor().id('aboutPage').schemaType('aboutPage').documentId('aboutPage')),
+      S.listItem()
+        .title('Contact Page')
+        .id('contactPage')
+        .child(S.editor().id('contactPage').schemaType('contactPage').documentId('contactPage')),
       S.listItem()
         .title('FAQs')
         .id('faqsPage')
@@ -375,6 +383,121 @@ const siteSettings = defineType({
   ],
 })
 
+const aboutPage = defineType({
+  name: 'aboutPage',
+  title: 'About Page',
+  type: 'document',
+  fields: [
+    defineField({ name: 'title', type: 'string', initialValue: 'About' }),
+    section('hero', 'Hero', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      image('image', 'Background image'),
+      legacyUrl('imageUrl'),
+      defineField({ name: 'primaryButtonLabel', type: 'string' }),
+      defineField({ name: 'primaryButtonTo', type: 'string' }),
+      defineField({ name: 'secondaryButtonLabel', type: 'string' }),
+      defineField({ name: 'secondaryButtonTo', type: 'string' }),
+    ]),
+    section('processIntro', 'Intro', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'content', type: 'text' }),
+      image('image', 'Image'),
+      legacyUrl('imageUrl'),
+      defineField({ name: 'imageAspectClass', type: 'string' }),
+      defineField({ name: 'videoUrl', type: 'url' }),
+      defineField({ name: 'ctaLabel', type: 'string' }),
+      defineField({ name: 'enableAnimations', type: 'boolean' }),
+    ]),
+    defineField({
+      name: 'valuesItems',
+      title: 'Values',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'title', type: 'string' }),
+            defineField({ name: 'content', type: 'text' }),
+            defineField({ name: 'icon_name', title: 'Icon name (lucide)', type: 'string' }),
+          ],
+          preview: { select: { title: 'title' } },
+        },
+      ],
+    }),
+    section('team', 'Meet the team', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'body', type: 'text' }),
+      defineField({
+        name: 'members',
+        type: 'array',
+        of: [
+          {
+            type: 'object',
+            fields: [
+              defineField({ name: 'name', type: 'string' }),
+              defineField({ name: 'role', type: 'string' }),
+              defineField({ name: 'description', type: 'text' }),
+              image('image', 'Photo'),
+              legacyUrl('imageUrl'),
+            ],
+            preview: { select: { title: 'name', subtitle: 'role' } },
+          },
+        ],
+      }),
+    ]),
+    section('processSteps', 'Process steps', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'tagline', type: 'text' }),
+      defineField({
+        name: 'steps',
+        type: 'array',
+        of: [
+          {
+            type: 'object',
+            fields: [
+              defineField({ name: 'title', type: 'string' }),
+              defineField({ name: 'description', type: 'text' }),
+            ],
+            preview: { select: { title: 'title' } },
+          },
+        ],
+      }),
+      defineField({ name: 'stepImages', title: 'Step images', type: 'array', of: [{ type: 'image', options: { hotspot: true } }] }),
+      legacyUrlArray('stepImageUrls'),
+    ]),
+  ],
+})
+
+const contactPage = defineType({
+  name: 'contactPage',
+  title: 'Contact Page',
+  type: 'document',
+  fields: [
+    defineField({ name: 'title', type: 'string', initialValue: 'Contact' }),
+    section('hero', 'Hero', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      image('image', 'Background image'),
+      legacyUrl('imageUrl'),
+    ]),
+    section('consultation', 'Consultation section', [
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'intro', type: 'text' }),
+      defineField({ name: 'phone', type: 'string' }),
+      defineField({ name: 'email', type: 'string' }),
+      defineField({ name: 'address', type: 'text' }),
+      defineField({ name: 'projectHeading', type: 'string' }),
+      defineField({ name: 'projectText', type: 'text' }),
+      defineField({ name: 'projectButtonLabel', type: 'string' }),
+      defineField({ name: 'projectButtonTo', type: 'string' }),
+    ]),
+  ],
+})
+
 const faqsPage = defineType({
   name: 'faqsPage',
   title: 'FAQs Page',
@@ -416,6 +539,6 @@ export default defineConfig({
         : prev,
   },
   schema: {
-    types: [homePage, siteSettings, faqsPage, servicePage, caseStudy, blogPost, enquirySubmission],
+    types: [homePage, siteSettings, aboutPage, contactPage, faqsPage, servicePage, caseStudy, blogPost, enquirySubmission],
   },
 })

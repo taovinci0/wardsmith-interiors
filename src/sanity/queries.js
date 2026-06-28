@@ -91,6 +91,38 @@ export const siteSettingsQuery = /* groq */ `
   }
 `
 
+export const aboutPageQuery = /* groq */ `
+  *[_type == "aboutPage"][0]{
+    hero{
+      eyebrow, heading,
+      "imageUrl": coalesce(image.asset->url, imageUrl),
+      primaryButtonLabel, primaryButtonTo, secondaryButtonLabel, secondaryButtonTo
+    },
+    processIntro{
+      eyebrow, heading, content,
+      "imageUrl": coalesce(image.asset->url, imageUrl),
+      imageAspectClass, videoUrl, ctaLabel, enableAnimations
+    },
+    valuesItems[]{ title, content, icon_name },
+    team{
+      eyebrow, heading, body,
+      members[]{ name, role, description, "imageUrl": coalesce(image.asset->url, imageUrl) }
+    },
+    processSteps{
+      eyebrow, heading, tagline,
+      steps[]{ title, description },
+      "stepImageUrls": coalesce(stepImages[].asset->url, stepImageUrls)
+    }
+  }
+`
+
+export const contactPageQuery = /* groq */ `
+  *[_type == "contactPage"][0]{
+    hero{ eyebrow, heading, "imageUrl": coalesce(image.asset->url, imageUrl) },
+    consultation{ heading, intro, phone, email, address, projectHeading, projectText, projectButtonLabel, projectButtonTo }
+  }
+`
+
 export const faqsQuery = /* groq */ `
   *[_type == "faqsPage"][0]{
     items[]{ question, answer }

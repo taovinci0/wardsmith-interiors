@@ -4,7 +4,17 @@ import { Link } from 'react-router-dom'
 const inputClass =
   'w-full rounded-lg border border-primary/20 bg-white px-4 py-3 font-sans text-neutral-900 outline-none transition-colors focus:border-accent-600'
 
-export function ContactConsultationSection() {
+export function ContactConsultationSection({
+  heading = 'Still unsure?',
+  intro = 'Book a free 20 minute consultation to discuss your project and get expert advice.',
+  projectHeading = 'Start Your Project',
+  projectText = 'Already know what you want? Send us your project details.',
+  projectButtonLabel = 'Start Your Project',
+  projectButtonTo = '/start-your-project',
+  phone,
+  email,
+  address,
+} = {}) {
   const [submitted, setSubmitted] = useState(false)
 
   function handleSubmit(e) {
@@ -18,10 +28,8 @@ export function ContactConsultationSection() {
         <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-16">
           <div>
             <div className="mb-8">
-              <h2 className="mb-4 font-serif text-[3rem] text-primary">Still unsure?</h2>
-              <p className="mb-6 font-sans text-lg font-light leading-relaxed text-neutral-600">
-                Book a free 20 minute consultation to discuss your project and get expert advice.
-              </p>
+              <h2 className="mb-4 font-serif text-[3rem] text-primary">{heading}</h2>
+              <p className="mb-6 font-sans text-lg font-light leading-relaxed text-neutral-600">{intro}</p>
             </div>
 
             {submitted ? (
@@ -91,15 +99,34 @@ export function ContactConsultationSection() {
           </div>
 
           <div>
-            <h2 className="mb-8 font-serif text-[3rem] text-primary">Start Your Project</h2>
+            <h2 className="mb-8 font-serif text-[3rem] text-primary">{projectHeading}</h2>
             <div className="mt-12 border-t border-neutral-300 pt-8">
-              <p className="mb-4 font-sans font-light text-neutral-600">
-                Already know what you want? Send us your project details.
-              </p>
-              <Link to="/start-your-project" className="btn-secondary inline-block">
-                Start Your Project
+              <p className="mb-4 font-sans font-light text-neutral-600">{projectText}</p>
+              <Link to={projectButtonTo} className="btn-secondary inline-block">
+                {projectButtonLabel}
               </Link>
             </div>
+            {phone || email || address ? (
+              <div className="mt-12 border-t border-neutral-300 pt-8 font-sans font-light text-neutral-600">
+                {phone ? (
+                  <p className="mb-2">
+                    <span className="font-medium text-primary">Phone:</span>{' '}
+                    <a href={`tel:${phone.replace(/\s+/g, '')}`} className="hover:text-accent-600">{phone}</a>
+                  </p>
+                ) : null}
+                {email ? (
+                  <p className="mb-2">
+                    <span className="font-medium text-primary">Email:</span>{' '}
+                    <a href={`mailto:${email}`} className="hover:text-accent-600">{email}</a>
+                  </p>
+                ) : null}
+                {address ? (
+                  <p className="whitespace-pre-line">
+                    <span className="font-medium text-primary">Address:</span> {address}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

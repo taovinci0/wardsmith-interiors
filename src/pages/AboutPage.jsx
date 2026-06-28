@@ -6,16 +6,22 @@ import { TestimonialsSection } from '../components/sections/TestimonialsSection.
 import { ValuesSection } from '../components/sections/ValuesSection.jsx'
 import { HeroPage } from '../components/heroes/HeroPage.jsx'
 import { aboutPage } from '../data/innerPagesContent.js'
+import { useSanityData } from '../hooks/useSanityData.js'
+import { aboutPageQuery } from '../sanity/queries.js'
 
 export function AboutPage() {
-  const { hero, processIntro, valuesItems } = aboutPage
+  const { data } = useSanityData(aboutPageQuery)
+  const hero = data?.hero ?? aboutPage.hero
+  const processIntro = data?.processIntro ?? aboutPage.processIntro
+  const valuesItems = data?.valuesItems?.length ? data.valuesItems : aboutPage.valuesItems
+  const heroImageUrls = hero.imageUrls ?? (hero.imageUrl ? [hero.imageUrl] : aboutPage.hero.imageUrls)
 
   return (
     <>
       <HeroPage
         eyebrow={hero.eyebrow}
         heading={hero.heading}
-        imageUrls={hero.imageUrls}
+        imageUrls={heroImageUrls}
         primaryButtonLabel={hero.primaryButtonLabel}
         primaryButtonTo={hero.primaryButtonTo}
         secondaryButtonLabel={hero.secondaryButtonLabel}
@@ -23,8 +29,8 @@ export function AboutPage() {
       />
       <ProcessIntroSection data={processIntro} />
       <ValuesSection items={valuesItems} columnsClass="md:grid-cols-4" />
-      <MeetTheTeamSection />
-      <ProcessStepsSection />
+      <MeetTheTeamSection data={data?.team} />
+      <ProcessStepsSection {...(data?.processSteps || {})} />
       <TestimonialsSection />
       <FinalCtaSection />
     </>

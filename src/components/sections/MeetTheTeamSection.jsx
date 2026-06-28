@@ -2,23 +2,26 @@ import { useRef } from 'react'
 import { meetTheTeam } from '../../data/innerPagesContent.js'
 import { useSectionReveal } from '../../hooks/useSectionReveal.js'
 
-export function MeetTheTeamSection() {
+export function MeetTheTeamSection({ data } = {}) {
   const revealRef = useRef(null)
   useSectionReveal(revealRef, 'meetTeam')
+
+  const d = data && (data.members?.length || data.heading) ? data : meetTheTeam
+  const members = d.members?.length ? d.members : meetTheTeam.members
 
   return (
     <section id="meet-the-team-section" className="meet-the-team-section section-padding bg-neutral-100">
       <div className="container-custom">
         <div ref={revealRef} className="meet-the-team-animate mx-auto mb-24 max-w-[720px] text-center">
-          <p className="meet-the-team-eyebrow eyebrow eyebrow-spacing text-accent-600">{meetTheTeam.eyebrow}</p>
+          <p className="meet-the-team-eyebrow eyebrow eyebrow-spacing text-accent-600">{d.eyebrow}</p>
           <h2 className="meet-the-team-heading heading-to-body-spacing font-serif text-[3rem] text-primary">
-            {meetTheTeam.heading}
+            {d.heading}
           </h2>
-          <p className="meet-the-team-body font-sans font-light text-neutral-600">{meetTheTeam.body}</p>
+          <p className="meet-the-team-body font-sans font-light text-neutral-600">{d.body}</p>
         </div>
 
         <div className="grid grid-cols-1 gap-16 md:grid-cols-2">
-          {meetTheTeam.members.map((member) => (
+          {members.map((member) => (
             <div
               key={member.name}
               className="flex h-full flex-col overflow-hidden rounded-[24px] bg-neutral-200"
