@@ -1,7 +1,7 @@
 import { defineConfig, defineField, defineType } from 'sanity'
 import { deskTool, type StructureResolver } from 'sanity/desk'
 
-const singletonTypes = new Set(['homePage', 'siteSettings'])
+const singletonTypes = new Set(['homePage', 'siteSettings', 'faqsPage'])
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
 
 /**
@@ -41,6 +41,10 @@ const structure: StructureResolver = (S) =>
         .title('Site Settings')
         .id('siteSettings')
         .child(S.editor().id('siteSettings').schemaType('siteSettings').documentId('siteSettings')),
+      S.listItem()
+        .title('FAQs')
+        .id('faqsPage')
+        .child(S.editor().id('faqsPage').schemaType('faqsPage').documentId('faqsPage')),
       S.divider(),
       ...S.documentTypeListItems().filter((item) => !singletonTypes.has(item.getId() || '')),
     ])
@@ -371,6 +375,30 @@ const siteSettings = defineType({
   ],
 })
 
+const faqsPage = defineType({
+  name: 'faqsPage',
+  title: 'FAQs Page',
+  type: 'document',
+  fields: [
+    defineField({ name: 'title', type: 'string', initialValue: 'FAQs' }),
+    defineField({
+      name: 'items',
+      title: 'FAQ items',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'question', type: 'string' }),
+            defineField({ name: 'answer', type: 'text' }),
+          ],
+          preview: { select: { title: 'question' } },
+        },
+      ],
+    }),
+  ],
+})
+
 export default defineConfig({
   name: 'default',
   title: 'Ward-Smith Content Studio',
@@ -388,6 +416,6 @@ export default defineConfig({
         : prev,
   },
   schema: {
-    types: [homePage, siteSettings, servicePage, caseStudy, blogPost, enquirySubmission],
+    types: [homePage, siteSettings, faqsPage, servicePage, caseStudy, blogPost, enquirySubmission],
   },
 })

@@ -91,6 +91,12 @@ export const siteSettingsQuery = /* groq */ `
   }
 `
 
+export const faqsQuery = /* groq */ `
+  *[_type == "faqsPage"][0]{
+    items[]{ question, answer }
+  }
+`
+
 export const servicesListQuery = /* groq */ `
   *[_type == "servicePage" && defined(slug.current)] | order(_createdAt asc){
     "slug": slug.current,
