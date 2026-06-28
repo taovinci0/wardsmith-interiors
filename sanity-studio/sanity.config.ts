@@ -17,15 +17,17 @@ const image = (name: string, title?: string) =>
   })
 
 /**
- * Legacy URL field kept (hidden) only so previously-imported `/media/...`
- * string values are preserved in the document and still available as a
- * fallback to the frontend until an editor uploads a real image.
+ * Legacy image-path field kept (hidden) only so previously-imported
+ * `/media/...` string values are preserved in the document and still available
+ * as a fallback to the frontend. Typed as `string` (not `url`) because the
+ * imported values are relative paths, which would otherwise fail URL validation
+ * and block publishing.
  */
 const legacyUrl = (name: string) =>
-  defineField({ name, type: 'url', hidden: true })
+  defineField({ name, type: 'string', hidden: true })
 
 const legacyUrlArray = (name: string) =>
-  defineField({ name, type: 'array', of: [{ type: 'url' }], hidden: true })
+  defineField({ name, type: 'array', of: [{ type: 'string' }], hidden: true })
 
 const structure: StructureResolver = (S) =>
   S.list()
