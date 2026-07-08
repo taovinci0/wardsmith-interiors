@@ -1,43 +1,18 @@
-import { useEffect, useState } from 'react'
-import { getSanityClient, isSanityConfigured } from '../lib/sanityClient.js'
+import { isSanityConfigured } from '../lib/sanityClient.js'
+import { useQuery } from '../lib/sanityLoader.js'
+
+// Constant for the app's lifetime (env is fixed at build time), so the branch
+// below keeps a stable hook order across every render of a given component.
+const CONFIGURED = isSanityConfigured()
 
 /**
- * Generic Sanity fetch hook. Returns { data, loading }.
- * When Sanity is not configured the hook is a no-op (data stays null), so callers
- * can fall back to their static content.
+ * Fetch Sanity data via the live-loader. In production this returns published
+ * content; inside the Presentation tool it updates live with draft edits.
+ * Returns { data, loading }; callers fall back to static content when data is null.
  */
 export function useSanityData(query, params) {
-  const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(Boolean(isSanityConfigured()))
-  const paramsKey = JSON.stringify(params || null)
-
-  useEffect(() => {
-    const client = getSanityClient()
-    if (!client) {
-      setLoading(false)
-      return undefined
-    }
-    let cancelled = false
-    setLoading(true)
-    client
-      .fetch(query, params || {})
-      .then((res) => {
-        if (!cancelled) {
-          setData(res)
-          setLoading(false)
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setData(null)
-          setLoading(false)
-        }
-      })
-    return () => {
-      cancelled = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, paramsKey])
-
-  return { data, loading }
+  if (!CONFIGURED) return { data: null, loading: false }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { data, loading } = useQuery(query, params ?? {})
+  return { data: data ?? null, loading }
 }

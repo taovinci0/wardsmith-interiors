@@ -1,5 +1,6 @@
 import { defineConfig, defineField, defineType } from 'sanity'
 import { deskTool, type StructureResolver } from 'sanity/desk'
+import { presentationTool } from 'sanity/presentation'
 
 const singletonTypes = new Set(['homePage', 'siteSettings', 'faqsPage', 'aboutPage', 'contactPage'])
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
@@ -525,9 +526,17 @@ const faqsPage = defineType({
 export default defineConfig({
   name: 'default',
   title: 'Ward-Smith Content Studio',
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID || '',
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID || '9ryg64p4',
   dataset: process.env.SANITY_STUDIO_DATASET || 'production',
-  plugins: [deskTool({ structure })],
+  plugins: [
+    deskTool({ structure }),
+    presentationTool({
+      previewUrl: {
+        origin: 'https://wardsmith-interiors.vercel.app',
+        preview: '/',
+      },
+    }),
+  ],
   document: {
     newDocumentOptions: (prev, { creationContext }) =>
       creationContext.type === 'global'

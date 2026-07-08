@@ -4,6 +4,8 @@ import { SiteHeader } from '../components/layout/SiteHeader.jsx'
 import { ScrollToTopOnRouteChange } from '../components/common/ScrollToTopOnRouteChange.jsx'
 import { useBodyPageClass } from '../hooks/useBodyPageClass.js'
 import { SanityDevBadge, SiteSeo } from '../seo/SiteSeo.jsx'
+import { SanityPreview } from '../components/SanityPreview.jsx'
+import { sanityClient } from '../lib/sanityLoader.js'
 
 export function SiteLayout() {
   useBodyPageClass()
@@ -12,6 +14,7 @@ export function SiteLayout() {
     <div id="smooth-wrapper">
       <SiteSeo />
       <ScrollToTopOnRouteChange />
+      {sanityClient ? <SanityPreview /> : null}
       <SanityDevBadge />
       <a
         href="#main"
