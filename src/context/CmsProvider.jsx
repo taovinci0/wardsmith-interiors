@@ -1,54 +1,43 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { CmsContext } from './cmsContext.js'
-import { getSanityClient, isSanityConfigured } from '../lib/sanityClient.js'
+import { isSanityConfigured } from '../lib/sanityClient.js'
+import { useQuery } from '../lib/sanityLoader.js'
 import { homePageQuery, siteSettingsQuery } from '../sanity/queries.js'
 
-export function CmsProvider({ children }) {
-  const [loading, setLoading] = useState(Boolean(isSanityConfigured()))
-  const [home, setHome] = useState(null)
-  const [siteSettings, setSiteSettings] = useState(null)
-  const [error, setError] = useState(null)
-
-  useEffect(() => {
-    const client = getSanityClient()
-    if (!client) {
-      setLoading(false)
-      return undefined
-    }
-
-    let cancelled = false
-    ;(async () => {
-      try {
-        const [homeDoc, settingsDoc] = await Promise.all([
-          client.fetch(homePageQuery).catch(() => null),
-          client.fetch(siteSettingsQuery).catch(() => null),
-        ])
-        if (!cancelled) {
-          setHome(homeDoc || null)
-          setSiteSettings(settingsDoc || null)
-        }
-      } catch (e) {
-        if (!cancelled) setError(e instanceof Error ? e.message : 'Sanity fetch failed')
-      } finally {
-        if (!cancelled) setLoading(false)
-      }
-    })()
-
-    return () => {
-      cancelled = true
-    }
-  }, [])
+/**
+ * Sanity-configured branch fetches through the live query store so the
+ * homepage/site settings participate in Presentation draft streaming.
+ * The branch is stable for the app's lifetime (env is fixed at build time).
+ */
+function CmsProviderLive({ children }) {
+  const { data: home, loading: homeLoading } = useQuery(homePageQuery)
+  const { data: siteSettings, loading: settingsLoading } = useQuery(siteSettingsQuery)
 
   const value = useMemo(
     () => ({
-      loading,
-      home,
-      siteSettings,
-      sanityConfigured: isSanityConfigured(),
-      error,
+      loading: Boolean(homeLoading || settingsLoading),
+      home: home ?? null,
+      siteSettings: siteSettings ?? null,
+      sanityConfigured: true,
+      error: null,
     }),
-    [loading, home, siteSettings, error],
+    [home, siteSettings, homeLoading, settingsLoading],
   )
 
   return <CmsContext.Provider value={value}>{children}</CmsContext.Provider>
+}
+
+const STATIC_VALUE = {
+  loading: false,
+  home: null,
+  siteSettings: null,
+  sanityConfigured: false,
+  error: null,
+}
+
+export function CmsProvider({ children }) {
+  if (!isSanityConfigured()) {
+    return <CmsContext.Provider value={STATIC_VALUE}>{children}</CmsContext.Provider>
+  }
+  return <CmsProviderLive>{children}</CmsProviderLive>
 }
