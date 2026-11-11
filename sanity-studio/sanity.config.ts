@@ -2,7 +2,16 @@ import { defineConfig, defineField, defineType } from 'sanity'
 import { deskTool, type StructureResolver } from 'sanity/desk'
 import { presentationTool } from 'sanity/presentation'
 
-const singletonTypes = new Set(['homePage', 'siteSettings', 'faqsPage', 'aboutPage', 'contactPage'])
+const singletonTypes = new Set([
+  'homePage',
+  'siteSettings',
+  'faqsPage',
+  'aboutPage',
+  'contactPage',
+  'kitchensPage',
+  'livingSpacesPage',
+  'ourApproachPage',
+])
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
 
 /**
@@ -39,9 +48,17 @@ const structure: StructureResolver = (S) =>
         .id('homePage')
         .child(S.editor().id('homePage').schemaType('homePage').documentId('homePage')),
       S.listItem()
-        .title('Site Settings')
-        .id('siteSettings')
-        .child(S.editor().id('siteSettings').schemaType('siteSettings').documentId('siteSettings')),
+        .title('Kitchens Page')
+        .id('kitchensPage')
+        .child(S.editor().id('kitchensPage').schemaType('kitchensPage').documentId('kitchensPage')),
+      S.listItem()
+        .title('Living Spaces Page')
+        .id('livingSpacesPage')
+        .child(S.editor().id('livingSpacesPage').schemaType('livingSpacesPage').documentId('livingSpacesPage')),
+      S.listItem()
+        .title('Our Approach Page')
+        .id('ourApproachPage')
+        .child(S.editor().id('ourApproachPage').schemaType('ourApproachPage').documentId('ourApproachPage')),
       S.listItem()
         .title('About Page')
         .id('aboutPage')
@@ -54,6 +71,10 @@ const structure: StructureResolver = (S) =>
         .title('FAQs')
         .id('faqsPage')
         .child(S.editor().id('faqsPage').schemaType('faqsPage').documentId('faqsPage')),
+      S.listItem()
+        .title('Site Settings')
+        .id('siteSettings')
+        .child(S.editor().id('siteSettings').schemaType('siteSettings').documentId('siteSettings')),
       S.divider(),
       ...S.documentTypeListItems().filter((item) => !singletonTypes.has(item.getId() || '')),
     ])
@@ -152,17 +173,50 @@ const servicePage = defineType({
 
 const caseStudy = defineType({
   name: 'caseStudy',
-  title: 'Case Study',
+  title: 'Project',
   type: 'document',
   fields: [
     defineField({ name: 'title', type: 'string', validation: (r) => r.required() }),
     defineField({ name: 'slug', type: 'slug', options: { source: 'title' }, validation: (r) => r.required() }),
+    defineField({
+      name: 'room',
+      title: 'Room',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Kitchen', value: 'kitchen' },
+          { title: 'Bedroom', value: 'bedroom' },
+          { title: 'Home office', value: 'home-office' },
+          { title: 'Media wall', value: 'media-wall' },
+          { title: 'Tailored space', value: 'tailored-space' },
+          { title: 'Whole home', value: 'whole-home' },
+        ],
+        layout: 'radio',
+      },
+    }),
     defineField({ name: 'location', type: 'string' }),
     defineField({ name: 'servicesLine', type: 'string' }),
     image('image', 'Cover image'),
     legacyUrl('imageUrl'),
     defineField({ name: 'cost', type: 'string' }),
     defineField({ name: 'projectOverview', type: 'text' }),
+    defineField({ name: 'brief', title: 'The brief', type: 'text' }),
+    defineField({ name: 'designDecisions', title: 'Design decisions', type: 'text' }),
+    defineField({
+      name: 'specification',
+      title: 'Specification',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'label', type: 'string' }),
+            defineField({ name: 'value', type: 'string' }),
+          ],
+          preview: { select: { title: 'label', subtitle: 'value' } },
+        },
+      ],
+    }),
     defineField({ name: 'testimonialVideoUrl', title: 'Testimonial video URL', type: 'url' }),
     image('testimonialVideoPoster', 'Testimonial video poster'),
     legacyUrl('testimonialVideoPosterUrl'),
@@ -251,6 +305,32 @@ const homePage = defineType({
         legacyUrlArray('imageUrls'),
       ],
     }),
+    section('kitchensSection', 'Kitchens section (v2)', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'content', type: 'text' }),
+      defineField({ name: 'images', title: 'Images', type: 'array', of: [{ type: 'image', options: { hotspot: true } }] }),
+      defineField({ name: 'ctaLabel', type: 'string' }),
+    ]),
+    section('howItWorks', 'How it works, in brief (v2)', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({
+        name: 'steps',
+        type: 'array',
+        of: [
+          {
+            type: 'object',
+            fields: [
+              defineField({ name: 'title', type: 'string' }),
+              defineField({ name: 'description', type: 'text' }),
+            ],
+            preview: { select: { title: 'title' } },
+          },
+        ],
+      }),
+      defineField({ name: 'ctaLabel', type: 'string' }),
+    ]),
     defineField({
       name: 'processIntro',
       type: 'object',
@@ -381,6 +461,12 @@ const siteSettings = defineType({
     defineField({ name: 'defaultTitleSuffix', type: 'string' }),
     image('ogImage', 'Default social share image'),
     legacyUrl('defaultOgImage'),
+    defineField({ name: 'phone', type: 'string' }),
+    defineField({ name: 'email', type: 'string' }),
+    defineField({ name: 'address', type: 'text' }),
+    defineField({ name: 'areaCovered', title: 'Area covered', type: 'string' }),
+    defineField({ name: 'instagramUrl', type: 'url' }),
+    defineField({ name: 'facebookUrl', type: 'url' }),
   ],
 })
 
@@ -499,6 +585,177 @@ const contactPage = defineType({
   ],
 })
 
+const kitchensPage = defineType({
+  name: 'kitchensPage',
+  title: 'Kitchens Page',
+  type: 'document',
+  fields: [
+    defineField({ name: 'title', type: 'string', initialValue: 'Kitchens' }),
+    section('hero', 'Hero', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'intro', type: 'text' }),
+      image('image', 'Hero image'),
+    ]),
+    section('howWeDesign', 'How we design', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'content', type: 'text' }),
+      image('image', 'Image'),
+      defineField({ name: 'videoUrl', type: 'url' }),
+    ]),
+    section('howItsMade', 'How it is made', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'content', type: 'text' }),
+      defineField({ name: 'images', title: 'Detail photography', type: 'array', of: [{ type: 'image', options: { hotspot: true } }] }),
+    ]),
+    section('projectsSection', 'Kitchen projects section', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+    ]),
+    section('whatsIncluded', 'What is included', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({
+        name: 'items',
+        type: 'array',
+        of: [
+          {
+            type: 'object',
+            fields: [
+              defineField({ name: 'title', type: 'string' }),
+              defineField({ name: 'content', type: 'text' }),
+            ],
+            preview: { select: { title: 'title' } },
+          },
+        ],
+      }),
+    ]),
+    section('investment', 'Investment and timescale', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'content', type: 'text' }),
+      defineField({
+        name: 'bands',
+        title: 'Guide bands (optional)',
+        type: 'array',
+        of: [
+          {
+            type: 'object',
+            fields: [
+              defineField({ name: 'label', type: 'string' }),
+              defineField({ name: 'value', type: 'string' }),
+            ],
+            preview: { select: { title: 'label', subtitle: 'value' } },
+          },
+        ],
+      }),
+    ]),
+    section('faqs', 'Common questions', [
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({
+        name: 'items',
+        type: 'array',
+        of: [
+          {
+            type: 'object',
+            fields: [
+              defineField({ name: 'question', type: 'string' }),
+              defineField({ name: 'answer', type: 'text' }),
+            ],
+            preview: { select: { title: 'question' } },
+          },
+        ],
+      }),
+    ]),
+  ],
+})
+
+const livingSpacesPage = defineType({
+  name: 'livingSpacesPage',
+  title: 'Living Spaces Page',
+  type: 'document',
+  fields: [
+    defineField({ name: 'title', type: 'string', initialValue: 'Living Spaces' }),
+    section('hero', 'Hero', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'intro', type: 'text' }),
+      image('image', 'Hero image'),
+    ]),
+    defineField({
+      name: 'spaces',
+      title: 'Room sections',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'title', type: 'string' }),
+            defineField({ name: 'content', type: 'text' }),
+            defineField({ name: 'images', title: 'Images', type: 'array', of: [{ type: 'image', options: { hotspot: true } }] }),
+            defineField({ name: 'relatedProject', title: 'Related project', type: 'reference', to: [{ type: 'caseStudy' }] }),
+          ],
+          preview: { select: { title: 'title' } },
+        },
+      ],
+    }),
+  ],
+})
+
+const ourApproachPage = defineType({
+  name: 'ourApproachPage',
+  title: 'Our Approach Page',
+  type: 'document',
+  fields: [
+    defineField({ name: 'title', type: 'string', initialValue: 'Our Approach' }),
+    section('hero', 'Hero', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'intro', type: 'text' }),
+      image('image', 'Hero image'),
+    ]),
+    section('wardSmithWay', 'The Ward-Smith Way', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'content', type: 'text' }),
+      image('image', 'Image'),
+      defineField({ name: 'videoUrl', type: 'url' }),
+    ]),
+    section('process', 'Process, step by step', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'tagline', type: 'text' }),
+      defineField({
+        name: 'steps',
+        type: 'array',
+        of: [
+          {
+            type: 'object',
+            fields: [
+              defineField({ name: 'title', type: 'string' }),
+              defineField({ name: 'description', type: 'text' }),
+              image('image', 'Image (e.g. design board)'),
+            ],
+            preview: { select: { title: 'title' } },
+          },
+        ],
+      }),
+    ]),
+    section('investment', 'Investment guidance', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'content', type: 'text' }),
+    ]),
+    section('aftercare', 'Aftercare', [
+      defineField({ name: 'eyebrow', type: 'string' }),
+      defineField({ name: 'heading', type: 'string' }),
+      defineField({ name: 'content', type: 'text' }),
+    ]),
+  ],
+})
+
 const faqsPage = defineType({
   name: 'faqsPage',
   title: 'FAQs Page',
@@ -548,6 +805,19 @@ export default defineConfig({
         : prev,
   },
   schema: {
-    types: [homePage, siteSettings, aboutPage, contactPage, faqsPage, servicePage, caseStudy, blogPost, enquirySubmission],
+    types: [
+      homePage,
+      kitchensPage,
+      livingSpacesPage,
+      ourApproachPage,
+      siteSettings,
+      aboutPage,
+      contactPage,
+      faqsPage,
+      servicePage,
+      caseStudy,
+      blogPost,
+      enquirySubmission,
+    ],
   },
 })
