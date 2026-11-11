@@ -19,8 +19,8 @@ export function BlogPostPage() {
       <section className="section-padding">
         <div className="container-custom text-center">
           <h1 className="mb-4 font-serif text-3xl text-primary">Post not found</h1>
-          <Link to="/blog" className="btn-primary inline-block">
-            Back to blog
+          <Link to="/journal" className="btn-primary inline-block">
+            Back to the journal
           </Link>
         </div>
       </section>

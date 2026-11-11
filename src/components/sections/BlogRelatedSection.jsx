@@ -14,7 +14,7 @@ export function BlogRelatedSection({ posts = [] }) {
         <div className="blog-related-grid grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((p) => (
             <article key={p.slug} className="group">
-              <Link to={`/blog/${p.slug}`} className="block">
+              <Link to={`/journal/${p.slug}`} className="block">
                 {p.imageUrl ? (
                   <div className="mb-6 aspect-[4/3] overflow-hidden rounded-[24px]">
                     <img

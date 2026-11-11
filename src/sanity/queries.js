@@ -79,6 +79,23 @@ export const homePageQuery = /* groq */ `
       content,
       primaryLabel,
       primaryTo
+    },
+    kitchensSection{
+      eyebrow, heading, content,
+      "imageUrls": images[].asset->url,
+      ctaLabel
+    },
+    howItWorks{
+      eyebrow, heading,
+      steps[]{ title, description },
+      ctaLabel
+    },
+    "selectedProjects": *[_type == "caseStudy" && defined(slug.current)] | order(_createdAt desc)[0...4]{
+      "slug": slug.current,
+      title,
+      location,
+      room,
+      "imageUrl": coalesce(image.asset->url, imageUrl)
     }
   }
 `
@@ -87,7 +104,60 @@ export const siteSettingsQuery = /* groq */ `
   *[_type == "siteSettings"][0]{
     siteName,
     defaultTitleSuffix,
-    "defaultOgImage": coalesce(ogImage.asset->url, defaultOgImage)
+    "defaultOgImage": coalesce(ogImage.asset->url, defaultOgImage),
+    phone,
+    email,
+    address,
+    areaCovered,
+    instagramUrl,
+    facebookUrl
+  }
+`
+
+export const kitchensPageQuery = /* groq */ `
+  *[_type == "kitchensPage"][0]{
+    hero{ eyebrow, heading, intro, "imageUrl": image.asset->url },
+    howWeDesign{ eyebrow, heading, content, "imageUrl": image.asset->url, videoUrl },
+    howItsMade{ eyebrow, heading, content, "imageUrls": images[].asset->url },
+    projectsSection{ eyebrow, heading },
+    whatsIncluded{ eyebrow, heading, items[]{ title, content } },
+    investment{ eyebrow, heading, content, bands[]{ label, value } },
+    faqs{ heading, items[]{ question, answer } },
+    "projects": *[_type == "caseStudy" && room == "kitchen" && defined(slug.current)] | order(_createdAt desc)[0...6]{
+      "slug": slug.current, title, location, "imageUrl": coalesce(image.asset->url, imageUrl)
+    }
+  }
+`
+
+export const livingSpacesPageQuery = /* groq */ `
+  *[_type == "livingSpacesPage"][0]{
+    hero{ eyebrow, heading, intro, "imageUrl": image.asset->url },
+    spaces[]{
+      title, content,
+      "imageUrls": images[].asset->url,
+      relatedProject->{ "slug": slug.current, title }
+    }
+  }
+`
+
+export const ourApproachPageQuery = /* groq */ `
+  *[_type == "ourApproachPage"][0]{
+    hero{ eyebrow, heading, intro, "imageUrl": image.asset->url },
+    wardSmithWay{ eyebrow, heading, content, "imageUrl": image.asset->url, videoUrl },
+    process{ eyebrow, heading, tagline, steps[]{ title, description, "imageUrl": image.asset->url } },
+    investment{ eyebrow, heading, content },
+    aftercare{ eyebrow, heading, content }
+  }
+`
+
+export const projectsListQuery = /* groq */ `
+  *[_type == "caseStudy" && defined(slug.current)] | order(_createdAt desc){
+    "slug": slug.current,
+    title,
+    location,
+    servicesLine,
+    room,
+    "imageUrl": coalesce(image.asset->url, imageUrl)
   }
 `
 
@@ -191,8 +261,12 @@ export const caseStudyBySlugQuery = /* groq */ `
     title,
     location,
     servicesLine,
+    room,
     cost,
     projectOverview,
+    brief,
+    designDecisions,
+    specification[]{ label, value },
     "imageUrl": coalesce(image.asset->url, imageUrl),
     testimonialVideoUrl,
     "testimonialVideoPosterUrl": coalesce(testimonialVideoPoster.asset->url, testimonialVideoPosterUrl),

@@ -19,9 +19,9 @@ export function CaseStudyDetailPage() {
     return (
       <section className="section-padding">
         <div className="container-custom text-center">
-          <h1 className="mb-4 font-serif text-3xl text-primary">Case study not found</h1>
-          <Link to="/case-studies" className="btn-primary inline-block">
-            All case studies
+          <h1 className="mb-4 font-serif text-3xl text-primary">Project not found</h1>
+          <Link to="/projects" className="btn-primary inline-block">
+            All projects
           </Link>
         </div>
       </section>
@@ -33,7 +33,7 @@ export function CaseStudyDetailPage() {
   return (
     <>
       <HeroPage
-        eyebrow="Case Studies"
+        eyebrow="Projects"
         heading={cs.title}
         imageUrls={[cs.imageUrl || defaultHeroBg]}
         showButtons={false}
@@ -47,6 +47,49 @@ export function CaseStudyDetailPage() {
         testimonialVideoUrl={cs.testimonialVideoUrl}
         testimonialVideoPosterUrl={cs.testimonialVideoPosterUrl}
       />
+      {cs.brief || cs.designDecisions || cs.specification?.length ? (
+        <section className="section-padding bg-white">
+          <div className="container-custom">
+            <div className="mx-auto grid max-w-[980px] grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
+              <div>
+                {cs.brief ? (
+                  <div className="mb-12">
+                    <h2 className="heading-to-body-spacing font-serif text-3xl text-primary">The brief</h2>
+                    {cs.brief.split(/\n{2,}/).map((p) => (
+                      <p key={p.slice(0, 32)} className="mb-5 font-sans text-lg font-light leading-relaxed text-neutral-600 last:mb-0">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ) : null}
+                {cs.designDecisions ? (
+                  <div>
+                    <h2 className="heading-to-body-spacing font-serif text-3xl text-primary">Design decisions</h2>
+                    {cs.designDecisions.split(/\n{2,}/).map((p) => (
+                      <p key={p.slice(0, 32)} className="mb-5 font-sans text-lg font-light leading-relaxed text-neutral-600 last:mb-0">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+              {cs.specification?.length ? (
+                <aside>
+                  <h2 className="mb-6 font-serif text-2xl text-primary">Specification</h2>
+                  <dl className="divide-y divide-neutral-200 border-y border-neutral-200">
+                    {cs.specification.map((s) => (
+                      <div key={s.label} className="py-3">
+                        <dt className="font-sans text-sm uppercase tracking-wide text-neutral-500">{s.label}</dt>
+                        <dd className="font-sans text-primary">{s.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </aside>
+              ) : null}
+            </div>
+          </div>
+        </section>
+      ) : null}
       {galleryUrls.length ? (
         <ServiceGalleryHeaderSection
           eyebrow={cs.galleryEyebrow || 'Project Gallery'}

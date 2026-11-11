@@ -1,4 +1,18 @@
 {
+  "redirects": [
+    { "source": "/services", "destination": "/kitchens", "permanent": true },
+    { "source": "/services/bespoke-kitchens", "destination": "/kitchens", "permanent": true },
+    { "source": "/services/bedrooms", "destination": "/living-spaces", "permanent": true },
+    { "source": "/services/home-offices", "destination": "/living-spaces", "permanent": true },
+    { "source": "/services/tailored-spaces", "destination": "/living-spaces", "permanent": true },
+    { "source": "/services/media-walls", "destination": "/living-spaces", "permanent": true },
+    { "source": "/services/carpentry-services", "destination": "/", "permanent": true },
+    { "source": "/case-studies", "destination": "/projects", "permanent": true },
+    { "source": "/case-studies/:slug", "destination": "/projects/:slug", "permanent": true },
+    { "source": "/blog", "destination": "/journal", "permanent": true },
+    { "source": "/blog/:slug", "destination": "/journal/:slug", "permanent": true },
+    { "source": "/start-your-project", "destination": "/contact", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/media/:path*",

@@ -15,7 +15,7 @@ export function CaseStudyRelatedSection({ items = [] }) {
         <div className="case-study-related-grid grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {items.map((c) => (
             <article key={c.slug} className="group">
-              <Link to={`/case-studies/${c.slug}`} className="block">
+              <Link to={`/projects/${c.slug}`} className="block">
                 {c.imageUrl ? (
                   <div className="mb-6 aspect-[4/3] overflow-hidden rounded-[24px]">
                     <img

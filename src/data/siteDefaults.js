@@ -25,28 +25,29 @@ export const serviceCards = servicesList.map((s) => ({
   imageUrl: s.imageUrl,
 }))
 
+/** v2 nav — kitchens first (design brief S1/V6): five links + one enquiry button. */
 export const primaryNav = [
-  { label: 'About Us', to: '/about-us' },
-  { label: 'Services', to: '/services', hasMega: true },
-  { label: 'Case Studies', to: '/case-studies' },
-  { label: 'Blog', to: '/blog' },
-  { label: 'Contact', to: '/contact' },
+  { label: 'Kitchens', to: '/kitchens' },
+  { label: 'Living Spaces', to: '/living-spaces' },
+  { label: 'Projects', to: '/projects' },
+  { label: 'Our Approach', to: '/our-approach' },
+  { label: 'About', to: '/about-us' },
 ]
 
-/** Footer column “Explore” — mirrors primary nav intent. */
+/** Footer column “Company” — labels match the page names they lead to (V7). */
 export const footerExploreLinks = [
-  { label: 'About Us', to: '/about-us' },
-  { label: 'Services', to: '/services' },
-  { label: 'Case Studies', to: '/case-studies' },
-  { label: 'Blog', to: '/blog' },
+  { label: 'Our Approach', to: '/our-approach' },
+  { label: 'About', to: '/about-us' },
+  { label: 'Journal', to: '/journal' },
+  { label: 'FAQs', to: '/faqs' },
   { label: 'Contact', to: '/contact' },
 ]
 
+/** Footer column “What we make” (V7). */
 export const footerCraftsmanshipLinks = [
-  { label: 'Bespoke Kitchens', to: '/services/bespoke-kitchens' },
-  { label: 'Fitted Wardrobes', to: '/services/bedrooms' },
-  { label: 'Home Studies', to: '/services/home-offices' },
-  { label: 'Media Units', to: '/services/media-walls' },
+  { label: 'Kitchens', to: '/kitchens' },
+  { label: 'Living Spaces', to: '/living-spaces' },
+  { label: 'Projects', to: '/projects' },
 ]
 
 export const heroHomeDefaults = {
