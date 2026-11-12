@@ -67,7 +67,7 @@ export function ServiceGalleryHeaderSection({ eyebrow, heading, paragraph, image
                 ref={(el) => {
                   itemsRef.current[i] = el
                 }}
-                className="gallery-image-item aspect-[4/3] overflow-hidden rounded-[24px]"
+                className="gallery-image-item aspect-[4/3] overflow-hidden rounded-lg"
               >
                 <img src={url} alt="" className="h-full w-full object-cover" />
               </div>

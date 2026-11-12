@@ -20,8 +20,6 @@ export function HeroHome() {
     if (!merged.imageUrls?.length) merged.imageUrls = heroHomeDefaults.imageUrls
     return merged
   }, [home])
-
-  const words = heading.split(' ')
   const heroRef = useRef(null)
 
   const slides =
@@ -111,13 +109,7 @@ export function HeroHome() {
           <p className="hero-eyebrow eyebrow-spacing text-accent-600">{eyebrow}</p>
         ) : null}
 
-        <h1 className="hero-title mb-12 flex w-10/12 flex-wrap items-baseline gap-x-[0.35em] gap-y-1 font-serif text-[4rem] leading-[1.05] text-white md:text-[5.5rem]">
-          {words.map((word, index) => (
-            <span key={`${word}-${index}`} className="hero-title-word inline-block overflow-hidden">
-              <span className="hero-title-word-inner inline-block">{word}</span>
-            </span>
-          ))}
-        </h1>
+        <h1 className="hero-title mb-12 max-w-[18ch] font-serif text-[2.75rem] leading-[1.08] text-white md:text-[3.75rem]">{heading}</h1>
 
         <div className="hero-buttons flex flex-col items-start gap-6 sm:flex-row sm:items-end sm:justify-end">
           {primaryButtonLabel && primaryButtonTo ? (

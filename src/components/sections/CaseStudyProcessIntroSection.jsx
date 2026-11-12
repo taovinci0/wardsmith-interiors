@@ -45,7 +45,7 @@ export function CaseStudyProcessIntroSection({
               <div className="mt-8 flex flex-col gap-4">
                 {location ? (
                   <div
-                    className="flex items-center gap-3 rounded-[24px] bg-neutral-200"
+                    className="flex items-center gap-3 rounded-lg bg-neutral-200"
                     style={{ padding: '0.75rem' }}
                   >
                     <MapPin className="h-6 w-6 shrink-0 text-accent-600" strokeWidth={1} aria-hidden />
@@ -54,7 +54,7 @@ export function CaseStudyProcessIntroSection({
                 ) : null}
                 {servicesLine ? (
                   <div
-                    className="flex items-center gap-3 rounded-[24px] bg-neutral-200"
+                    className="flex items-center gap-3 rounded-lg bg-neutral-200"
                     style={{ padding: '0.75rem' }}
                   >
                     <Briefcase className="h-6 w-6 shrink-0 text-accent-600" strokeWidth={1} aria-hidden />
@@ -63,7 +63,7 @@ export function CaseStudyProcessIntroSection({
                 ) : null}
                 {cost ? (
                   <div
-                    className="flex items-center gap-3 rounded-[24px] bg-neutral-200"
+                    className="flex items-center gap-3 rounded-lg bg-neutral-200"
                     style={{ padding: '0.75rem' }}
                   >
                     <PoundSterling className="h-6 w-6 shrink-0 text-accent-600" strokeWidth={1} aria-hidden />

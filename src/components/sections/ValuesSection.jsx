@@ -67,22 +67,6 @@ export function ValuesSection({ items = valuesItems, columnsClass = 'md:grid-col
         <div className={`grid grid-cols-1 gap-8 ${columnsClass} md:gap-12`}>
           {items.map((item) => (
             <div key={item.title} className="values-item values-item-reveal w-full" style={{ width: '100%' }}>
-              {item.icon_name ? (
-                <div className="mb-6 flex justify-center">
-                  <div
-                    className="values-icon-wrapper flex items-center justify-center"
-                    style={{
-                      backgroundColor: '#224A4F',
-                      padding: '1rem',
-                      borderRadius: '0.75rem',
-                      width: '80px',
-                      height: '80px',
-                    }}
-                  >
-                    <ValuesIcon name={item.icon_name} />
-                  </div>
-                </div>
-              ) : null}
               {item.title ? (
                 <h3 className="values-item-title heading-to-body-spacing text-center font-serif text-[2rem] leading-[1.2] text-primary">
                   {item.title}

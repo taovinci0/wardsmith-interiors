@@ -24,7 +24,7 @@ export function CaseStudiesArchivePage() {
             {items.map((cs) => (
               <article key={cs.slug} className="group">
                 <Link to={`/case-studies/${cs.slug}`} className="block">
-                  <div className="mb-6 aspect-[4/3] overflow-hidden rounded-[24px]">
+                  <div className="mb-6 aspect-[4/3] overflow-hidden rounded-lg">
                     <img
                       src={cs.imageUrl}
                       alt=""

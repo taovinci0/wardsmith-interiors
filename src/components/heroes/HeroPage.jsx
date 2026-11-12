@@ -31,7 +31,6 @@ export function HeroPage({
     imageUrls.join(','),
   ])
 
-  const words = heading ? heading.split(' ') : []
 
   return (
     <section
@@ -71,13 +70,9 @@ export function HeroPage({
           <p className="hero-eyebrow eyebrow-spacing text-accent-600">{eyebrow}</p>
         ) : null}
 
-        {words.length ? (
-          <h1 className="hero-title mb-12 flex w-10/12 flex-wrap items-baseline gap-x-[0.35em] gap-y-1 font-serif text-[4rem] leading-[1.05] text-white md:text-[5.5rem]">
-            {words.map((word, index) => (
-              <span key={`${word}-${index}`} className="hero-title-word inline-block overflow-hidden">
-                <span className="hero-title-word-inner inline-block">{word}</span>
-              </span>
-            ))}
+        {heading ? (
+          <h1 className="hero-title mb-12 max-w-[20ch] font-serif text-[2.5rem] leading-[1.1] text-white md:text-[3.5rem]">
+            {heading}
           </h1>
         ) : null}
 

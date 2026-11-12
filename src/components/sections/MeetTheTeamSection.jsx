@@ -24,7 +24,7 @@ export function MeetTheTeamSection({ data } = {}) {
           {members.map((member) => (
             <div
               key={member.name}
-              className="flex h-full flex-col overflow-hidden rounded-[24px] bg-neutral-200"
+              className="flex h-full flex-col overflow-hidden rounded-lg bg-neutral-200"
             >
               {member.imageUrl ? (
                 <div className="relative aspect-[4/3] overflow-hidden">

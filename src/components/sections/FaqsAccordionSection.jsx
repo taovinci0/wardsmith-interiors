@@ -15,7 +15,7 @@ export function FaqsAccordionSection({ items = faqItems }) {
               return (
                 <div
                   key={faq.question}
-                  className={`overflow-hidden rounded-[24px] border bg-white transition-colors ${
+                  className={`overflow-hidden rounded-lg border bg-white transition-colors ${
                     isOpen ? 'border-primary/20' : 'border-primary/10'
                   }`}
                 >

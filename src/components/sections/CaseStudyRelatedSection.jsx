@@ -17,7 +17,7 @@ export function CaseStudyRelatedSection({ items = [] }) {
             <article key={c.slug} className="group">
               <Link to={`/projects/${c.slug}`} className="block">
                 {c.imageUrl ? (
-                  <div className="mb-6 aspect-[4/3] overflow-hidden rounded-[24px]">
+                  <div className="mb-6 aspect-[4/3] overflow-hidden rounded-lg">
                     <img
                       src={c.imageUrl}
                       alt=""

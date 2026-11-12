@@ -31,7 +31,7 @@ export function ServicesArchivePage() {
               return (
                 <article key={service.slug} className="group">
                   <Link to={`/services/${service.slug}`} className="block">
-                    <div className="mb-6 aspect-[4/3] overflow-hidden rounded-[24px]">
+                    <div className="mb-6 aspect-[4/3] overflow-hidden rounded-lg">
                       <img
                         src={imageUrl}
                         alt=""

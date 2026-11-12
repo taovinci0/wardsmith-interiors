@@ -16,7 +16,7 @@ export function BlogRelatedSection({ posts = [] }) {
             <article key={p.slug} className="group">
               <Link to={`/journal/${p.slug}`} className="block">
                 {p.imageUrl ? (
-                  <div className="mb-6 aspect-[4/3] overflow-hidden rounded-[24px]">
+                  <div className="mb-6 aspect-[4/3] overflow-hidden rounded-lg">
                     <img
                       src={p.imageUrl}
                       alt=""

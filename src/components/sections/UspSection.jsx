@@ -8,7 +8,7 @@ export function UspSection({ data = usp }) {
   useSectionReveal(revealRef, 'usp')
 
   return (
-    <section id="usp-section" className="section-padding relative overflow-hidden bg-accent-200">
+    <section id="usp-section" className="section-padding relative overflow-hidden bg-white">
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.4]"
         style={{

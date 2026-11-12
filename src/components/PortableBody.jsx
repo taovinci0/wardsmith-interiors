@@ -46,7 +46,7 @@ const components = {
   types: {
     image: ({ value }) =>
       value?.url ? (
-        <img src={value.url} alt={value.alt || ''} className="my-8 w-full rounded-[24px]" loading="lazy" />
+        <img src={value.url} alt={value.alt || ''} className="my-8 w-full rounded-lg" loading="lazy" />
       ) : null,
   },
 }
