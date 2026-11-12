@@ -123,7 +123,7 @@ export function EnquiryFormSection() {
                       step >= n ? 'text-primary' : 'text-neutral-400'
                     }`}
                   >
-                    {['Contact Information', 'Project Overview', 'Measurements', 'Budget & Timeline'][i]}
+                    {['Project Overview', 'Measurements', 'Budget & Timeline', 'Contact Details'][i]}
                   </span>
                 </div>
                 {i < 3 ? <div className="progress-line mx-2 hidden h-0.5 w-8 bg-neutral-300 sm:block" /> : null}
@@ -142,7 +142,7 @@ export function EnquiryFormSection() {
             }}
           >
             <div className={stepClass(step === 0)} data-step="0">
-              <h1 className="mb-8 font-serif text-primary" style={{ fontSize: 'clamp(3rem, 8vw, 5.5rem)', lineHeight: 1.05 }}>
+              <h1 className="mb-8 font-serif text-primary" style={{ fontSize: 'clamp(2.25rem, 5vw, 3.5rem)', lineHeight: 1.08 }}>
                 Start your project.
               </h1>
               <div className="mb-8 font-sans text-lg font-light leading-relaxed text-neutral-600">
@@ -157,18 +157,16 @@ export function EnquiryFormSection() {
                 </button>
               </div>
               <div className="mt-12 border-t border-neutral-300 pt-8">
-                <Link to="/contact" className="enquiry-contact-alt-btn group">
-                  <span className="text-left">
-                    Still unsure? Book a free 20 minute consultation to discuss your project.
-                  </span>
-                  <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" aria-hidden />
-                </Link>
+                <p className="font-sans font-light text-neutral-600">
+                  Prefer to talk it through first? Call or email us using the details above and we&apos;ll arrange a free
+                  20 minute consultation.
+                </p>
               </div>
             </div>
 
-            <div className={stepClass(step === 1)} data-step="1">
-              <h2 className="mb-8 font-serif text-primary" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>
-                Contact Information
+            <div className={stepClass(step === 4)} data-step="4">
+              <h2 className="mb-8 font-serif text-primary" style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}>
+                Contact Details
               </h2>
               <div className="mb-8">
                 <label htmlFor="enquiry_name" className="form-label-ws">
@@ -201,17 +199,31 @@ export function EnquiryFormSection() {
                 </label>
                 <textarea id="enquiry_address" name="enquiry_address" className="form-textarea-ws" rows={3} required />
               </div>
+              <div className="form-field mt-8">
+                <label className="form-radio-label-ws max-w-none">
+                  <input id="enquiry_terms" name="enquiry_terms" type="checkbox" className="mt-1 rounded border-neutral-300" required />
+                  <span className="text-sm">
+                    I agree to terms &amp; conditions provided by the Ward-Smith Interiors Ltd. By providing my phone number, I
+                    agree to receive text messages from the business. <span className="text-accent-600">*</span>
+                  </span>
+                </label>
+              </div>
+              {submitError ? (
+                <p className="mb-4 font-sans text-sm text-red-600" role="alert">
+                  {submitError}
+                </p>
+              ) : null}
               <div className="form-field mt-8 flex gap-4">
-                <button type="button" className="btn-secondary" onClick={() => setStep(0)}>
+                <button type="button" className="btn-secondary" onClick={() => setStep(3)} disabled={submitting}>
                   Back
                 </button>
-                <button type="button" className="btn-primary" onClick={() => setStep(2)}>
-                  Continue
+                <button type="submit" className="btn-primary" disabled={submitting}>
+                  {submitting ? 'Sending…' : 'Submit Enquiry'}
                 </button>
               </div>
             </div>
 
-            <div className={stepClass(step === 2)} data-step="2">
+            <div className={stepClass(step === 1)} data-step="1">
               <h2 className="mb-8 font-serif text-primary" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>
                 Project Overview
               </h2>
@@ -268,16 +280,16 @@ export function EnquiryFormSection() {
                 <p className="mt-2 font-sans text-sm font-light text-neutral-500">You can also attach files in the next step</p>
               </div>
               <div className="form-field mt-8 flex gap-4">
-                <button type="button" className="btn-secondary" onClick={() => setStep(1)}>
+                <button type="button" className="btn-secondary" onClick={() => setStep(0)}>
                   Back
                 </button>
-                <button type="button" className="btn-primary" onClick={() => setStep(3)}>
+                <button type="button" className="btn-primary" onClick={() => setStep(2)}>
                   Continue
                 </button>
               </div>
             </div>
 
-            <div className={stepClass(step === 3)} data-step="3">
+            <div className={stepClass(step === 2)} data-step="2">
               <h2 className="mb-8 font-serif text-primary" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>
                 Measurements
               </h2>
@@ -319,16 +331,16 @@ export function EnquiryFormSection() {
                 <p className="mt-2 font-sans text-sm font-light text-neutral-500">Accepted formats: Images (JPG, PNG) and PDF files</p>
               </div>
               <div className="form-field mt-8 flex gap-4">
-                <button type="button" className="btn-secondary" onClick={() => setStep(2)}>
+                <button type="button" className="btn-secondary" onClick={() => setStep(1)}>
                   Back
                 </button>
-                <button type="button" className="btn-primary" onClick={() => setStep(4)}>
+                <button type="button" className="btn-primary" onClick={() => setStep(3)}>
                   Continue
                 </button>
               </div>
             </div>
 
-            <div className={stepClass(step === 4)} data-step="4">
+            <div className={stepClass(step === 3)} data-step="3">
               <h2 className="mb-8 font-serif text-primary" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>
                 Budget and Timeline
               </h2>
@@ -361,26 +373,12 @@ export function EnquiryFormSection() {
                   ))}
                 </div>
               </div>
-              <div className="form-field mt-8">
-                <label className="form-radio-label-ws max-w-none">
-                  <input id="enquiry_terms" name="enquiry_terms" type="checkbox" className="mt-1 rounded border-neutral-300" required />
-                  <span className="text-sm">
-                    I agree to terms &amp; conditions provided by the Ward-Smith Interiors Ltd. By providing my phone number, I
-                    agree to receive text messages from the business. <span className="text-accent-600">*</span>
-                  </span>
-                </label>
-              </div>
-              {submitError ? (
-                <p className="mb-4 font-sans text-sm text-red-600" role="alert">
-                  {submitError}
-                </p>
-              ) : null}
               <div className="form-field mt-8 flex gap-4">
-                <button type="button" className="btn-secondary" onClick={() => setStep(3)} disabled={submitting}>
+                <button type="button" className="btn-secondary" onClick={() => setStep(2)}>
                   Back
                 </button>
-                <button type="submit" className="btn-primary" disabled={submitting}>
-                  {submitting ? 'Sending…' : 'Submit Enquiry'}
+                <button type="button" className="btn-primary" onClick={() => setStep(4)}>
+                  Continue
                 </button>
               </div>
             </div>
@@ -388,7 +386,7 @@ export function EnquiryFormSection() {
 
           {step === 5 ? (
             <div className="enquiry-step mx-auto max-w-2xl text-center" data-step="5">
-              <h1 className="mb-8 font-serif text-primary" style={{ fontSize: 'clamp(3rem, 8vw, 5.5rem)', lineHeight: 1.05 }}>
+              <h1 className="mb-8 font-serif text-primary" style={{ fontSize: 'clamp(2.25rem, 5vw, 3.5rem)', lineHeight: 1.08 }}>
                 Thank You
               </h1>
               <div className="mb-8 font-sans text-lg font-light leading-relaxed text-neutral-600">
