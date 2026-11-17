@@ -25,7 +25,7 @@ function ValuesIcon({ name }) {
   )
 }
 
-export function ValuesSection({ items = valuesItems, columnsClass = 'md:grid-cols-3' }) {
+export function ValuesSection({ items = valuesItems, columnsClass = 'md:grid-cols-3', bg = 'bg-neutral-200' }) {
   const sectionRef = useRef(null)
 
   useLayoutEffect(() => {
@@ -62,7 +62,7 @@ export function ValuesSection({ items = valuesItems, columnsClass = 'md:grid-col
   if (!items.length) return null
 
   return (
-    <section id="values-section" ref={sectionRef} className="values-section bg-neutral-200 py-16">
+    <section id="values-section" ref={sectionRef} className={`values-section ${bg} py-16`}>
       <div className="container-custom">
         <div className={`grid grid-cols-1 gap-8 ${columnsClass} md:gap-12`}>
           {items.map((item) => (

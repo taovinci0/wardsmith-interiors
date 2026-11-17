@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react'
+import { ArrowLink } from '../common/ArrowLink.jsx'
 import { gsap } from '../../lib/gsapClient.js'
 import { processIntro as defaultProcessIntro } from '../../data/homePageContent.js'
 import { VideoModal } from '../common/VideoModal.jsx'
@@ -51,9 +52,21 @@ export function ProcessIntroSection({ data: dataProp, bg = 'bg-neutral-100' } = 
     return () => ctx.revert()
   }, [showVideoCard])
 
-  const paragraphs = data.content
+  const allParagraphs = data.content
     ? data.content.split(/\n\n+/).map((p) => p.trim()).filter(Boolean)
     : []
+
+  // Trailing short paragraphs (up to two) merge into one serif pull-line.
+  let pullCount = 0
+  while (
+    pullCount < 2 &&
+    allParagraphs.length - pullCount > 1 &&
+    allParagraphs[allParagraphs.length - 1 - pullCount].length <= 130
+  ) {
+    pullCount += 1
+  }
+  const paragraphs = pullCount ? allParagraphs.slice(0, -pullCount) : allParagraphs
+  const pullLine = pullCount ? allParagraphs.slice(-pullCount).join(' ') : null
 
   if (!hasContent) {
     return null
@@ -67,7 +80,7 @@ export function ProcessIntroSection({ data: dataProp, bg = 'bg-neutral-100' } = 
       data-enable-animations={data.enableAnimations ? 'true' : 'false'}
     >
       <div className="container-custom">
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-20">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
           <div className="order-2 lg:order-1">
             {data.eyebrow ? (
               <p className="process-intro-reveal eyebrow eyebrow-spacing text-accent-600">{data.eyebrow}</p>
@@ -79,22 +92,25 @@ export function ProcessIntroSection({ data: dataProp, bg = 'bg-neutral-100' } = 
               </h2>
             ) : null}
 
-            {paragraphs.length ? (
-              <div className="process-intro-reveal mb-8 max-w-[52ch] font-sans font-light leading-relaxed text-neutral-600">
-                {paragraphs.map((p, i) => {
-                  // A short closing line becomes the serif pull-line of the band.
-                  const isPull = i === paragraphs.length - 1 && paragraphs.length > 1 && p.length <= 130
-                  return isPull ? (
-                    <p key={p.slice(0, 24)} className="mb-0 mt-6 max-w-[40ch] font-serif text-xl leading-snug text-primary">
-                      {p}
-                    </p>
-                  ) : (
-                    <p key={p.slice(0, 24)} className="mb-4 last:mb-0">
-                      {p}
-                    </p>
-                  )
-                })}
+            {paragraphs.length || pullLine ? (
+              <div className="process-intro-reveal mb-8 max-w-[56ch] font-sans font-light leading-relaxed text-neutral-600">
+                {paragraphs.map((p) => (
+                  <p key={p.slice(0, 24)} className="mb-4 last:mb-0">
+                    {p}
+                  </p>
+                ))}
+                {pullLine ? (
+                  <p className="mb-0 mt-7 max-w-[44ch] font-serif text-[1.35rem] leading-[1.45] text-primary">
+                    {pullLine}
+                  </p>
+                ) : null}
               </div>
+            ) : null}
+
+            {data.linkLabel && data.linkTo ? (
+              <ArrowLink to={data.linkTo} className="process-intro-reveal">
+                {data.linkLabel}
+              </ArrowLink>
             ) : null}
 
             {!showVideoCard && data.videoUrl ? (
@@ -136,13 +152,10 @@ export function ProcessIntroSection({ data: dataProp, bg = 'bg-neutral-100' } = 
                         setVideoOpen(true)
                       }}
                     >
-                      <span className="mb-3 flex h-20 w-20 items-center justify-center rounded-full bg-white/90 transition-transform duration-300 hover:scale-110">
-                        <svg className="ml-1 block h-9 w-9" fill="#224A4F" viewBox="0 0 24 24" aria-hidden>
+                      <span className="flex h-[76px] w-[76px] items-center justify-center rounded-full bg-white/90 transition-transform duration-300 hover:scale-110">
+                        <svg className="ml-1 block h-8 w-8" fill="#224A4F" viewBox="0 0 24 24" aria-hidden>
                           <path d="M8 5v14l11-7z" />
                         </svg>
-                      </span>
-                      <span className="eyebrow text-white" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)' }}>
-                        Watch video
                       </span>
                     </button>
                   </>

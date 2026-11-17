@@ -36,11 +36,19 @@ export function HomePage() {
       />
 
       <KitchensHomeSection data={home?.kitchensSection} />
-      <ProcessIntroSection data={home?.processIntro} bg="bg-white" />
-      <ValuesSection items={home?.valuesItems?.length ? home.valuesItems : valuesItems} />
+      <ProcessIntroSection
+        data={{
+          ...(home?.processIntro || {}),
+          imageAspectClass: 'aspect-[5/4]',
+          linkLabel: 'Meet Seb and the team',
+          linkTo: '/about-us',
+        }}
+        bg="bg-white"
+      />
+      <ValuesSection items={home?.valuesItems?.length ? home.valuesItems : valuesItems} bg="bg-white" />
 
       {home?.selectedProjects?.length ? (
-        <section id="home-projects-section" className="section-padding bg-white">
+        <section id="home-projects-section" className="section-padding bg-neutral-100">
           <div className="container-custom">
             <SectionHeaderSplit eyebrow="Projects" heading="Recent work, room by room." />
             <ProjectCardsGrid items={home.selectedProjects} variant="overlay" />
@@ -54,7 +62,7 @@ export function HomePage() {
       ) : null}
 
       {livingSpaces.length ? (
-        <section id="home-living-spaces-section" className="section-padding bg-neutral-100">
+        <section id="home-living-spaces-section" className="section-padding bg-white">
           <div className="container-custom">
             <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
               <div>
@@ -87,6 +95,7 @@ export function HomePage() {
       ) : null}
 
       <DarkPanelSection
+        bg="bg-neutral-100"
         eyebrow={home?.howItWorks?.eyebrow || 'How it works'}
         heading={home?.howItWorks?.heading || 'From first conversation to installation'}
         content="We'll procure the best quality materials and handcraft your build in our specialised workshop — fine tuning all the details with your feedback along the way."
@@ -121,6 +130,7 @@ export function HomePage() {
       <TestimonialsSection
         section={home?.testimonialsSection?.heading ? home.testimonialsSection : testimonialsSection}
         items={home?.testimonials?.length ? home.testimonials : testimonials}
+        bg="bg-white"
       />
       <FinalCtaSection data={home?.finalCta?.heading ? home.finalCta : finalCta} />
     </>

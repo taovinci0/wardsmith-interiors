@@ -7,7 +7,7 @@ import { VideoModal } from '../common/VideoModal.jsx'
  * Client stories — grid of video testimonial cards (poster + play → modal),
  * stars and name/location meta below each card, Google badge underneath.
  */
-export function TestimonialsSection({ section = head, items = testimonials }) {
+export function TestimonialsSection({ section = head, items = testimonials, bg = 'bg-neutral-100' }) {
   const [videoOpen, setVideoOpen] = useState(false)
   const [activeVideoUrl, setActiveVideoUrl] = useState(null)
 
@@ -15,7 +15,7 @@ export function TestimonialsSection({ section = head, items = testimonials }) {
   if (!cards.length) return null
 
   return (
-    <section id="testimonials-section" className="section-padding bg-neutral-100">
+    <section id="testimonials-section" className={`section-padding ${bg}`}>
       <div className="container-custom">
         <SectionHeaderSplit
           eyebrow={section.eyebrow}
