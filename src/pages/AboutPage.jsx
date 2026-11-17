@@ -29,8 +29,16 @@ export function AboutPage() {
         secondaryButtonLabel={hero.secondaryButtonLabel}
         secondaryButtonTo={hero.secondaryButtonTo}
       />
-      <ProcessIntroSection data={processIntro} />
-      <ValuesSection items={valuesItems} columnsClass="md:grid-cols-4" />
+      <ProcessIntroSection
+        data={{
+          ...processIntro,
+          imageAspectClass: 'aspect-[5/4]',
+          linkLabel: 'See our approach',
+          linkTo: '/our-approach',
+        }}
+        bg="bg-white"
+      />
+      <ValuesSection items={valuesItems} columnsClass="md:grid-cols-4" bg="bg-white" />
       <MeetTheTeamSection data={data?.team} />
       <TestimonialsSection
         section={home?.testimonialsSection?.heading ? home.testimonialsSection : testimonialsSection}
