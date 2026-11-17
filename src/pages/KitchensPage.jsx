@@ -75,7 +75,7 @@ export function KitchensPage() {
 
       {/* 5 — What is included */}
       {data?.whatsIncluded?.items?.length ? (
-        <section className="section-padding bg-neutral-100">
+        <section className="section-padding bg-white">
           <div className="container-custom">
             <SectionHeaderSplit
               eyebrow={data.whatsIncluded.eyebrow}
