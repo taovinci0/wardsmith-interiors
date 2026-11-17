@@ -31,8 +31,8 @@ export function ProcessIntroSection({ data: dataProp, bg = 'bg-neutral-100' } = 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: 'top 70%',
-          toggleActions: 'play none none reverse',
+          start: 'top 75%',
+          toggleActions: 'play none none none',
         },
       })
 
@@ -44,8 +44,8 @@ export function ProcessIntroSection({ data: dataProp, bg = 'bg-neutral-100' } = 
       }
 
       if (copy.length) {
-        gsap.set(copy, { opacity: 0, y: 24 })
-        tl.to(copy, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.12 }, 0.15)
+        gsap.set(copy, { opacity: 0, y: 20 })
+        tl.to(copy, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.1 }, 0.15)
       }
     }, sectionRef)
 

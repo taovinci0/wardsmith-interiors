@@ -39,19 +39,19 @@ export function ValuesSection({ items = valuesItems, columnsClass = 'md:grid-col
     if (!items.length) return undefined
 
     const ctx = gsap.context(() => {
-      gsap.set(items, { opacity: 0, y: 40 })
+      gsap.set(items, { opacity: 0, y: 24 })
 
       gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: 'top 70%',
-          toggleActions: 'play none none reverse',
+          start: 'top 80%',
+          toggleActions: 'play none none none',
         },
       }).to(items, {
         opacity: 1,
         y: 0,
         duration: 0.8,
-        ease: 'power4.out',
+        ease: 'power3.out',
         stagger: 0.1,
       })
     }, sectionRef)

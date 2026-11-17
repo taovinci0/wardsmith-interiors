@@ -49,14 +49,14 @@
   text-transform: uppercase;
 }
 
-/* WP .hero-eyebrow — font-medium vs .eyebrow font-bold */
+/* WP .hero-eyebrow — font-medium vs .eyebrow font-bold.
+   Visible by default; the intro animation pre-hides it in JS before paint. */
 .hero-eyebrow {
   font-family: gotham, ui-sans-serif, system-ui, sans-serif;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  opacity: 0;
 }
 
 /* Custom logo — matches WP custom_logo + .custom-logo rules */
@@ -763,10 +763,6 @@ body.page-contact .hamburger-line {
 
 .usp-blueprint-frame:hover .usp-blueprint-img {
   transform: scale(1.1);
-}
-
-.hero-buttons a {
-  opacity: 0;
 }
 
 .btn-primary {

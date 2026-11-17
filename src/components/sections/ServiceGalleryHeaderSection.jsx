@@ -19,12 +19,12 @@ export function ServiceGalleryHeaderSection({ eyebrow, heading, paragraph, image
 
       gsap.fromTo(
         els,
-        { opacity: 0, y: 40 },
+        { opacity: 0, y: 24 },
         {
           opacity: 1,
           y: 0,
           duration: 0.8,
-          ease: 'power4.out',
+          ease: 'power3.out',
           stagger: 0.1,
           scrollTrigger: {
             trigger: section,

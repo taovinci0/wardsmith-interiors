@@ -44,13 +44,7 @@ export function HeroHome() {
       ? imageUrls.map((url) => ({ url }))
       : [{ url: null }]
 
-  useHeroIntroAnimation(heroRef, [
-    heading,
-    eyebrow,
-    primaryButtonLabel,
-    secondaryButtonLabel,
-    imageUrls.join(','),
-  ])
+  useHeroIntroAnimation(heroRef)
 
   useEffect(() => {
     const root = heroRef.current
@@ -160,7 +154,7 @@ export function HeroHome() {
 
         {/* Proof strip */}
         <div
-          className="mt-10 flex flex-wrap gap-x-12 gap-y-2 border-t border-white/20 pt-5"
+          className="hero-proof mt-10 flex flex-wrap gap-x-12 gap-y-2 border-t border-white/20 pt-5"
           style={{ textShadow: '0 1px 10px rgba(0, 0, 0, 0.5)' }}
         >
           <p className="m-0 font-sans text-[13px] font-light text-white/90">

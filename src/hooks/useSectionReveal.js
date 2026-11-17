@@ -42,28 +42,28 @@ export function useSectionReveal(triggerRef, variant) {
 
     const ctx = gsap.context(() => {
       if (toInit.length) {
-        gsap.set(toInit, { opacity: 0, y: 40 })
+        gsap.set(toInit, { opacity: 0, y: 24 })
       }
 
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger,
           start: 'top 85%',
-          toggleActions: 'play none none reverse',
+          toggleActions: 'play none none none',
         },
       })
 
       if (eyebrow) {
-        timeline.to(eyebrow, { opacity: 1, y: 0, duration: 0.8, ease: 'power4.out' }, 0)
+        timeline.to(eyebrow, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 0)
       }
       if (heading) {
-        timeline.to(heading, { opacity: 1, y: 0, duration: 1.2, ease: 'power4.out' }, 0.1)
+        timeline.to(heading, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, 0.1)
       }
       if (body) {
-        timeline.to(body, { opacity: 1, y: 0, duration: 0.8, ease: 'power4.out' }, 0.25)
+        timeline.to(body, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 0.25)
       }
       if (buttonEls.length) {
-        timeline.to(buttonEls, { opacity: 1, y: 0, duration: 0.8, ease: 'power4.out', stagger: 0.1 }, 0.35)
+        timeline.to(buttonEls, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.1 }, 0.35)
       }
     }, triggerRef)
 

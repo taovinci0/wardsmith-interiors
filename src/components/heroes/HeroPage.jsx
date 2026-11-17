@@ -23,13 +23,7 @@ export function HeroPage({
       ? imageUrls.map((url) => ({ url }))
       : [{ url: null }]
 
-  useHeroIntroAnimation(heroRef, [
-    heading,
-    eyebrow,
-    primaryButtonLabel,
-    secondaryButtonLabel,
-    imageUrls.join(','),
-  ])
+  useHeroIntroAnimation(heroRef)
 
 
   return (

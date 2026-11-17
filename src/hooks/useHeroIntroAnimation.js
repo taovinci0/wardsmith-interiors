@@ -2,93 +2,41 @@ import { useLayoutEffect } from 'react'
 import gsap from 'gsap'
 
 /**
- * Homepage / inner-page hero entrance — matches WordPress `hero.js` timeline.
+ * Hero entrance — one gentle pass per mount: the image settles (soft scale +
+ * fade), then eyebrow / title / buttons / proof strip rise in sequence.
+ * The header is deliberately never animated, and CMS data arriving after
+ * mount must not replay the timeline.
  */
-export function useHeroIntroAnimation(heroRef, deps = []) {
+export function useHeroIntroAnimation(heroRef) {
   useLayoutEffect(() => {
     if (!heroRef.current) return undefined
 
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) return undefined
+
     const hero = heroRef.current
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline()
-
       const firstSlide = hero.querySelector('.hero-slide')
       if (firstSlide) {
-        gsap.set(firstSlide, { scale: 1.15, opacity: 0 })
-        tl.to(
+        gsap.fromTo(
           firstSlide,
-          {
-            scale: 1,
-            opacity: 1,
-            duration: 2.2,
-            ease: 'expo.out',
-          },
-          0,
+          { scale: 1.05, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 1.4, ease: 'power2.out' },
         )
       }
 
-      const header = document.querySelector('.site-header')
-      if (header) {
-        gsap.set(header, { y: -100, opacity: 0 })
-        tl.to(
-          header,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1.2,
-            ease: 'power4.out',
-          },
-          0.5,
-        )
-      }
-
-      const titleWords = hero.querySelectorAll('.hero-title-word-inner')
-      if (titleWords.length) {
-        gsap.set(titleWords, { y: '110%' })
-        tl.to(
-          titleWords,
-          {
-            y: '0%',
-            duration: 1.5,
-            ease: 'power4.out',
-            stagger: 0.05,
-          },
-          0.8,
-        )
-      }
-
-      const eyebrowEl = hero.querySelector('.hero-eyebrow')
-      if (eyebrowEl) {
-        gsap.set(eyebrowEl, { y: 40, opacity: 0 })
-        tl.to(
-          eyebrowEl,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1.2,
-            ease: 'power4.out',
-          },
-          1.2,
-        )
-      }
-
-      const buttons = hero.querySelectorAll('.hero-buttons a.btn-primary, .hero-buttons a.btn-secondary')
-      if (buttons.length) {
-        gsap.set(buttons, { y: 40, opacity: 0 })
-        tl.to(
-          buttons,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1.1,
-            ease: 'power4.out',
-            stagger: 0.1,
-          },
-          1.2,
+      const content = hero.querySelectorAll('.hero-eyebrow, .hero-title, .hero-buttons, .hero-proof')
+      if (content.length) {
+        gsap.fromTo(
+          content,
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out', stagger: 0.12, delay: 0.25 },
         )
       }
     }, heroRef)
 
     return () => ctx.revert()
-  }, deps)
+    // Run once per mount: content swaps from CMS re-render in place without replaying.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 }
