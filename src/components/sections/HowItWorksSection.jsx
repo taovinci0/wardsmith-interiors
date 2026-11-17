@@ -8,7 +8,7 @@ export function HowItWorksSection({ data }) {
   if (!data?.steps?.length) return null
 
   return (
-    <section id="home-how-it-works-section" className="section-padding bg-neutral-100">
+    <section id="home-how-it-works-section" className="section-padding bg-white">
       <div className="container-custom">
         <div className="mb-14 max-w-[720px]">
           {data.eyebrow ? <p className="eyebrow eyebrow-spacing text-accent-600">{data.eyebrow}</p> : null}
@@ -16,7 +16,7 @@ export function HowItWorksSection({ data }) {
         </div>
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           {data.steps.map((s, i) => (
-            <div key={s.title}>
+            <div key={s.title} className="border-t border-neutral-300 pt-6">
               <p className="mb-3 font-serif text-4xl text-accent-600">{String(i + 1).padStart(2, '0')}</p>
               <h3 className="mb-2 font-serif text-xl text-primary">{s.title}</h3>
               <p className="font-sans font-light leading-relaxed text-neutral-600">{s.description}</p>

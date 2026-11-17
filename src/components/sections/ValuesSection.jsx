@@ -66,14 +66,18 @@ export function ValuesSection({ items = valuesItems, columnsClass = 'md:grid-col
       <div className="container-custom">
         <div className={`grid grid-cols-1 gap-8 ${columnsClass} md:gap-12`}>
           {items.map((item) => (
-            <div key={item.title} className="values-item values-item-reveal w-full" style={{ width: '100%' }}>
+            <div
+              key={item.title}
+              className="values-item values-item-reveal w-full border-t border-neutral-300 pt-6"
+              style={{ width: '100%' }}
+            >
               {item.title ? (
-                <h3 className="values-item-title heading-to-body-spacing text-center font-serif text-[2rem] leading-[1.2] text-primary">
+                <h3 className="values-item-title heading-to-body-spacing font-serif text-[2rem] leading-[1.2] text-primary">
                   {item.title}
                 </h3>
               ) : null}
               {item.content ? (
-                <div className="text-center font-sans text-sm font-light text-neutral-600">
+                <div className="font-sans text-sm font-light leading-relaxed text-neutral-600">
                   {item.content.split(/\n\n+/).map((p) => (
                     <p key={p.slice(0, 20)} className="mb-3 last:mb-0">
                       {p}
