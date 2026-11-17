@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { faqItems } from '../../data/faqItems.js'
+import { SectionHeaderSplit } from './SectionHeaderSplit.jsx'
 
-export function FaqsAccordionSection({ items = faqItems }) {
+export function FaqsAccordionSection({ items = faqItems, eyebrow, heading, intro }) {
   const [openIndex, setOpenIndex] = useState(0)
 
   return (
     <section id="faqs-section" className="bg-neutral-100" style={{ paddingTop: '8rem', paddingBottom: '8rem' }}>
       <div className="container-custom">
+        <SectionHeaderSplit eyebrow={eyebrow} heading={heading} intro={intro} />
         <div className="mx-auto max-w-4xl">
           <div className="space-y-4">
             {items.map((faq, index) => {

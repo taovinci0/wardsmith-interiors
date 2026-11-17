@@ -30,22 +30,27 @@ export function ProjectsArchivePage() {
       <HeroPage eyebrow="Projects" heading="Completed projects" imageUrls={[defaultHeroBg]} showButtons={false} />
       <section className="bg-neutral-100" style={{ paddingTop: '6rem', paddingBottom: '8rem' }}>
         <div className="container-custom">
-          <div className="mb-12 flex flex-wrap gap-3" role="group" aria-label="Filter projects by room">
-            {FILTERS.map((f) => (
-              <button
-                key={f.value}
-                type="button"
-                onClick={() => setFilter(f.value)}
-                aria-pressed={filter === f.value}
-                className={`rounded-full border px-5 py-2 font-sans text-sm transition-colors ${
-                  filter === f.value
-                    ? 'border-primary bg-primary text-white'
-                    : 'border-neutral-400 bg-transparent text-primary hover:border-primary'
-                }`}
-              >
-                {f.label}
-              </button>
-            ))}
+          <div className="mb-12 flex flex-wrap items-center justify-between gap-6">
+            <div className="flex flex-wrap gap-3" role="group" aria-label="Filter projects by room">
+              {FILTERS.map((f) => (
+                <button
+                  key={f.value}
+                  type="button"
+                  onClick={() => setFilter(f.value)}
+                  aria-pressed={filter === f.value}
+                  className={`rounded-full border px-5 py-2.5 font-sans text-xs font-medium uppercase tracking-[0.2em] transition-colors ${
+                    filter === f.value
+                      ? 'border-primary bg-primary text-white'
+                      : 'border-neutral-300 bg-transparent text-primary hover:border-primary'
+                  }`}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+            <p className="font-sans text-sm font-light text-neutral-500">
+              {items.length} {items.length === 1 ? 'project' : 'projects'}
+            </p>
           </div>
           {items.length ? (
             <ProjectCardsGrid items={items} />

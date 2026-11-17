@@ -1,27 +1,34 @@
 import { HeroPage } from '../components/heroes/HeroPage.jsx'
 import { ProcessIntroSection } from '../components/sections/ProcessIntroSection.jsx'
 import { GreenBandCtaSection } from '../components/sections/GreenBandCtaSection.jsx'
+import { SectionHeaderSplit } from '../components/sections/SectionHeaderSplit.jsx'
+import { DarkPanelSection } from '../components/sections/DarkPanelSection.jsx'
 import { defaultHeroBg } from '../data/innerPagesContent.js'
 import { useSanityData } from '../hooks/useSanityData.js'
 import { ourApproachPageQuery } from '../sanity/queries.js'
 
+/** Editorial prose band — heading column left, running copy right. */
 function ProseSection({ eyebrow, heading, content, bg = 'bg-white' }) {
   if (!content) return null
   return (
     <section className={`section-padding ${bg}`}>
       <div className="container-custom">
-        <div className="mx-auto max-w-[760px]">
-          {eyebrow ? <p className="eyebrow eyebrow-spacing text-accent-600">{eyebrow}</p> : null}
-          {heading ? (
-            <h2 className="heading-to-body-spacing font-serif text-[2.5rem] leading-tight text-primary">{heading}</h2>
-          ) : null}
-          {String(content)
-            .split(/\n{2,}/)
-            .map((p) => (
-              <p key={p.slice(0, 32)} className="mb-5 font-sans text-lg font-light leading-relaxed text-neutral-600 last:mb-0">
-                {p}
-              </p>
-            ))}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,380px)_1fr] lg:gap-20">
+          <div>
+            {eyebrow ? <p className="eyebrow eyebrow-spacing text-accent-600">{eyebrow}</p> : null}
+            {heading ? (
+              <h2 className="font-serif text-[2rem] leading-[1.15] text-primary md:text-[2.5rem]">{heading}</h2>
+            ) : null}
+          </div>
+          <div className="max-w-[62ch] border-t border-neutral-300 pt-8 lg:border-t-0 lg:pt-1">
+            {String(content)
+              .split(/\n{2,}/)
+              .map((p) => (
+                <p key={p.slice(0, 32)} className="mb-5 font-sans text-lg font-light leading-relaxed text-neutral-600 last:mb-0">
+                  {p}
+                </p>
+              ))}
+          </div>
         </div>
       </div>
     </section>
@@ -63,22 +70,28 @@ export function OurApproachPage() {
       {steps.length ? (
         <section className="section-padding bg-neutral-100">
           <div className="container-custom">
-            <div className="mb-14 max-w-[720px]">
-              <p className="eyebrow eyebrow-spacing text-accent-600">{data?.process?.eyebrow || 'The Process'}</p>
-              <h2 className="heading-to-body-spacing font-serif text-[2.5rem] leading-tight text-primary">
-                {data?.process?.heading}
-              </h2>
-              {data?.process?.tagline ? (
-                <p className="font-sans text-lg font-light text-neutral-600">{data.process.tagline}</p>
-              ) : null}
-            </div>
+            <SectionHeaderSplit
+              eyebrow={data?.process?.eyebrow || 'The Process'}
+              heading={data?.process?.heading}
+              intro={data?.process?.tagline}
+            />
             <ol className="space-y-16">
               {steps.map((s, i) => (
-                <li key={s.title} className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+                <li
+                  key={s.title}
+                  className="grid grid-cols-1 items-center gap-10 border-t border-neutral-300 pt-12 lg:grid-cols-2 lg:gap-20"
+                >
                   <div className={i % 2 ? 'lg:order-2' : ''}>
-                    <p className="mb-2 font-serif text-5xl text-accent-600">{String(i + 1).padStart(2, '0')}</p>
-                    <h3 className="mb-3 font-serif text-2xl text-primary">{s.title}</h3>
-                    <p className="font-sans text-lg font-light leading-relaxed text-neutral-600">{s.description}</p>
+                    <div className="mb-4 flex items-baseline justify-between gap-4">
+                      <span className="font-serif text-2xl text-accent-600">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="font-sans text-xs font-light tracking-[0.1em] text-neutral-500 uppercase">
+                        Step {i + 1} of {steps.length}
+                      </span>
+                    </div>
+                    <h3 className="mb-3 font-serif text-[2rem] leading-[1.2] text-primary">{s.title}</h3>
+                    <p className="max-w-[52ch] font-sans text-lg font-light leading-relaxed text-neutral-600">
+                      {s.description}
+                    </p>
                   </div>
                   {s.imageUrl ? (
                     <div className={`aspect-[4/3] overflow-hidden rounded-lg ${i % 2 ? 'lg:order-1' : ''}`}>
@@ -92,12 +105,14 @@ export function OurApproachPage() {
         </section>
       ) : null}
 
-      {/* 3 — Investment guidance */}
-      <ProseSection
-        eyebrow={data?.investment?.eyebrow}
-        heading={data?.investment?.heading}
-        content={data?.investment?.content}
-      />
+      {/* 3 — Investment guidance (dark panel moment) */}
+      {data?.investment?.content ? (
+        <DarkPanelSection
+          eyebrow={data.investment.eyebrow}
+          heading={data.investment.heading}
+          content={data.investment.content}
+        />
+      ) : null}
 
       {/* 4 — Aftercare */}
       <ProseSection

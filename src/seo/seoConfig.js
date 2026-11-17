@@ -7,18 +7,18 @@ const DEFAULT_DESC =
 /** Static defaults; extend with CMS-driven `siteSettings` in `SiteSeo.jsx` later. */
 const ROUTES = [
   { path: '/', title: 'Bespoke Fitted Furniture in Essex', description: DEFAULT_DESC },
+  { path: '/kitchens', title: 'Bespoke Kitchens in Essex', description: 'Kitchens designed, made and installed by Ward-Smith Interiors — from first sketch to fitting, all by our own Essex workshop.' },
+  { path: '/living-spaces', title: 'Living Spaces', description: 'Bespoke fitted furniture for bedrooms, home offices, media walls and tailored spaces across Essex.' },
+  { path: '/our-approach', title: 'Our Approach', description: 'How a Ward-Smith project runs — design, making, installation and aftercare, step by step.' },
+  { path: '/projects', title: 'Projects', description: 'Recent bespoke kitchens and fitted furniture projects across Essex.' },
+  { path: '/projects/:slug', title: 'Project', description: DEFAULT_DESC },
+  { path: '/journal', title: 'Journal', description: 'Notes from the workshop — ideas, materials and inspiration from Ward-Smith Interiors.' },
+  { path: '/journal/:slug', title: 'Article', description: DEFAULT_DESC },
   { path: '/about-us', title: 'About Us', description: 'Meet the Ward-Smith team and our approach to bespoke joinery in Essex.' },
   { path: '/contact', title: 'Contact', description: 'Get in touch with Ward-Smith Interiors — phone, email, and enquiry.' },
   { path: '/faqs', title: 'FAQs', description: 'Answers to common questions about bespoke furniture, lead times, and our process.' },
-  { path: '/start-your-project', title: 'Start Your Project', description: 'Tell us about your space and begin your bespoke furniture project.' },
   { path: '/privacy-policy', title: 'Privacy Policy', description: 'How Ward-Smith Interiors handles your personal data.' },
   { path: '/terms-of-business', title: 'Terms of Business', description: 'Terms of business for Ward-Smith Interiors Ltd projects.' },
-  { path: '/services', title: 'Services', description: 'Bespoke kitchens, bedrooms, home offices, media walls, and carpentry across Essex.' },
-  { path: '/services/:slug', title: 'Service', description: DEFAULT_DESC },
-  { path: '/case-studies', title: 'Case Studies', description: 'Recent bespoke interior projects across Essex.' },
-  { path: '/case-studies/:slug', title: 'Case Study', description: DEFAULT_DESC },
-  { path: '/blog', title: 'Blog', description: 'News, ideas, and inspiration from Ward-Smith Interiors.' },
-  { path: '/blog/:slug', title: 'Article', description: DEFAULT_DESC },
 ]
 
 export function resolveSeoPathname(pathname) {

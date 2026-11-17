@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { ArrowLink } from '../components/common/ArrowLink.jsx'
 import { HeroPage } from '../components/heroes/HeroPage.jsx'
 import { GreenBandCtaSection } from '../components/sections/GreenBandCtaSection.jsx'
 import { defaultHeroBg } from '../data/innerPagesContent.js'
@@ -52,18 +52,21 @@ export function LivingSpacesPage() {
                 ) : null}
               </div>
               <div className="lg:[direction:ltr]">
-                <h2 className="heading-to-body-spacing font-serif text-[2.5rem] leading-tight text-primary">{space.title}</h2>
+                <p className="mb-4 font-serif text-xl text-accent-600">{String(i + 1).padStart(2, '0')}</p>
+                <h2 className="heading-to-body-spacing max-w-[16ch] font-serif text-[2rem] leading-[1.15] text-primary md:text-[2.5rem]">
+                  {space.title}
+                </h2>
                 {String(space.content || '')
                   .split(/\n{2,}/)
                   .map((p) => (
-                    <p key={p.slice(0, 32)} className="mb-5 font-sans text-lg font-light leading-relaxed text-neutral-600">
+                    <p key={p.slice(0, 32)} className="mb-5 max-w-[52ch] font-sans text-lg font-light leading-relaxed text-neutral-600">
                       {p}
                     </p>
                   ))}
                 {space.relatedProject?.slug ? (
-                  <Link to={`/projects/${space.relatedProject.slug}`} className="btn-secondary mt-2 inline-block">
+                  <ArrowLink to={`/projects/${space.relatedProject.slug}`} className="mt-2">
                     See a related project
-                  </Link>
+                  </ArrowLink>
                 ) : null}
               </div>
             </div>
