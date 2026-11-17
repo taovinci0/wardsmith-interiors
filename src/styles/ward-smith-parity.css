@@ -132,6 +132,15 @@ body.page-start-your-project .site-header::before {
   display: none !important;
 }
 
+/* Contact has no photo hero — solid header like start-your-project */
+body.page-contact .site-header {
+  background-color: #224a4f !important;
+}
+
+body.page-contact .site-header::before {
+  display: none !important;
+}
+
 .site-header.scrolled {
   background-color: #224a4f !important;
   border-bottom: none;

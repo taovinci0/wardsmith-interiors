@@ -34,9 +34,16 @@ function fileToDataUrl(file) {
   })
 }
 
-/** WP `contact-form.php` — multi-step enquiry (steps 0–4 + thank you). Client-only until API wiring. */
-export function EnquiryFormSection() {
-  const [step, setStep] = useState(0)
+const STEP_LABELS = ['Project overview', 'Measurements', 'Budget & timeline', 'Contact details']
+
+/**
+ * Multi-step enquiry (4 steps + thank you).
+ * variant="card": framed card for embedding beside the contact rail (starts at step 1);
+ * variant="standalone": full-band section with intro step (legacy pages).
+ */
+export function EnquiryFormSection({ variant = 'standalone' }) {
+  const isCard = variant === 'card'
+  const [step, setStep] = useState(isCard ? 1 : 0)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState(null)
 
@@ -100,39 +107,31 @@ export function EnquiryFormSection() {
     }
   }
 
-  return (
-    <section id="enquiry-form-section" className="bg-neutral-100" style={{ paddingTop: '10rem', paddingBottom: '6rem' }}>
-      <div className="container-custom">
+  const body = (
+    <>
         <div
-          className={`enquiry-progress mb-12 ${showProgress ? '' : 'enquiry-progress-hidden'}`}
+          className={`enquiry-progress ${isCard ? 'mb-9 border-b border-neutral-300 pb-6' : 'mb-12'}`}
           style={showProgress ? undefined : { display: 'none' }}
         >
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          <div className={`flex flex-wrap gap-x-6 gap-y-3 ${isCard ? 'justify-between' : 'justify-center'}`}>
             {[1, 2, 3, 4].map((n, i) => (
-              <div key={n} className="flex items-center">
-                <div className="progress-step flex items-center" data-step={n}>
-                  <div
-                    className={`progress-step-number flex h-10 w-10 items-center justify-center rounded-full border-2 font-sans font-medium transition-all duration-300 ${
-                      step >= n ? 'border-accent-600 bg-white text-accent-600' : 'border-neutral-300 bg-white text-neutral-400'
-                    }`}
-                  >
-                    <span>{n}</span>
-                  </div>
-                  <span
-                    className={`progress-step-label ml-3 hidden font-sans font-medium md:block ${
-                      step >= n ? 'text-primary' : 'text-neutral-400'
-                    }`}
-                  >
-                    {['Project Overview', 'Measurements', 'Budget & Timeline', 'Contact Details'][i]}
-                  </span>
-                </div>
-                {i < 3 ? <div className="progress-line mx-2 hidden h-0.5 w-8 bg-neutral-300 sm:block" /> : null}
+              <div key={n} className="flex items-baseline gap-2.5" data-step={n}>
+                <span className={`font-serif text-lg ${step >= n ? 'text-accent-600' : 'text-neutral-300'}`}>
+                  {String(n).padStart(2, '0')}
+                </span>
+                <span
+                  className={`hidden font-sans text-[11px] uppercase tracking-[0.12em] md:block ${
+                    step >= n ? 'font-bold text-primary' : 'font-medium text-neutral-500'
+                  }`}
+                >
+                  {STEP_LABELS[i]}
+                </span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="enquiry-form-container mx-auto max-w-3xl">
+        <div className={isCard ? 'enquiry-form-container' : 'enquiry-form-container mx-auto max-w-3xl'}>
           <form
             id="enquiry-form"
             className={step === 5 ? 'hidden' : 'enquiry-form'}
@@ -165,9 +164,7 @@ export function EnquiryFormSection() {
             </div>
 
             <div className={stepClass(step === 4)} data-step="4">
-              <h2 className="mb-8 font-serif text-primary" style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}>
-                Contact Details
-              </h2>
+              <h2 className="mb-8 font-serif text-[1.75rem] text-primary">Contact details</h2>
               <div className="mb-8">
                 <label htmlFor="enquiry_name" className="form-label-ws">
                   Name <span className="text-accent-600">*</span>
@@ -224,9 +221,7 @@ export function EnquiryFormSection() {
             </div>
 
             <div className={stepClass(step === 1)} data-step="1">
-              <h2 className="mb-8 font-serif text-primary" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>
-                Project Overview
-              </h2>
+              <h2 className="mb-8 font-serif text-[1.75rem] text-primary">Project overview</h2>
               <div className="mb-8">
                 <label htmlFor="enquiry_space_type" className="form-label-ws">
                   What type of space are you looking to transform? <span className="text-accent-600">*</span>
@@ -279,10 +274,14 @@ export function EnquiryFormSection() {
                 />
                 <p className="mt-2 font-sans text-sm font-light text-neutral-500">You can also attach files in the next step</p>
               </div>
-              <div className="form-field mt-8 flex gap-4">
-                <button type="button" className="btn-secondary" onClick={() => setStep(0)}>
-                  Back
-                </button>
+              <div className="form-field mt-8 flex items-center justify-between gap-4">
+                {!isCard ? (
+                  <button type="button" className="btn-secondary" onClick={() => setStep(0)}>
+                    Back
+                  </button>
+                ) : (
+                  <p className="m-0 font-sans text-[13px] font-light text-neutral-500">Step 1 of 4 · takes about 3 minutes</p>
+                )}
                 <button type="button" className="btn-primary" onClick={() => setStep(2)}>
                   Continue
                 </button>
@@ -290,9 +289,7 @@ export function EnquiryFormSection() {
             </div>
 
             <div className={stepClass(step === 2)} data-step="2">
-              <h2 className="mb-8 font-serif text-primary" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>
-                Measurements
-              </h2>
+              <h2 className="mb-8 font-serif text-[1.75rem] text-primary">Measurements</h2>
               <div className="mb-8">
                 <label htmlFor="enquiry_dimensions" className="form-label-ws">
                   Do you have approximate dimensions of the space?{' '}
@@ -341,9 +338,7 @@ export function EnquiryFormSection() {
             </div>
 
             <div className={stepClass(step === 3)} data-step="3">
-              <h2 className="mb-8 font-serif text-primary" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>
-                Budget and Timeline
-              </h2>
+              <h2 className="mb-8 font-serif text-[1.75rem] text-primary">Budget and timeline</h2>
               <div className="mb-8">
                 <p className="form-label-ws">
                   Do you have a budget range in mind for your project? <span className="text-accent-600">*</span>
@@ -403,7 +398,20 @@ export function EnquiryFormSection() {
             </div>
           ) : null}
         </div>
+    </>
+  )
+
+  if (isCard) {
+    return (
+      <div id="enquiry-form-section" className="rounded-lg border border-neutral-300 bg-white p-6 md:p-10">
+        {body}
       </div>
+    )
+  }
+
+  return (
+    <section id="enquiry-form-section" className="bg-neutral-100" style={{ paddingTop: '10rem', paddingBottom: '6rem' }}>
+      <div className="container-custom">{body}</div>
     </section>
   )
 }
