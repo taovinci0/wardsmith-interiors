@@ -23,14 +23,14 @@ export function KitchensHomeSection({ data }) {
               {data.ctaLabel || 'Explore our kitchens'}
             </Link>
           </div>
-          <div className="grid grid-cols-[2fr_1fr] items-start gap-6">
+          <div className="grid grid-cols-[1.4fr_1fr] items-start gap-6">
             {img1 ? (
               <div className="aspect-[4/5] overflow-hidden rounded-lg">
                 <img src={img1} alt="Bespoke Ward-Smith kitchen" className="h-full w-full object-cover" loading="lazy" />
               </div>
             ) : null}
             {img2 ? (
-              <div className="aspect-square overflow-hidden rounded-lg lg:mt-24">
+              <div className="aspect-[4/5] overflow-hidden rounded-lg lg:mt-[72px]">
                 <img src={img2} alt="" className="h-full w-full object-cover" loading="lazy" />
               </div>
             ) : null}

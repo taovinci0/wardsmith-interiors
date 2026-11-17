@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
+import { ArrowLink } from '../components/common/ArrowLink.jsx'
 import { DarkPanelSection } from '../components/sections/DarkPanelSection.jsx'
 import { FinalCtaSection } from '../components/sections/FinalCtaSection.jsx'
 import { HeroHome } from '../components/sections/HeroHome.jsx'
 import { KitchensHomeSection } from '../components/sections/KitchensHomeSection.jsx'
 import { ProcessIntroSection } from '../components/sections/ProcessIntroSection.jsx'
 import { ProjectCardsGrid } from '../components/sections/ProjectCardsGrid.jsx'
-import { SectionHeaderSplit } from '../components/sections/SectionHeaderSplit.jsx'
 import { TestimonialsSection } from '../components/sections/TestimonialsSection.jsx'
 import { ValuesSection } from '../components/sections/ValuesSection.jsx'
 import { WhatWeMakeSection } from '../components/sections/WhatWeMakeSection.jsx'
@@ -50,13 +50,18 @@ export function HomePage() {
       {home?.selectedProjects?.length ? (
         <section id="home-projects-section" className="section-padding bg-neutral-100">
           <div className="container-custom">
-            <SectionHeaderSplit eyebrow="Projects" heading="Recent work, room by room." />
-            <ProjectCardsGrid items={home.selectedProjects} variant="overlay" />
-            <div className="mt-12">
-              <Link to="/projects" className="btn-secondary inline-block">
+            <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
+              <div>
+                <p className="eyebrow eyebrow-spacing text-accent-600">Projects</p>
+                <h2 className="font-serif text-[2rem] leading-[1.15] text-primary md:text-[2.5rem]">
+                  Recent work, room by room.
+                </h2>
+              </div>
+              <ArrowLink to="/projects" className="mb-2">
                 View all projects
-              </Link>
+              </ArrowLink>
             </div>
+            <ProjectCardsGrid items={home.selectedProjects.slice(0, 2)} variant="overlay" />
           </div>
         </section>
       ) : null}
@@ -67,11 +72,13 @@ export function HomePage() {
             <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
               <div>
                 <p className="eyebrow eyebrow-spacing text-accent-600">Living Spaces</p>
-                <h2 className="font-serif text-[2.5rem] text-primary">Beyond the kitchen</h2>
+                <h2 className="font-serif text-[2rem] leading-[1.15] text-primary md:text-[2.5rem]">
+                  Beyond the kitchen.
+                </h2>
               </div>
-              <Link to="/living-spaces" className="btn-secondary inline-block">
+              <ArrowLink to="/living-spaces" className="mb-2">
                 Explore living spaces
-              </Link>
+              </ArrowLink>
             </div>
             <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
               {livingSpaces.slice(0, 4).map((s) => (
