@@ -702,6 +702,14 @@ body.page-contact .hamburger-line {
   overflow: hidden;
 }
 
+/* Heroes always sit on the brand dark ground — while a photo is loading
+   (or fading in on the first visit) the viewport shows teal, never white. */
+.hero,
+.hero-page,
+.hero-page-contact {
+  background-color: var(--color-primary-dark, #1a383c);
+}
+
 .hero-overlay {
   position: absolute;
   inset: 0;
