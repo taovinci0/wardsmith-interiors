@@ -2,11 +2,12 @@ import { useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useCms } from '../../context/useCms.js'
-import { heroHomeDefaults } from '../../data/siteDefaults.js'
+import { heroHomeDefaults, siteLogoUrl } from '../../data/siteDefaults.js'
 import { useHeroIntroAnimation } from '../../hooks/useHeroIntroAnimation.js'
 
 export function HeroHome() {
-  const { home } = useCms()
+  const { home, siteSettings } = useCms()
+  const areaCovered = siteSettings?.areaCovered || 'Essex and surrounding areas'
   const {
     eyebrow,
     heading,
@@ -104,6 +105,21 @@ export function HeroHome() {
 
       <div className="hero-overlay pointer-events-none absolute inset-0" />
 
+      {/* Brandmark watermark — oversized, faded, cropped off the top-right edge */}
+      <img
+        src={siteLogoUrl}
+        alt=""
+        aria-hidden
+        className="pointer-events-none absolute w-auto"
+        style={{
+          top: '-12%',
+          right: '-6%',
+          height: '118%',
+          opacity: 0.07,
+          filter: 'brightness(0) invert(1)',
+        }}
+      />
+
       <div className="hero-content container-custom relative z-10 flex h-full flex-col justify-end pb-10">
         {eyebrow ? (
           <p className="hero-eyebrow eyebrow-spacing text-accent-600">{eyebrow}</p>
@@ -122,6 +138,15 @@ export function HeroHome() {
               {secondaryButtonLabel}
             </Link>
           ) : null}
+        </div>
+
+        {/* Proof strip */}
+        <div className="mt-10 flex flex-wrap gap-x-12 gap-y-2 border-t border-white/20 pt-5">
+          <p className="m-0 font-sans text-[13px] font-light text-white/80">
+            <span className="font-medium text-accent-600">5.0</span>&ensp;Rated on Google Reviews
+          </p>
+          <p className="m-0 font-sans text-[13px] font-light text-white/80">Made at Wicks Manor, Maldon</p>
+          <p className="m-0 font-sans text-[13px] font-light text-white/80">Covering {areaCovered}</p>
         </div>
       </div>
     </section>

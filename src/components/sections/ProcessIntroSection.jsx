@@ -3,7 +3,7 @@ import { gsap } from '../../lib/gsapClient.js'
 import { processIntro as defaultProcessIntro } from '../../data/homePageContent.js'
 import { VideoModal } from '../common/VideoModal.jsx'
 
-export function ProcessIntroSection({ data: dataProp } = {}) {
+export function ProcessIntroSection({ data: dataProp, bg = 'bg-neutral-100' } = {}) {
   const data = { ...defaultProcessIntro, ...dataProp }
   const sectionRef = useRef(null)
   const [videoOpen, setVideoOpen] = useState(false)
@@ -63,7 +63,7 @@ export function ProcessIntroSection({ data: dataProp } = {}) {
     <section
       id="process-intro-section"
       ref={sectionRef}
-      className="process-intro-section section-padding bg-neutral-100"
+      className={`process-intro-section section-padding ${bg}`}
       data-enable-animations={data.enableAnimations ? 'true' : 'false'}
     >
       <div className="container-custom">
@@ -81,11 +81,19 @@ export function ProcessIntroSection({ data: dataProp } = {}) {
 
             {paragraphs.length ? (
               <div className="process-intro-reveal mb-8 max-w-[52ch] font-sans font-light leading-relaxed text-neutral-600">
-                {paragraphs.map((p) => (
-                  <p key={p.slice(0, 24)} className="mb-4 last:mb-0">
-                    {p}
-                  </p>
-                ))}
+                {paragraphs.map((p, i) => {
+                  // A short closing line becomes the serif pull-line of the band.
+                  const isPull = i === paragraphs.length - 1 && paragraphs.length > 1 && p.length <= 130
+                  return isPull ? (
+                    <p key={p.slice(0, 24)} className="mb-0 mt-6 max-w-[40ch] font-serif text-xl leading-snug text-primary">
+                      {p}
+                    </p>
+                  ) : (
+                    <p key={p.slice(0, 24)} className="mb-4 last:mb-0">
+                      {p}
+                    </p>
+                  )
+                })}
               </div>
             ) : null}
 
@@ -115,7 +123,7 @@ export function ProcessIntroSection({ data: dataProp } = {}) {
                   className="process-intro-image h-full w-full object-cover"
                 />
                 {data.enableAnimations ? (
-                  <div className="process-intro-mask pointer-events-none absolute inset-0 z-[1] origin-top bg-neutral-100" />
+                  <div className={`process-intro-mask pointer-events-none absolute inset-0 z-[1] origin-top ${bg}`} />
                 ) : null}
                 {showVideoCard ? (
                   <>

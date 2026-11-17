@@ -8,7 +8,7 @@ export function KitchensHomeSection({ data }) {
   const [img1, img2] = data.imageUrls || []
 
   return (
-    <section id="home-kitchens-section" className="section-padding bg-white">
+    <section id="home-kitchens-section" className="section-padding bg-neutral-100">
       <div className="container-custom">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <div>

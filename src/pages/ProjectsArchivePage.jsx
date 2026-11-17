@@ -17,7 +17,9 @@ export function ProjectsArchivePage() {
   const { data } = useSanityData(projectsListQuery)
   const [filter, setFilter] = useState('all')
 
-  const all = (data && data.length ? data : caseStudiesSeed).slice().sort(kitchensFirst)
+  const all = (data && data.length ? data : caseStudiesSeed)
+    .filter((p) => p.imageUrl)
+    .sort(kitchensFirst)
   const items =
     filter === 'all'
       ? all

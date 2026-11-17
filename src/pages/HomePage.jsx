@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom'
+import { DarkPanelSection } from '../components/sections/DarkPanelSection.jsx'
 import { FinalCtaSection } from '../components/sections/FinalCtaSection.jsx'
 import { HeroHome } from '../components/sections/HeroHome.jsx'
-import { HowItWorksSection } from '../components/sections/HowItWorksSection.jsx'
 import { KitchensHomeSection } from '../components/sections/KitchensHomeSection.jsx'
 import { ProcessIntroSection } from '../components/sections/ProcessIntroSection.jsx'
 import { ProjectCardsGrid } from '../components/sections/ProjectCardsGrid.jsx'
+import { SectionHeaderSplit } from '../components/sections/SectionHeaderSplit.jsx'
 import { TestimonialsSection } from '../components/sections/TestimonialsSection.jsx'
 import { ValuesSection } from '../components/sections/ValuesSection.jsx'
+import { WhatWeMakeSection } from '../components/sections/WhatWeMakeSection.jsx'
 import { useCms } from '../context/useCms.js'
 import { finalCta, servicesList, testimonials, testimonialsSection, valuesItems } from '../data/homePageContent.js'
+import { footerDefaults } from '../data/siteDefaults.js'
 
 /**
  * v2 homepage order (design brief, S7): Hero → Kitchens → The Ward-Smith Way
@@ -16,26 +19,31 @@ import { finalCta, servicesList, testimonials, testimonialsSection, valuesItems 
  * Client stories → Consultation.
  */
 export function HomePage() {
-  const { home } = useCms()
+  const { home, siteSettings } = useCms()
   const livingSpaces = (home?.servicesList?.length ? home.servicesList : servicesList).filter(
     (s) => s.slug !== 'bespoke-kitchens',
   )
+  const areaCovered = siteSettings?.areaCovered || footerDefaults.areaCovered || 'Essex and surrounding areas'
 
   return (
     <>
       <HeroHome />
+
+      <WhatWeMakeSection
+        kitchensImageUrl={home?.kitchensSection?.imageUrls?.[0]}
+        livingImageUrl={livingSpaces[0]?.imageUrl}
+        projectsImageUrl={home?.selectedProjects?.find((p) => p.imageUrl)?.imageUrl}
+      />
+
       <KitchensHomeSection data={home?.kitchensSection} />
-      <ProcessIntroSection data={home?.processIntro} />
+      <ProcessIntroSection data={home?.processIntro} bg="bg-white" />
       <ValuesSection items={home?.valuesItems?.length ? home.valuesItems : valuesItems} />
 
       {home?.selectedProjects?.length ? (
         <section id="home-projects-section" className="section-padding bg-white">
           <div className="container-custom">
-            <div className="mb-14">
-              <p className="eyebrow eyebrow-spacing text-accent-600">Projects</p>
-              <h2 className="font-serif text-[2.5rem] text-primary">Selected projects</h2>
-            </div>
-            <ProjectCardsGrid items={home.selectedProjects} />
+            <SectionHeaderSplit eyebrow="Projects" heading="Recent work, room by room." />
+            <ProjectCardsGrid items={home.selectedProjects} variant="overlay" />
             <div className="mt-12">
               <Link to="/projects" className="btn-secondary inline-block">
                 View all projects
@@ -78,7 +86,37 @@ export function HomePage() {
         </section>
       ) : null}
 
-      <HowItWorksSection data={home?.howItWorks} />
+      <DarkPanelSection
+        eyebrow={home?.howItWorks?.eyebrow || 'How it works'}
+        heading={home?.howItWorks?.heading || 'From first conversation to installation'}
+        content="We'll procure the best quality materials and handcraft your build in our specialised workshop — fine tuning all the details with your feedback along the way."
+        rows={[
+          { label: 'Google Reviews', value: 'Rated 5.0' },
+          { label: 'Workshop', value: 'Wicks Manor, Maldon' },
+          { label: 'Covering', value: areaCovered },
+        ]}
+      >
+        <Link
+          to="/our-approach"
+          className="group mt-6 inline-flex items-center gap-2 font-sans text-xs font-medium uppercase tracking-[0.2em] text-accent-600 transition-colors hover:text-accent-200"
+        >
+          <span>{home?.howItWorks?.ctaLabel || 'See our approach'}</span>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+            className="transition-transform duration-300 group-hover:translate-x-1"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </Link>
+      </DarkPanelSection>
 
       <TestimonialsSection
         section={home?.testimonialsSection?.heading ? home.testimonialsSection : testimonialsSection}

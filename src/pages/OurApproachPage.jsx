@@ -64,6 +64,7 @@ export function OurApproachPage() {
               }
             : undefined
         }
+        bg="bg-white"
       />
 
       {/* 2 — Process, step by step (static, numbered — no pinned scrolling) */}

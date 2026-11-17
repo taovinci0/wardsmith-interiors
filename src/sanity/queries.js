@@ -90,7 +90,7 @@ export const homePageQuery = /* groq */ `
       steps[]{ title, description },
       ctaLabel
     },
-    "selectedProjects": *[_type == "caseStudy" && defined(slug.current)] | order(_createdAt desc)[0...4]{
+    "selectedProjects": *[_type == "caseStudy" && defined(slug.current) && defined(coalesce(image.asset, imageUrl))] | order(_createdAt desc)[0...4]{
       "slug": slug.current,
       title,
       location,

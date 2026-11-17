@@ -41,6 +41,7 @@ export function KitchensPage() {
               }
             : undefined
         }
+        bg="bg-white"
       />
 
       {/* 3 — How it is made, with detail photography */}
