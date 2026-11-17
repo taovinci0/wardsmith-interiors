@@ -22,9 +22,7 @@ export function LivingSpacesPage() {
       {hero?.intro ? (
         <section className="bg-white" style={{ paddingTop: '6rem', paddingBottom: '2rem' }}>
           <div className="container-custom">
-            <p className="mx-auto max-w-[760px] font-serif text-2xl font-light leading-relaxed text-primary">
-              {hero.intro}
-            </p>
+            <p className="max-w-[38ch] font-serif text-2xl leading-[1.5] text-primary">{hero.intro}</p>
           </div>
         </section>
       ) : null}
@@ -32,22 +30,16 @@ export function LivingSpacesPage() {
       {spaces.map((space, i) => (
         <section key={space.title} className={`section-padding ${i % 2 ? 'bg-neutral-100' : 'bg-white'}`}>
           <div className="container-custom">
-            <div className={`grid grid-cols-1 items-center gap-12 lg:grid-cols-2 ${i % 2 ? 'lg:[direction:rtl]' : ''}`}>
+            <div className={`grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-20 ${i % 2 ? 'lg:[direction:rtl]' : ''}`}>
               <div className="lg:[direction:ltr]">
                 {space.imageUrls?.length ? (
-                  <div className="grid gap-6">
-                    <div className="aspect-[4/3] overflow-hidden rounded-lg">
-                      <img src={space.imageUrls[0]} alt={space.title} className="h-full w-full object-cover" loading="lazy" />
-                    </div>
-                    {space.imageUrls.length > 1 ? (
-                      <div className="grid grid-cols-2 gap-6">
-                        {space.imageUrls.slice(1, 3).map((u) => (
-                          <div key={u} className="aspect-square overflow-hidden rounded-lg">
-                            <img src={u} alt="" className="h-full w-full object-cover" loading="lazy" />
-                          </div>
-                        ))}
-                      </div>
-                    ) : null}
+                  <div className="aspect-[4/3] overflow-hidden rounded-lg">
+                    <img
+                      src={space.imageUrls[space.imageUrls.length - 1]}
+                      alt={space.title}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
                   </div>
                 ) : null}
               </div>
