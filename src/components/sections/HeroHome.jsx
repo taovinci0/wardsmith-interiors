@@ -5,6 +5,22 @@ import { useCms } from '../../context/useCms.js'
 import { heroHomeDefaults, siteLogoUrl } from '../../data/siteDefaults.js'
 import { useHeroIntroAnimation } from '../../hooks/useHeroIntroAnimation.js'
 
+/** Render the heading with the closing phrase in the accent colour, when it matches. */
+const ACCENT_PHRASE = 'the people who call them home'
+
+function renderHeading(heading) {
+  if (!heading) return heading
+  const idx = heading.toLowerCase().indexOf(ACCENT_PHRASE)
+  if (idx === -1) return heading
+  return (
+    <>
+      {heading.slice(0, idx)}
+      <span className="text-accent-600">{heading.slice(idx, idx + ACCENT_PHRASE.length)}</span>
+      {heading.slice(idx + ACCENT_PHRASE.length)}
+    </>
+  )
+}
+
 export function HeroHome() {
   const { home, siteSettings } = useCms()
   const areaCovered = siteSettings?.areaCovered || 'Essex and surrounding areas'
@@ -115,7 +131,7 @@ export function HeroHome() {
           top: '-12%',
           right: '-6%',
           height: '118%',
-          opacity: 0.07,
+          opacity: 0.05,
           filter: 'brightness(0) invert(1)',
         }}
       />
@@ -125,9 +141,11 @@ export function HeroHome() {
           <p className="hero-eyebrow eyebrow-spacing text-accent-600">{eyebrow}</p>
         ) : null}
 
-        <h1 className="hero-title mb-12 max-w-[18ch] font-serif text-[2.75rem] leading-[1.08] text-white md:text-[3.75rem]">{heading}</h1>
+        <h1 className="hero-title mb-9 max-w-[21ch] font-serif text-[2.5rem] leading-[1.1] text-white md:text-[3.375rem]">
+          {renderHeading(heading)}
+        </h1>
 
-        <div className="hero-buttons flex flex-col items-start gap-6 sm:flex-row sm:items-end sm:justify-end">
+        <div className="hero-buttons flex flex-wrap items-center gap-4">
           {primaryButtonLabel && primaryButtonTo ? (
             <Link to={primaryButtonTo} className="btn-primary">
               {primaryButtonLabel}
@@ -141,12 +159,15 @@ export function HeroHome() {
         </div>
 
         {/* Proof strip */}
-        <div className="mt-10 flex flex-wrap gap-x-12 gap-y-2 border-t border-white/20 pt-5">
-          <p className="m-0 font-sans text-[13px] font-light text-white/80">
+        <div
+          className="mt-10 flex flex-wrap gap-x-12 gap-y-2 border-t border-white/20 pt-5"
+          style={{ textShadow: '0 1px 10px rgba(0, 0, 0, 0.5)' }}
+        >
+          <p className="m-0 font-sans text-[13px] font-light text-white/90">
             <span className="font-medium text-accent-600">5.0</span>&ensp;Rated on Google Reviews
           </p>
-          <p className="m-0 font-sans text-[13px] font-light text-white/80">Made at Wicks Manor, Maldon</p>
-          <p className="m-0 font-sans text-[13px] font-light text-white/80">Covering {areaCovered}</p>
+          <p className="m-0 font-sans text-[13px] font-light text-white/90">Made at Wicks Manor, Maldon</p>
+          <p className="m-0 font-sans text-[13px] font-light text-white/90">Covering {areaCovered}</p>
         </div>
       </div>
     </section>
