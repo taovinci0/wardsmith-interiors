@@ -5,11 +5,14 @@ import { TestimonialsSection } from '../components/sections/TestimonialsSection.
 import { ValuesSection } from '../components/sections/ValuesSection.jsx'
 import { HeroPage } from '../components/heroes/HeroPage.jsx'
 import { aboutPage } from '../data/innerPagesContent.js'
+import { testimonials, testimonialsSection } from '../data/homePageContent.js'
+import { useCms } from '../context/useCms.js'
 import { useSanityData } from '../hooks/useSanityData.js'
 import { aboutPageQuery } from '../sanity/queries.js'
 
 export function AboutPage() {
   const { data } = useSanityData(aboutPageQuery)
+  const { home } = useCms()
   const hero = data?.hero ?? aboutPage.hero
   const processIntro = data?.processIntro ?? aboutPage.processIntro
   const valuesItems = data?.valuesItems?.length ? data.valuesItems : aboutPage.valuesItems
@@ -29,7 +32,11 @@ export function AboutPage() {
       <ProcessIntroSection data={processIntro} />
       <ValuesSection items={valuesItems} columnsClass="md:grid-cols-4" />
       <MeetTheTeamSection data={data?.team} />
-      <TestimonialsSection />
+      <TestimonialsSection
+        section={home?.testimonialsSection?.heading ? home.testimonialsSection : testimonialsSection}
+        items={home?.testimonials?.length ? home.testimonials : testimonials}
+        bg="bg-white"
+      />
       <FinalCtaSection />
     </>
   )

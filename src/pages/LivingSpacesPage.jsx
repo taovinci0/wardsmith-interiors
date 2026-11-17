@@ -22,7 +22,7 @@ export function LivingSpacesPage() {
       {hero?.intro ? (
         <section className="bg-white" style={{ paddingTop: '6rem', paddingBottom: '2rem' }}>
           <div className="container-custom">
-            <p className="max-w-[38ch] font-serif text-2xl leading-[1.5] text-primary">{hero.intro}</p>
+            <p className="max-w-[36ch] font-serif text-[1.625rem] leading-[1.5] text-primary">{hero.intro}</p>
           </div>
         </section>
       ) : null}
