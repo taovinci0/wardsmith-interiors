@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { ArrowLink } from '../common/ArrowLink.jsx'
 
 /**
  * Homepage section 2 — Kitchens, directly after the hero. Static, image-led.
@@ -19,9 +19,7 @@ export function KitchensHomeSection({ data }) {
             {data.content ? (
               <p className="mb-8 max-w-[52ch] font-sans text-lg font-light leading-relaxed text-neutral-600">{data.content}</p>
             ) : null}
-            <Link to="/kitchens" className="btn-primary inline-block">
-              {data.ctaLabel || 'Explore our kitchens'}
-            </Link>
+            <ArrowLink to="/kitchens">{data.ctaLabel || 'Explore our kitchens'}</ArrowLink>
           </div>
           <div className="grid grid-cols-[1.4fr_1fr] items-start gap-6">
             {img1 ? (

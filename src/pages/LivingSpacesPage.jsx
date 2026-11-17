@@ -70,7 +70,7 @@ export function LivingSpacesPage() {
         id="living-spaces-cta-section"
         heading="Have a space in mind?"
         content="Tell us about the room and we'll talk through what's possible — storage, finishes, budget and timings."
-        primaryLabel="Book a consultation"
+        primaryLabel="Start your project"
         primaryTo="/contact"
       />
     </>

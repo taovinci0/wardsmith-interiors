@@ -152,6 +152,6 @@ export const finalCta = {
   heading: 'Ready to Transform Your Home?',
   content:
     "Whether you have a clear brief in mind or need guidance to shape your ideas, we're here to help. Start your project with detailed specifications, or book a complimentary 20-minute consultation to explore your options and take the next step with confidence.",
-  primaryLabel: 'Start Your Project',
-  primaryTo: '/start-your-project',
+  primaryLabel: 'Start your project',
+  primaryTo: '/contact',
 }

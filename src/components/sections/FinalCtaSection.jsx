@@ -38,14 +38,9 @@ export function FinalCtaSection({ data = finalCta }) {
             className="final-cta-buttons mx-auto flex flex-col items-center justify-center gap-4 sm:flex-row"
             style={{ width: 'fit-content' }}
           >
-            <Link to="/contact" className="btn-secondary">
-              Book a Call
+            <Link to="/contact" className="btn-primary">
+              {data.primaryLabel || 'Start your project'}
             </Link>
-            {data.primaryLabel && data.primaryTo ? (
-              <Link to={data.primaryTo} className="btn-primary">
-                {data.primaryLabel}
-              </Link>
-            ) : null}
           </div>
         </div>
       </div>

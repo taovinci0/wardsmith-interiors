@@ -108,9 +108,9 @@ export function KitchensPage() {
       {/* 8 — Consultation */}
       <GreenBandCtaSection
         id="kitchens-cta-section"
-        heading="Book a design consultation"
-        content="We'll visit your home, measure your space, and talk through how a Ward-Smith kitchen could work for you."
-        primaryLabel="Book a consultation"
+        heading="Start your kitchen project"
+        content="Tell us about your space and your ideas — we'll visit your home, measure up, and talk through how a Ward-Smith kitchen could work for you."
+        primaryLabel="Start your project"
         primaryTo="/contact"
       />
     </>

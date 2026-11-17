@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 /** WP `service-cta.php` / `case-study-cta.php` — green band + pattern + two buttons. */
-export function GreenBandCtaSection({ id = 'service-cta-section', heading, content, primaryLabel, primaryTo, showBookCall = true }) {
+export function GreenBandCtaSection({ id = 'service-cta-section', heading, content, primaryLabel, primaryTo }) {
   return (
     <section
       id={id}
@@ -29,16 +29,9 @@ export function GreenBandCtaSection({ id = 'service-cta-section', heading, conte
             className="final-cta-buttons mx-auto flex flex-col items-center justify-center gap-4 sm:flex-row"
             style={{ width: 'fit-content' }}
           >
-            {showBookCall ? (
-              <Link to="/contact" className="btn-secondary">
-                Book a Call
-              </Link>
-            ) : null}
-            {primaryLabel && primaryTo ? (
-              <Link to={primaryTo} className="btn-primary">
-                {primaryLabel}
-              </Link>
-            ) : null}
+            <Link to={primaryTo || '/contact'} className="btn-primary">
+              {primaryLabel || 'Start your project'}
+            </Link>
           </div>
         </div>
       </div>

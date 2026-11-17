@@ -54,10 +54,10 @@ export const heroHomeDefaults = {
   eyebrow: 'WARD SMITH INTERIORS',
   /** Matches homepage meta `_hero_heading` (WP DB) */
   heading: 'Crafting Bespoke Essex Furniture Through Creative Design and Expert Craftsmanship',
-  primaryButtonLabel: 'FIND OUT MORE',
-  primaryButtonTo: '/about-us',
-  secondaryButtonLabel: 'GET IN TOUCH',
-  secondaryButtonTo: '/start-your-project',
+  primaryButtonLabel: 'Start your project',
+  primaryButtonTo: '/contact',
+  secondaryButtonLabel: null,
+  secondaryButtonTo: null,
   /** `_hero_images` attachment → full-size URL on Local */
   imageUrls: [wpMediaUrl('/wp-content/uploads/2025/12/hero-bg.jpg')],
 }

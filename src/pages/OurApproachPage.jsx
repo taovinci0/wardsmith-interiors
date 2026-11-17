@@ -127,8 +127,8 @@ export function OurApproachPage() {
       <GreenBandCtaSection
         id="approach-cta-section"
         heading="Ready to start the conversation?"
-        content="Book a complimentary design consultation — we'll walk through your space, your ideas and what happens next."
-        primaryLabel="Book a consultation"
+        content="Tell us about your project — we'll walk through your space, your ideas and what happens next."
+        primaryLabel="Start your project"
         primaryTo="/contact"
       />
     </>

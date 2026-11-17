@@ -46,7 +46,7 @@ export function SiteHeader() {
             </ul>
 
             <Link to="/contact" className="btn-outline whitespace-nowrap">
-              Book a consultation
+              Start your project
             </Link>
           </nav>
 
@@ -102,7 +102,7 @@ export function SiteHeader() {
 
             <div className="mobile-menu-cta">
               <Link to="/contact" className="btn-primary" onClick={closeMenu}>
-                Book a consultation
+                Start your project
               </Link>
             </div>
           </nav>
