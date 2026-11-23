@@ -90,7 +90,7 @@ export const homePageQuery = /* groq */ `
       steps[]{ title, description },
       ctaLabel
     },
-    "selectedProjects": *[_type == "caseStudy" && defined(slug.current) && defined(coalesce(image.asset, imageUrl))] | order(_createdAt desc)[0...4]{
+    "selectedProjects": *[_type == "caseStudy" && defined(slug.current) && defined(coalesce(image.asset, imageUrl)) && defined(projectOverview)] | order(_createdAt desc)[0...4]{
       "slug": slug.current,
       title,
       location,
@@ -123,7 +123,7 @@ export const kitchensPageQuery = /* groq */ `
     whatsIncluded{ eyebrow, heading, items[]{ title, content } },
     investment{ eyebrow, heading, content, bands[]{ label, value } },
     faqs{ heading, items[]{ question, answer } },
-    "projects": *[_type == "caseStudy" && room == "kitchen" && defined(slug.current)] | order(_createdAt desc)[0...6]{
+    "projects": *[_type == "caseStudy" && room == "kitchen" && defined(slug.current) && defined(coalesce(image.asset, imageUrl)) && defined(projectOverview)] | order(_createdAt desc)[0...6]{
       "slug": slug.current, title, location, "imageUrl": coalesce(image.asset->url + "?auto=format&w=1600&q=75", imageUrl)
     }
   }
@@ -151,7 +151,7 @@ export const ourApproachPageQuery = /* groq */ `
 `
 
 export const projectsListQuery = /* groq */ `
-  *[_type == "caseStudy" && defined(slug.current)] | order(_createdAt desc){
+  *[_type == "caseStudy" && defined(slug.current) && defined(coalesce(image.asset, imageUrl)) && defined(projectOverview)] | order(_createdAt desc){
     "slug": slug.current,
     title,
     location,
@@ -246,7 +246,7 @@ export const servicePageBySlugQuery = /* groq */ `
 `
 
 export const caseStudiesListQuery = /* groq */ `
-  *[_type == "caseStudy" && defined(slug.current)] | order(_createdAt asc){
+  *[_type == "caseStudy" && defined(slug.current) && defined(coalesce(image.asset, imageUrl)) && defined(projectOverview)] | order(_createdAt asc){
     "slug": slug.current,
     title,
     location,
@@ -278,7 +278,7 @@ export const caseStudyBySlugQuery = /* groq */ `
     ctaContent,
     ctaButtonLabel,
     ctaButtonTo,
-    "related": *[_type == "caseStudy" && slug.current != $slug] | order(_createdAt asc)[0...3]{
+    "related": *[_type == "caseStudy" && slug.current != $slug && defined(coalesce(image.asset, imageUrl)) && defined(projectOverview)] | order(_createdAt asc)[0...3]{
       "slug": slug.current,
       title,
       location,

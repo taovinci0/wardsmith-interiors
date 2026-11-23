@@ -24,7 +24,7 @@ const STATIC_ROUTES = [
 ]
 
 const query = encodeURIComponent(
-  '{"posts":*[_type=="blogPost" && defined(slug.current)].slug.current,"projects":*[_type=="caseStudy" && defined(slug.current) && defined(coalesce(image.asset, imageUrl))].slug.current}',
+  '{"posts":*[_type=="blogPost" && defined(slug.current)].slug.current,"projects":*[_type=="caseStudy" && defined(slug.current) && defined(coalesce(image.asset, imageUrl)) && defined(projectOverview)].slug.current}',
 )
 
 let posts = []

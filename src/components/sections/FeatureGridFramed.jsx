@@ -20,7 +20,7 @@ export function FeatureGridFramed({ items = [], columns = 3 }) {
                 </span>
               ) : null}
             </div>
-            <h3 className="mb-2 font-serif text-xl leading-snug text-primary">{it.title}</h3>
+            <h3 className="mb-2 font-serif text-2xl leading-snug text-primary">{it.title}</h3>
             {it.content ? (
               <p className="font-sans text-sm font-light leading-relaxed text-neutral-600">{it.content}</p>
             ) : null}
