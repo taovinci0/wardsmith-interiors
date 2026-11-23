@@ -9,7 +9,7 @@
     "dev:full": "concurrently -k \"npm run dev:api\" \"vite\"",
     "sanity:dev": "npm --prefix sanity-studio run dev",
     "sanity:seed": "node scripts/seed-sanity-content.mjs",
-    "build": "vite build",
+    "build": "vite build && node scripts/generate-sitemap.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

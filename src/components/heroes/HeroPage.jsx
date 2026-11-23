@@ -18,9 +18,10 @@ export function HeroPage({
   contentPaddingTop,
 }) {
   const heroRef = useRef(null)
+  const realUrls = imageUrls.filter(Boolean)
   const slides =
-    imageUrls.length > 0
-      ? imageUrls.map((url) => ({ url }))
+    realUrls.length > 0
+      ? realUrls.map((url) => ({ url }))
       : [{ url: null }]
 
   useHeroIntroAnimation(heroRef)

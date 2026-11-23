@@ -11,7 +11,44 @@
     { "source": "/case-studies/:slug", "destination": "/projects/:slug", "permanent": true },
     { "source": "/blog", "destination": "/journal", "permanent": true },
     { "source": "/blog/:slug", "destination": "/journal/:slug", "permanent": true },
-    { "source": "/start-your-project", "destination": "/contact", "permanent": true }
+    { "source": "/start-your-project", "destination": "/contact", "permanent": true },
+
+    { "source": "/bespoke-kitchens", "destination": "/kitchens", "permanent": true },
+    { "source": "/bedrooms", "destination": "/living-spaces", "permanent": true },
+    { "source": "/home-offices", "destination": "/living-spaces", "permanent": true },
+    { "source": "/media-walls", "destination": "/living-spaces", "permanent": true },
+    { "source": "/tailored-spaces", "destination": "/living-spaces", "permanent": true },
+    { "source": "/under-stair-storage", "destination": "/living-spaces", "permanent": true },
+    { "source": "/carpentry-services", "destination": "/", "permanent": true },
+    { "source": "/contact-us", "destination": "/contact", "permanent": true },
+    { "source": "/meet-the-team", "destination": "/about-us", "permanent": true },
+    { "source": "/our-values", "destination": "/about-us", "permanent": true },
+    { "source": "/why-ward-smith", "destination": "/about-us", "permanent": true },
+    { "source": "/the-process", "destination": "/our-approach", "permanent": true },
+    { "source": "/professional-cad-design", "destination": "/our-approach", "permanent": true },
+    { "source": "/terms-and-conditions", "destination": "/terms-of-business", "permanent": true },
+
+    { "source": "/essex-bedroom-transformation-case-study", "destination": "/projects/essex-bedroom-transformation", "permanent": true },
+    { "source": "/witham-bedroom-case-study", "destination": "/projects/witham-bedroom-refurbishment", "permanent": true },
+
+    { "source": "/cad-design-process-benefits", "destination": "/journal/cad-design-process-benefits", "permanent": true },
+    { "source": "/custom-fitted-wardrobe-essex", "destination": "/journal/custom-fitted-wardrobe-essex", "permanent": true },
+    { "source": "/custom-home-office-furniture-essex", "destination": "/journal/custom-home-office-furniture-essex", "permanent": true },
+    { "source": "/fitted-wardrobes-value-essex", "destination": "/journal/fitted-wardrobes-value-essex", "permanent": true },
+    { "source": "/kitchen-fitting-timelines-essex", "destination": "/journal/kitchen-fitting-timelines-essex", "permanent": true },
+    { "source": "/kitchen-renovations-essex-guide", "destination": "/journal/kitchen-renovations-essex-guide", "permanent": true },
+    { "source": "/media-walls-essex-benefits-features", "destination": "/journal/media-walls-essex-benefits-features", "permanent": true },
+    { "source": "/media-walls-vs-tv-stands-essex", "destination": "/journal/media-walls-vs-tv-stands-essex", "permanent": true },
+    { "source": "/popular-media-wall-designs-essex", "destination": "/journal/popular-media-wall-designs-essex", "permanent": true },
+    { "source": "/ultimate-guide-fitted-wardrobes-essex", "destination": "/journal/ultimate-guide-fitted-wardrobes-essex", "permanent": true },
+    { "source": "/under-stair-storage-essex-benefits", "destination": "/journal/under-stair-storage-essex-benefits", "permanent": true },
+    { "source": "/walk-in-wardrobe-benefits-essex", "destination": "/journal/walk-in-wardrobe-benefits-essex", "permanent": true },
+    { "source": "/what-is-a-kitchen-fitter-essex", "destination": "/journal/what-is-a-kitchen-fitter-essex", "permanent": true },
+
+    { "source": "/category/kitchens", "destination": "/kitchens", "permanent": true },
+    { "source": "/category/case-study", "destination": "/projects", "permanent": true },
+    { "source": "/category/computer-aided-design-cad", "destination": "/our-approach", "permanent": true },
+    { "source": "/category/:slug", "destination": "/living-spaces", "permanent": true }
   ],
   "rewrites": [
     {

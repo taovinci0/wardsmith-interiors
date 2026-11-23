@@ -34,7 +34,8 @@ export function HeroHome() {
     imageUrls,
   } = useMemo(() => {
     const merged = { ...heroHomeDefaults, ...(home?.hero || {}) }
-    if (!merged.imageUrls?.length) merged.imageUrls = heroHomeDefaults.imageUrls
+    merged.imageUrls = (merged.imageUrls || []).filter(Boolean)
+    if (!merged.imageUrls.length) merged.imageUrls = heroHomeDefaults.imageUrls
     return merged
   }, [home])
   const heroRef = useRef(null)

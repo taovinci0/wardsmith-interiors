@@ -6,28 +6,32 @@ import { formatDocumentTitle, resolveSeoPathname, siteName } from './seoConfig.j
 /**
  * Central route-aware meta tags. Dynamic segments resolve titles from static seeds until Sanity drives each page.
  */
+/** Canonical host — staging and the vercel.app alias must canonicalise here. */
+const CANONICAL_ORIGIN = 'https://wardsmithinteriors.co.uk'
+const OG_IMAGE = `${CANONICAL_ORIGIN}/media/2025/12/hero-bg.jpg`
+
 export function SiteSeo() {
   const { pathname } = useLocation()
   const params = useParams()
-  const origin = typeof globalThis !== 'undefined' && globalThis.location?.origin ? globalThis.location.origin : ''
 
   const base = resolveSeoPathname(pathname)
   let pageTitle = base.title
   let description = base.description
 
-  if (pathname.startsWith('/services/') && params.slug) {
+  if ((pathname.startsWith('/services/') || pathname.startsWith('/kitchens/')) && params.slug) {
     const s = getServiceBySlug(params.slug)
     if (s?.title) pageTitle = s.title
-  } else if (pathname.startsWith('/case-studies/') && params.slug) {
+  } else if ((pathname.startsWith('/case-studies/') || pathname.startsWith('/projects/')) && params.slug) {
     const c = getCaseStudyBySlug(params.slug)
     if (c?.title) pageTitle = c.title
-  } else if (pathname.startsWith('/blog/') && params.slug) {
+  } else if ((pathname.startsWith('/blog/') || pathname.startsWith('/journal/')) && params.slug) {
     const p = getBlogPostBySlug(params.slug)
     if (p?.title) pageTitle = p.title
     if (p?.excerpt) description = p.excerpt
   }
 
   const documentTitle = formatDocumentTitle(pageTitle)
+  const canonical = pathname === '/' ? `${CANONICAL_ORIGIN}/` : `${CANONICAL_ORIGIN}${pathname.replace(/\/$/, '')}`
 
   return (
     <Helmet htmlAttributes={{ lang: 'en-GB' }} prioritizeSeoTags>
@@ -36,10 +40,12 @@ export function SiteSeo() {
       <meta property="og:title" content={documentTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content="website" />
+      <meta property="og:url" content={canonical} />
+      <meta property="og:image" content={OG_IMAGE} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={documentTitle} />
       <meta name="twitter:description" content={description} />
-      {origin ? <link rel="canonical" href={`${origin}${pathname}`} /> : null}
+      <link rel="canonical" href={canonical} />
     </Helmet>
   )
 }
