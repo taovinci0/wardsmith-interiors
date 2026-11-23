@@ -17,7 +17,7 @@ export const homePageQuery = /* groq */ `
       primaryButtonTo,
       secondaryButtonLabel,
       secondaryButtonTo,
-      "imageUrls": coalesce(images[].asset->url + "?auto=format&w=1200&q=75", imageUrls)
+      "imageUrls": coalesce(images[]{"u": asset->url + "?auto=format&w=1200&q=75"}[].u, imageUrls)
     },
     processIntro{
       eyebrow,
@@ -82,7 +82,7 @@ export const homePageQuery = /* groq */ `
     },
     kitchensSection{
       eyebrow, heading, content,
-      "imageUrls": images[].asset->url + "?auto=format&w=1200&q=75",
+      "imageUrls": images[]{"u": asset->url + "?auto=format&w=1200&q=75"}[].u,
       ctaLabel
     },
     howItWorks{
@@ -118,7 +118,7 @@ export const kitchensPageQuery = /* groq */ `
   *[_type == "kitchensPage"][0]{
     hero{ eyebrow, heading, intro, "imageUrl": image.asset->url + "?auto=format&w=1600&q=75" },
     howWeDesign{ eyebrow, heading, content, "imageUrl": image.asset->url + "?auto=format&w=1600&q=75", videoUrl },
-    howItsMade{ eyebrow, heading, content, "imageUrls": images[].asset->url + "?auto=format&w=1200&q=75" },
+    howItsMade{ eyebrow, heading, content, "imageUrls": images[]{"u": asset->url + "?auto=format&w=1200&q=75"}[].u },
     projectsSection{ eyebrow, heading },
     whatsIncluded{ eyebrow, heading, items[]{ title, content } },
     investment{ eyebrow, heading, content, bands[]{ label, value } },
@@ -134,7 +134,7 @@ export const livingSpacesPageQuery = /* groq */ `
     hero{ eyebrow, heading, intro, "imageUrl": image.asset->url + "?auto=format&w=1600&q=75" },
     spaces[]{
       title, content,
-      "imageUrls": images[].asset->url + "?auto=format&w=1200&q=75",
+      "imageUrls": images[]{"u": asset->url + "?auto=format&w=1200&q=75"}[].u,
       relatedProject->{ "slug": slug.current, title }
     }
   }
@@ -181,7 +181,7 @@ export const aboutPageQuery = /* groq */ `
     processSteps{
       eyebrow, heading, tagline,
       steps[]{ title, description },
-      "stepImageUrls": coalesce(stepImages[].asset->url + "?auto=format&w=1200&q=75", stepImageUrls)
+      "stepImageUrls": coalesce(stepImages[]{"u": asset->url + "?auto=format&w=1200&q=75"}[].u, stepImageUrls)
     }
   }
 `
@@ -228,7 +228,7 @@ export const servicePageBySlugQuery = /* groq */ `
     serviceProcessSteps{
       eyebrow, heading, tagline,
       steps[]{ title, description },
-      "stepImageUrls": coalesce(stepImages[].asset->url + "?auto=format&w=1200&q=75", stepImageUrls),
+      "stepImageUrls": coalesce(stepImages[]{"u": asset->url + "?auto=format&w=1200&q=75"}[].u, stepImageUrls),
       endCard{ heading, paragraph, buttonLabel, buttonTo }
     },
     serviceUsp{
@@ -239,7 +239,7 @@ export const servicePageBySlugQuery = /* groq */ `
     },
     gallery{
       eyebrow, heading, paragraph,
-      "imageUrls": coalesce(images[].asset->url + "?auto=format&w=1200&q=75", imageUrls)
+      "imageUrls": coalesce(images[]{"u": asset->url + "?auto=format&w=1200&q=75"}[].u, imageUrls)
     },
     serviceCta{ heading, content, buttonLabel, buttonTo }
   }
@@ -273,7 +273,7 @@ export const caseStudyBySlugQuery = /* groq */ `
     galleryEyebrow,
     galleryHeading,
     galleryParagraph,
-    "galleryImageUrls": coalesce(galleryImages[].asset->url + "?auto=format&w=1200&q=75", galleryImageUrls),
+    "galleryImageUrls": coalesce(galleryImages[]{"u": asset->url + "?auto=format&w=1200&q=75"}[].u, galleryImageUrls),
     ctaHeading,
     ctaContent,
     ctaButtonLabel,
