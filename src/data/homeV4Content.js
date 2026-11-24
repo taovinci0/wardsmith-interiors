@@ -21,22 +21,18 @@ const IMG = {
 }
 
 export const homeV4 = {
-  hero: {
+  // Overrides onto the existing full-height photo hero (brandmark intact):
+  // Seb's copy, our treatment.
+  heroOverride: {
     eyebrow: 'Bespoke kitchens & fitted furniture · Essex',
-    headingLine1: 'Bespoke kitchens,',
-    headingLine2: 'made to be lived with.',
+    heading: 'Bespoke kitchens, made to be lived with.',
+    accentPhrase: 'made to be lived with.',
     content:
       'Designed around how your household cooks, gathers and gets through the week. Made by our own team at Wicks Manor near Maldon, and fitted by the people who made it.',
-    primaryLabel: 'Start a conversation',
-    primaryTo: '/contact',
-    secondaryLabel: 'See our kitchens',
-    secondaryTo: '/kitchens',
-    proofStrip: [
-      '5.0 on Google from 56 reviews',
-      'Made at Wicks Manor, Maldon',
-      'Designed, made and fitted by one team',
-      '3-year craftsmanship guarantee',
-    ],
+    primaryButtonLabel: 'Start a conversation',
+    primaryButtonTo: '/contact',
+    secondaryButtonLabel: 'See our kitchens',
+    secondaryButtonTo: '/kitchens',
   },
 
   roomsFirst: {

@@ -8,20 +8,20 @@ import { useHeroIntroAnimation } from '../../hooks/useHeroIntroAnimation.js'
 /** Render the heading with the closing phrase in the accent colour, when it matches. */
 const ACCENT_PHRASE = 'the people who call them home'
 
-function renderHeading(heading) {
+function renderHeading(heading, accentPhrase = ACCENT_PHRASE) {
   if (!heading) return heading
-  const idx = heading.toLowerCase().indexOf(ACCENT_PHRASE)
+  const idx = heading.toLowerCase().indexOf(accentPhrase.toLowerCase())
   if (idx === -1) return heading
   return (
     <>
       {heading.slice(0, idx)}
-      <span className="text-accent-600">{heading.slice(idx, idx + ACCENT_PHRASE.length)}</span>
-      {heading.slice(idx + ACCENT_PHRASE.length)}
+      <span className="text-accent-600 italic">{heading.slice(idx, idx + accentPhrase.length)}</span>
+      {heading.slice(idx + accentPhrase.length)}
     </>
   )
 }
 
-export function HeroHome() {
+export function HeroHome({ override }) {
   const { home, siteSettings } = useCms()
   const areaCovered = siteSettings?.areaCovered || 'Essex and surrounding areas'
   const {
@@ -32,12 +32,14 @@ export function HeroHome() {
     secondaryButtonLabel,
     secondaryButtonTo,
     imageUrls,
+    accentPhrase,
+    content,
   } = useMemo(() => {
-    const merged = { ...heroHomeDefaults, ...(home?.hero || {}) }
+    const merged = { ...heroHomeDefaults, ...(home?.hero || {}), ...(override || {}) }
     merged.imageUrls = (merged.imageUrls || []).filter(Boolean)
     if (!merged.imageUrls.length) merged.imageUrls = heroHomeDefaults.imageUrls
     return merged
-  }, [home])
+  }, [home, override])
   const heroRef = useRef(null)
 
   const slides =
@@ -137,8 +139,14 @@ export function HeroHome() {
         ) : null}
 
         <h1 className="hero-title mb-9 max-w-[21ch] font-serif text-[2.5rem] leading-[1.1] text-white md:text-[3.375rem]">
-          {renderHeading(heading)}
+          {renderHeading(heading, accentPhrase || undefined)}
         </h1>
+
+        {content ? (
+          <p className="hero-subtitle -mt-4 mb-9 max-w-[46ch] font-sans font-light leading-relaxed text-white/90">
+            {content}
+          </p>
+        ) : null}
 
         <div className="hero-buttons flex flex-wrap items-center gap-4">
           {primaryButtonLabel && primaryButtonTo ? (
@@ -147,7 +155,7 @@ export function HeroHome() {
             </Link>
           ) : null}
           {secondaryButtonLabel && secondaryButtonTo ? (
-            <Link to={secondaryButtonTo} className="btn-secondary">
+            <Link to={secondaryButtonTo} className="btn-outline">
               {secondaryButtonLabel}
             </Link>
           ) : null}

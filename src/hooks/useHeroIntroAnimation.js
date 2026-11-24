@@ -35,7 +35,7 @@ export function useHeroIntroAnimation(heroRef) {
         }
       }
 
-      const content = hero.querySelectorAll('.hero-eyebrow, .hero-title, .hero-buttons, .hero-proof')
+      const content = hero.querySelectorAll('.hero-eyebrow, .hero-title, .hero-subtitle, .hero-buttons, .hero-proof')
       if (content.length) {
         gsap.fromTo(
           content,
