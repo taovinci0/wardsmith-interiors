@@ -255,6 +255,20 @@ export const caseStudiesListQuery = /* groq */ `
   }
 `
 
+/** Best complete project for the homepage feature: kitchens first, newest first. */
+export const featuredProjectQuery = /* groq */ `
+  *[_type == "caseStudy" && defined(slug.current) && defined(coalesce(image.asset, imageUrl)) && defined(projectOverview)]
+    | order(select(room == "kitchen" => 0, 1) asc, _createdAt desc)[0]{
+    "slug": slug.current,
+    title,
+    location,
+    room,
+    projectOverview,
+    "imageUrl": coalesce(image.asset->url + "?auto=format&w=2000&q=75", imageUrl),
+    "galleryImageUrls": coalesce(galleryImages[]{"u": asset->url + "?auto=format&w=1200&q=75"}[].u, galleryImageUrls)[0...3]
+  }
+`
+
 export const caseStudyBySlugQuery = /* groq */ `
   *[_type == "caseStudy" && slug.current == $slug][0]{
     "slug": slug.current,

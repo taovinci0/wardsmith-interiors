@@ -40,7 +40,7 @@ export function RoomsFirstSection({ data }) {
             ) : null}
           </figure>
           {data.wideImageUrl ? (
-            <div className="aspect-video overflow-hidden rounded-lg">
+            <div className="aspect-video overflow-hidden rounded-lg" data-parallax>
               <img src={data.wideImageUrl} alt="" className="h-full w-full object-cover" loading="lazy" />
             </div>
           ) : null}

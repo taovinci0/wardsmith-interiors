@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { HeroHome } from '../components/sections/HeroHome.jsx'
 import { KitchensHomeSection } from '../components/sections/KitchensHomeSection.jsx'
@@ -10,6 +11,9 @@ import { PromiseSection } from '../components/sections/home-v4/PromiseSection.js
 import { ApproachStripSection } from '../components/sections/home-v4/ApproachStripSection.jsx'
 import { FinalCtaDualSection } from '../components/sections/home-v4/FinalCtaDualSection.jsx'
 import { useCms } from '../context/useCms.js'
+import { useSanityData } from '../hooks/useSanityData.js'
+import { useHomeV4Motion } from '../hooks/useHomeV4Motion.js'
+import { featuredProjectQuery } from '../sanity/queries.js'
 import { homeV4 } from '../data/homeV4Content.js'
 import { processIntro as processIntroFallback } from '../data/homePageContent.js'
 
@@ -33,10 +37,13 @@ function GoogleG() {
  */
 export function HomePageV4() {
   const { home } = useCms()
+  const { data: featured, loading: featuredLoading } = useSanityData(featuredProjectQuery)
   const film = home?.processIntro?.videoUrl ? home.processIntro : processIntroFallback
+  const rootRef = useRef(null)
+  useHomeV4Motion(rootRef, !featuredLoading)
 
   return (
-    <>
+    <div ref={rootRef}>
       <Helmet>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
@@ -55,7 +62,7 @@ export function HomePageV4() {
 
       {/* 5 — featured project (placeholder; hide before homepage swap if no
              completed kitchen caseStudy exists) */}
-      <FeaturedProjectSection data={homeV4.featuredProject} />
+      <FeaturedProjectSection project={featured} data={homeV4.featuredProject} />
 
       {/* 6 — the same care, room by room */}
       <RoomByRoomSection data={homeV4.roomByRoom} />
@@ -109,6 +116,6 @@ export function HomePageV4() {
 
       {/* 10 — tell us about your home (dual-path, corner plus-grid) */}
       <FinalCtaDualSection data={homeV4.finalCta} />
-    </>
+    </div>
   )
 }
