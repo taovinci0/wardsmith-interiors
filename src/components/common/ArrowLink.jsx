@@ -5,7 +5,7 @@ export function ArrowLink({ to, children, className = '' }) {
   return (
     <Link
       to={to}
-      className={`group inline-flex items-center gap-2 font-sans text-xs font-medium uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent-600 ${className}`}
+      className={`group inline-flex items-center gap-2 font-sans text-xs font-medium uppercase tracking-[0.2em] text-primary underline decoration-primary/35 decoration-1 underline-offset-[6px] transition-colors hover:text-accent-600 hover:decoration-accent-600/60 ${className}`}
     >
       <span>{children}</span>
       <svg

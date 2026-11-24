@@ -7,6 +7,7 @@ import { CaseStudyDetailPage } from './pages/CaseStudyDetailPage.jsx'
 import { ContactPage } from './pages/ContactPage.jsx'
 import { FaqsPage } from './pages/FaqsPage.jsx'
 import { HomePage } from './pages/HomePage.jsx'
+import { HomePageV4 } from './pages/HomePageV4.jsx'
 import { KitchensPage } from './pages/KitchensPage.jsx'
 import { LivingSpacesPage } from './pages/LivingSpacesPage.jsx'
 import { NotFoundPage } from './pages/NotFoundPage.jsx'
@@ -41,6 +42,7 @@ export const router = createBrowserRouter([
     element: <SiteLayout />,
     children: [
       { index: true, element: <HomePage /> },
+      { path: 'home-v2', element: <HomePageV4 /> },
       { path: 'kitchens', element: <KitchensPage /> },
       { path: 'living-spaces', element: <LivingSpacesPage /> },
       { path: 'our-approach', element: <OurApproachPage /> },
