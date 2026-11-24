@@ -34,7 +34,7 @@ export function FeaturedProjectSection({ project, data }) {
           src={siteLogoUrl}
           alt=""
           aria-hidden
-          className="pointer-events-none absolute w-auto"
+          className="pointer-events-none absolute hidden w-auto md:block"
           style={{ top: '-10%', right: '-4%', height: '118%', opacity: 0.06, filter: 'brightness(0) invert(1)' }}
         />
       </div>

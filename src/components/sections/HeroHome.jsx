@@ -125,7 +125,7 @@ export function HeroHome({ override }) {
         src={siteLogoUrl}
         alt=""
         aria-hidden
-        className="pointer-events-none absolute w-auto"
+        className="pointer-events-none absolute hidden w-auto md:block"
         style={{
           top: '-12%',
           right: '-6%',
