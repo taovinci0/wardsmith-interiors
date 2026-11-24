@@ -13,7 +13,7 @@ export function ConsideredGridSection({ data }) {
 
         <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
           {data.items.map((it, i) => (
-            <div key={it.title}>
+            <div key={it.title} className={i % 2 === 1 ? 'lg:mt-12' : ''}>
               <div className="mb-6 overflow-hidden rounded-lg" style={{ aspectRatio: '1 / 1' }}>
                 <img src={it.imageUrl} alt="" className="h-full w-full object-cover" loading="lazy" />
               </div>

@@ -41,7 +41,8 @@ export const router = createBrowserRouter([
     path: '/',
     element: <SiteLayout />,
     children: [
-      { index: true, element: <HomePageV4 /> }, // v4 review build (branch only)
+      { index: true, element: <HomePage /> },
+      { path: 'home-v2', element: <HomePageV4 /> },
       { path: 'kitchens', element: <KitchensPage /> },
       { path: 'living-spaces', element: <LivingSpacesPage /> },
       { path: 'our-approach', element: <OurApproachPage /> },

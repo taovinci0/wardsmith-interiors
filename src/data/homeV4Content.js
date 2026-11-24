@@ -27,6 +27,7 @@ export const homeV4 = {
     eyebrow: 'Bespoke kitchens & fitted furniture · Essex',
     heading: 'Bespoke kitchens, made to be lived with.',
     accentPhrase: 'made to be lived with.',
+    breakBeforeAccent: true,
     content:
       'Designed around how your household cooks, gathers and gets through the week. Made by our own team at Wicks Manor near Maldon, and fitted by the people who made it.',
     primaryButtonLabel: 'Start a conversation',
@@ -43,6 +44,8 @@ export const homeV4 = {
       'We design for that life first. The cabinetry follows.',
     ],
     imageUrl: IMG.kitchenGrey,
+    imageCaption: 'Detail — hand-finished cabinetry',
+    wideImageUrl: IMG.detail,
   },
 
   finestWork: {
@@ -203,29 +206,35 @@ export const homeV4 = {
     imageCaption: 'Makers at work, Wicks Manor workshop',
     steps: [
       {
+        tag: 'Call',
         title: 'A first conversation',
         content:
           "A relaxed call about your home, your plans and your budget, and an honest view on whether we're the right fit.",
       },
       {
+        tag: 'Design',
         title: 'Design at your table',
         content:
           'We visit, measure and listen, then develop drawings and a detailed proposal for you to consider.',
       },
       {
+        tag: 'Workshop',
         title: 'Made at Wicks Manor',
         content: 'Once every detail is agreed, our team makes your furniture in our workshop.',
       },
       {
+        tag: 'Fitting',
         title: 'Fitted with care',
         content:
           "The people who made it install it, and treat your home with the respect we'd expect in our own.",
       },
       {
+        tag: 'Aftercare',
         title: 'Looked after',
         content: "We're still here once the dust sheets are folded away.",
       },
     ],
+    ctaLine: 'The whole journey, explained properly.',
     linkLabel: 'See our approach in detail',
     linkTo: '/our-approach',
   },
@@ -240,28 +249,28 @@ export const homeV4 = {
       id: 'steven',
       name: 'Steven',
       location: 'Billericay, Essex',
-      posterImageUrl: IMG.testimonialPoster,
+      posterImageUrl: 'https://i.ytimg.com/vi/BGBzn6xJRgw/oar2.jpg',
       videoUrl: 'https://youtube.com/shorts/BGBzn6xJRgw',
     },
     {
       id: 'james',
       name: 'James',
       location: 'Witham, Essex',
-      posterImageUrl: IMG.testimonialPoster,
+      posterImageUrl: 'https://i.ytimg.com/vi/g2uby_DMxl4/oar2.jpg',
       videoUrl: 'https://youtube.com/shorts/g2uby_DMxl4',
     },
     {
       id: 'jordan',
       name: 'Jordan',
       location: 'Epping, Essex',
-      posterImageUrl: IMG.testimonialPoster,
+      posterImageUrl: 'https://i.ytimg.com/vi/xeYRpy2_W3A/oar2.jpg',
       videoUrl: 'https://www.youtube.com/shorts/xeYRpy2_W3A',
     },
     {
       id: 'sarah',
       name: 'Sarah',
       location: 'Dunmow, Essex',
-      posterImageUrl: IMG.testimonialPoster,
+      posterImageUrl: 'https://i.ytimg.com/vi/pe9wdi1qcFk/oar2.jpg',
       videoUrl: 'https://youtube.com/shorts/pe9wdi1qcFk',
     },
   ],
@@ -278,14 +287,14 @@ export const homeV4 = {
         // GoHighLevel booking calendar embeds on the contact page; intent
         // preselects the journey until that embed lands.
         to: '/contact?intent=call',
-        tone: 'light',
+        tone: 'peach',
       },
       {
         heading: 'Already have plans?',
         content: "Send us your drawings and brief, and we'll come back with our thoughts.",
         buttonLabel: 'Send us your plans',
         to: '/contact?intent=plans',
-        tone: 'dark',
+        tone: 'cream',
       },
     ],
     footnote: 'Covering Essex and the surrounding counties. We aim to reply within 24 hours.',

@@ -7,6 +7,7 @@ const DEFAULT_DESC =
 /** Static defaults; extend with CMS-driven `siteSettings` in `SiteSeo.jsx` later. */
 const ROUTES = [
   { path: '/', title: 'Bespoke Fitted Furniture in Essex', description: DEFAULT_DESC },
+  { path: '/home-v2', title: 'Homepage preview', description: DEFAULT_DESC },
   { path: '/kitchens', title: 'Bespoke Kitchens in Essex', description: 'Kitchens designed, made and installed by Ward-Smith Interiors — from first sketch to fitting, all by our own Essex workshop.' },
   { path: '/living-spaces', title: 'Living Spaces', description: 'Bespoke fitted furniture for bedrooms, home offices, media walls and tailored spaces across Essex.' },
   { path: '/our-approach', title: 'Our Approach', description: 'How a Ward-Smith project runs — design, making, installation and aftercare, step by step.' },

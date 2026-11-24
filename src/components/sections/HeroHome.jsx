@@ -8,13 +8,14 @@ import { useHeroIntroAnimation } from '../../hooks/useHeroIntroAnimation.js'
 /** Render the heading with the closing phrase in the accent colour, when it matches. */
 const ACCENT_PHRASE = 'the people who call them home'
 
-function renderHeading(heading, accentPhrase = ACCENT_PHRASE) {
+function renderHeading(heading, accentPhrase = ACCENT_PHRASE, breakBeforeAccent = false) {
   if (!heading) return heading
   const idx = heading.toLowerCase().indexOf(accentPhrase.toLowerCase())
   if (idx === -1) return heading
   return (
     <>
-      {heading.slice(0, idx)}
+      {heading.slice(0, idx).trimEnd()}
+      {breakBeforeAccent ? <br /> : ' '}
       <span className="text-accent-600 italic">{heading.slice(idx, idx + accentPhrase.length)}</span>
       {heading.slice(idx + accentPhrase.length)}
     </>
@@ -33,6 +34,7 @@ export function HeroHome({ override }) {
     secondaryButtonTo,
     imageUrls,
     accentPhrase,
+    breakBeforeAccent,
     content,
   } = useMemo(() => {
     const merged = { ...heroHomeDefaults, ...(home?.hero || {}), ...(override || {}) }
@@ -139,7 +141,7 @@ export function HeroHome({ override }) {
         ) : null}
 
         <h1 className="hero-title mb-9 max-w-[21ch] font-serif text-[2.5rem] leading-[1.1] text-white md:text-[3.375rem]">
-          {renderHeading(heading, accentPhrase || undefined)}
+          {renderHeading(heading, accentPhrase || undefined, breakBeforeAccent)}
         </h1>
 
         {content ? (

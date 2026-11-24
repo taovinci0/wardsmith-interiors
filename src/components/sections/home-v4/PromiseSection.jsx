@@ -1,18 +1,20 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
-const PLUS_GRID = `url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 8v8M8 12h8' stroke='%23FFFFFF' stroke-width='1' fill='none' opacity='0.1'/%3E%3C/svg%3E")`
+import { VideoModal } from '../../common/VideoModal.jsx'
 
 /**
- * The page's one dark band: the promise + founder film, the six
- * commitments, and the guarantee card. data = homeV4.promise,
- * guarantee = homeV4.guarantee.
+ * The page's one dark band, on clean primary (plus-grid reserved for the
+ * closer's corner field): the promise + the real workshop film, the six
+ * commitments, and the cream guarantee card inside the band.
  */
-export function PromiseSection({ data, guarantee }) {
+export function PromiseSection({ data, guarantee, filmPosterUrl, filmVideoUrl }) {
+  const [videoOpen, setVideoOpen] = useState(false)
   if (!data) return null
+
   return (
-    <section className="section-padding bg-primary" style={{ backgroundImage: PLUS_GRID }}>
+    <section className="section-padding bg-primary">
       <div className="container-custom">
-        {/* Promise + founder film */}
+        {/* Promise + workshop film */}
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-24">
           <div>
             <p className="eyebrow eyebrow-spacing text-accent-600">{data.eyebrow}</p>
@@ -26,25 +28,33 @@ export function PromiseSection({ data, guarantee }) {
             </p>
             <Link
               to={data.linkTo}
-              className="font-sans text-xs font-medium uppercase tracking-[0.2em] text-white underline decoration-white/40 underline-offset-8 transition-colors hover:decoration-accent-600"
+              className="font-sans text-xs font-medium uppercase tracking-[0.2em] text-white underline decoration-white/40 decoration-1 underline-offset-[6px] transition-colors hover:decoration-accent-600"
             >
               {data.linkLabel}
             </Link>
           </div>
 
-          <div>
-            <div
-              className="relative flex items-center justify-center overflow-hidden rounded-lg bg-white/5"
+          <figure className="m-0">
+            <button
+              type="button"
+              className="relative block w-full cursor-pointer overflow-hidden rounded-lg border-0 bg-white/5 p-0"
               style={{ aspectRatio: '16 / 10' }}
+              onClick={() => filmVideoUrl && setVideoOpen(true)}
+              aria-label="Play the workshop film"
             >
-              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-neutral-100/90">
-                <svg className="ml-1 block h-7 w-7" fill="#224A4F" viewBox="0 0 24 24" aria-hidden>
-                  <path d="M8 5v14l11-7z" />
-                </svg>
+              {filmPosterUrl ? (
+                <img src={filmPosterUrl} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+              ) : null}
+              <span className="absolute inset-0 flex items-center justify-center bg-black/20">
+                <span className="flex h-16 w-16 items-center justify-center rounded-full bg-neutral-100/90 transition-transform duration-300 hover:scale-110">
+                  <svg className="ml-1 block h-7 w-7" fill="#224A4F" viewBox="0 0 24 24" aria-hidden>
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </span>
               </span>
-            </div>
-            <p className="mt-3 font-sans text-sm font-light text-neutral-200">{data.videoCaption}</p>
-          </div>
+            </button>
+            <figcaption className="mt-3 font-sans text-sm font-light text-neutral-200">{data.videoCaption}</figcaption>
+          </figure>
         </div>
 
         {/* Six commitments */}
@@ -65,13 +75,13 @@ export function PromiseSection({ data, guarantee }) {
           </div>
         </div>
 
-        {/* Guarantee card */}
+        {/* Guarantee card, inside the band */}
         {guarantee ? (
           <div className="mt-20 rounded-lg bg-neutral-100 px-8 py-12 md:px-14">
             <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-[220px_1fr] md:gap-16">
-              <div className="mx-auto flex h-44 w-44 items-center justify-center rounded-full border border-primary/30 p-3">
+              <div className="mx-auto flex h-48 w-48 items-center justify-center rounded-full border border-primary/25 p-2.5">
                 <div className="flex h-full w-full flex-col items-center justify-center rounded-full border border-accent-600 text-primary">
-                  <span className="font-serif text-5xl leading-none">{guarantee.years}</span>
+                  <span className="font-serif text-[3.4rem] leading-none">{guarantee.years}</span>
                   <span className="mt-2 font-sans text-[10px] font-medium uppercase tracking-[0.2em]">
                     Year guarantee
                   </span>
@@ -97,6 +107,8 @@ export function PromiseSection({ data, guarantee }) {
           </div>
         ) : null}
       </div>
+
+      <VideoModal open={videoOpen} onClose={() => setVideoOpen(false)} videoUrl={filmVideoUrl} />
     </section>
   )
 }
