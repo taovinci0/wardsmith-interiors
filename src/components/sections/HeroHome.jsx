@@ -159,10 +159,13 @@ export function HeroHome() {
           style={{ textShadow: '0 1px 10px rgba(0, 0, 0, 0.5)' }}
         >
           <p className="m-0 font-sans text-[13px] font-light text-white/90">
-            <span className="font-medium text-accent-600">5.0</span>&ensp;Rated on Google Reviews
+            <span className="font-medium text-accent-600">5.0</span>&ensp;on Google from 56 reviews
           </p>
           <p className="m-0 font-sans text-[13px] font-light text-white/90">Made at Wicks Manor, Maldon</p>
-          <p className="m-0 font-sans text-[13px] font-light text-white/90">Covering {areaCovered}</p>
+          <p className="m-0 font-sans text-[13px] font-light text-white/90">Designed, made and fitted by one team</p>
+          <p className="m-0 hidden font-sans text-[13px] font-light text-white/90 sm:block">
+            3-year craftsmanship guarantee
+          </p>
         </div>
       </div>
     </section>
