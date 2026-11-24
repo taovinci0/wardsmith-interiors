@@ -7,7 +7,7 @@ import { SectionHeaderSplit } from '../SectionHeaderSplit.jsx'
 export function ConsideredGridSection({ data }) {
   if (!data?.items?.length) return null
   return (
-    <section className="section-padding bg-neutral-100 pt-0">
+    <section className="section-padding bg-neutral-100">
       <div className="container-custom">
         <SectionHeaderSplit eyebrow={data.eyebrow} heading={data.heading} intro={data.intro} />
 

@@ -3,12 +3,12 @@ import { ArrowLink } from '../common/ArrowLink.jsx'
 /**
  * Homepage section 2 — Kitchens, directly after the hero. Static, image-led.
  */
-export function KitchensHomeSection({ data }) {
+export function KitchensHomeSection({ data, bg = 'bg-neutral-100' }) {
   if (!data?.heading) return null
   const [img1, img2] = data.imageUrls || []
 
   return (
-    <section id="home-kitchens-section" className="section-padding bg-neutral-100">
+    <section id="home-kitchens-section" className={`section-padding ${bg}`}>
       <div className="container-custom">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <div>

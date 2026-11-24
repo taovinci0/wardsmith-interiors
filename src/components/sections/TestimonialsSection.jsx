@@ -7,7 +7,7 @@ import { VideoModal } from '../common/VideoModal.jsx'
  * Client stories — grid of video testimonial cards (poster + play → modal),
  * stars and name/location meta below each card, Google badge underneath.
  */
-export function TestimonialsSection({ section = head, items = testimonials, bg = 'bg-neutral-100' }) {
+export function TestimonialsSection({ section = head, items = testimonials, bg = 'bg-neutral-100', showBadge = true }) {
   const [videoOpen, setVideoOpen] = useState(false)
   const [activeVideoUrl, setActiveVideoUrl] = useState(null)
 
@@ -64,6 +64,7 @@ export function TestimonialsSection({ section = head, items = testimonials, bg =
           ))}
         </div>
 
+        {showBadge ? (
         <div className="mt-14 flex justify-center border-t border-neutral-300 pt-10">
           <div className="flex items-center gap-3 rounded-full bg-white px-4 py-3" style={{ boxShadow: '0 4px 12px -2px rgba(0, 0, 0, 0.12)' }}>
             <img src="/images/Google__G__logo.svg" alt="Google" className="h-8 w-8" />
@@ -73,6 +74,7 @@ export function TestimonialsSection({ section = head, items = testimonials, bg =
             </div>
           </div>
         </div>
+        ) : null}
       </div>
 
       <VideoModal open={videoOpen} onClose={() => setVideoOpen(false)} videoUrl={activeVideoUrl} />

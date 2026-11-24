@@ -55,7 +55,7 @@ export function HomePageV4() {
       <RoomsFirstSection data={homeV4.roomsFirst} />
 
       {/* 3 — kitchens are where we do our finest work (CMS section, as shipped) */}
-      <KitchensHomeSection data={home?.kitchensSection} />
+      <KitchensHomeSection data={home?.kitchensSection} bg="bg-white" />
 
       {/* 4 — considered down to the last drawer */}
       <ConsideredGridSection data={homeV4.considered} />
@@ -79,8 +79,8 @@ export function HomePageV4() {
       <ApproachStripSection data={homeV4.approach} />
 
       {/* 9 — in their words + Google rating row */}
-      <TestimonialsSection section={homeV4.testimonialsHead} items={homeV4.testimonials} bg="bg-white" />
-      <section className="bg-white pb-24">
+      <TestimonialsSection section={homeV4.testimonialsHead} items={homeV4.testimonials} bg="bg-neutral-100" showBadge={false} />
+      <section className="bg-neutral-100 pb-24">
         <div className="container-custom flex flex-wrap items-center justify-between gap-6 border-t border-neutral-300 pt-10">
           <p className="m-0 flex items-baseline gap-4">
             <span className="font-serif text-4xl text-primary">5.0</span>
